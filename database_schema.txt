@@ -1,0 +1,55 @@
+CREATE TABLE UserAccount(
+	Title VARCHAR(4),
+	Gender VARCHAR(20) NOT NULL,
+	First_Name VARCHAR(20) NOT NULL,
+	Last_Name VARCHAR(20) NOT NULL,
+	Birthdate DATE NOT NULL,
+	Company VARCHAR(40) NOT NULL,
+	Email_Address VARCHAR(50) NOT NULL,
+	Username VARCHAR(15) PRIMARY KEY,
+	Password VARCHAR(15) NOT NULL,
+	Profile_Tags SET,
+	Education VARCHAR(100),
+	Location VARCHAR(30),
+	Work_History VARCHAR(3000),
+	Rating DECIMAL(2,1),
+	Resume_URL VARCHAR(2048),
+	Work_Sample_URL VARCHAR(2048),
+	Privacy BOOL NOT NULL,
+	Employer_Comments_URL VARCHAR(2048)
+	Profile_Image_URL VARCHAR(2048));
+	
+
+CREATE TABLE Listings(
+	Listing_ID INTEGER(15) PRIMARY KEY NOT NULL,
+	Hunter_Username VARCHAR(15) NOT NULL,
+	Huntee_ID VARCHAR(15) NOT NULL,
+	Listing_Title VARCHAR(20) NOT NULL,
+	Tag_Field VARCHAR(10),
+	Tag_Discipline VARCHAR(10),
+	Tag_Skills VARCHAR(10),
+	Description VARCHAR(2000) NOT NULL);
+
+CREATE TABLE Payment(
+	Username VARCHAR(15) NOT NULL,
+	Card_Type VARCHAR(10) NOT NULL,
+	Card_Number INTEGER(16) NOT NULL,
+	Name_On_Card VARCHAR(21) NOT NULL,
+	Expiration_Month INTEGER(2) NOT NULL,
+	Expiration_Year INTEGER(2) NOT NULL,
+	CVV INTEGER(4) NOT NULL,
+	PRIMARY KEY (CardType, CardNumber));
+
+CREATE TABLE Inbox(
+	Sender_Username VARCHAR(15) NOT NULL,
+	Receiver_Username VARCHAR(15) NOT NULL,
+	Message VARCHAR(2000),
+	Message_ID INTEGER(15) PRIMARY KEY));
+
+CREATE TABLE ProgressTracker(
+	Listing_ID INTEGER(15) PRIMARY KEY,
+	Current_Overall_Progress DECIMAL(2, 2) NOT NULL,
+	Milestone Names SET NOT NULL,
+	Milestone_Name VARCHAR(30),
+	Current_Milestone_Progress DECIMAL(2, 2) NOT NULL,
+	Last_Updated_Date DATE NOT NULL);
