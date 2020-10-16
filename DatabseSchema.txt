@@ -4,7 +4,7 @@ CREATE TABLE UserAccount(
 	First_Name VARCHAR(20) NOT NULL,
 	Last_Name VARCHAR(20) NOT NULL,
 	Birthdate DATE NOT NULL,
-	Company VARCHAR(40) NOT NULL,
+	Company VARCHAR(40),
 	Username VARCHAR(15) PRIMARY KEY,
 	Password VARCHAR(15) NOT NULL,
 	ProfileTagOne VARCHAR(20),
