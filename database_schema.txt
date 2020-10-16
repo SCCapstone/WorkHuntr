@@ -22,6 +22,7 @@ CREATE TABLE UserAccount(
 
 CREATE TABLE Listings(
 	Listing_ID INTEGER(15) PRIMARY KEY NOT NULL,
+	Price DECIMAL(5,2),
 	Hunter_Username VARCHAR(15) NOT NULL,
 	Huntee_ID VARCHAR(15) NOT NULL,
 	Listing_Title VARCHAR(20) NOT NULL,
@@ -30,7 +31,7 @@ CREATE TABLE Listings(
 	Tag_Skills VARCHAR(10),
 	Description VARCHAR(2000) NOT NULL);
 
-CREATE TABLE Payment(
+CREATE TABLE Payments(
 	Username VARCHAR(15) NOT NULL,
 	Card_Type VARCHAR(10) NOT NULL,
 	Card_Number INTEGER(16) NOT NULL,
