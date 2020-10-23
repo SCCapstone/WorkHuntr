@@ -2,7 +2,7 @@ from django.core.exceptions import *
 from django.shortcuts import render, redirect, HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
-import requests
+import requests  # Requests will need to be imported
 
 @csrf_exempt
 def login(request):
