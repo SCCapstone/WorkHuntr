@@ -1,4 +1,15 @@
-<html>
+<!--<html>
   <h1>Profile</h1>
   <button onclick="location.href='/dashboard'">Back</button>
-</html>
+</html>-->
+
+{% extends 'main.html' %}
+
+{% block content %}
+  <table>
+    <tr>
+      <td><button onclick="location.href='/dashboard'">Back</button></td>
+    </tr>
+  </table>
+  <h2>Profile</h2>
+{% endblock %}

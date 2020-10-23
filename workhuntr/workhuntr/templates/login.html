@@ -1,5 +1,16 @@
-<html>
+<!--<html>
   <h1>Login</h1>
   <button onclick="location.href='/dashboard'">Login</button>
   <button onclick="location.href='/create_account'">Create Account</button>
-</html>
+</html>-->
+{% extends 'main.html' %}
+
+{% block content %}
+  <table>
+    <tr>
+      <td><button onclick="location.href='/dashboard'">Login</button></td>
+      <td><button onclick="location.href='/create_account'">Create Account</button></td>
+    </tr>
+  </table>
+  <h2>Login</h2>
+{% endblock %}
