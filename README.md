@@ -10,9 +10,11 @@ for development, the 3.1.2 version of django, the 20.1.1 version of pip, and the
 
 ## Setup
 
-You'll need to install django, so call pip install django
+You'll need to install django, so call 
+> pip install django
 
-You'll also need to install the requests package, so call pip install requests
+You'll also need to install the requests package, so call 
+> pip install requests
 
 ## Coding Style Guide
 
