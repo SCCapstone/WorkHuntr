@@ -24,11 +24,11 @@ From GiantNerds\workhuntr> to run the server execute the command
 
 >python manage.py runserver
 
-## Deployment
+# Deployment
 
 Deployment is not currently available
 
-## Testing
+# Testing
 
 Testing is not currently available
 
