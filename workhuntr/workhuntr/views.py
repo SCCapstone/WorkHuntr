@@ -28,5 +28,6 @@ def modify_listings(request):
 def profile(request):
   return render(request, 'profile.html')
 
+@csrf_exempt
 def home(request):
   return render(request, 'home.html')
