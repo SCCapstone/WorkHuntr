@@ -1,6 +1,17 @@
-<html>
-  <h1>Dashboard</h1>
-  <button onclick="location.href='/profile'">Profile</button>
-  <button onclick="location.href='/current_listings'">Current Listings</button>
-  <button onclick="location.href='/login'">Log Out</button>
-</html>
+<!--<html>-->
+{% extends 'main.html' %}
+
+{% block content %}
+
+  <table> 
+    <tr>
+      <td><button onclick="location.href='/profile'">Profile</button></td>
+      <td><button onclick="location.href='/current_listings'">Current Listings</button></td>
+      <td><button onclick="location.href='/login'">Log Out</button></td>
+    </tr>
+  </table>
+
+  <h2>Dashboard</h2>
+
+  {% endblock %}
+<!--</html>-->

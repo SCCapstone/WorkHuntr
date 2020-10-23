@@ -1,5 +1,14 @@
-<html>
+<!--<html>-->
+{% extends 'main.html' %}
+
+{% block content %}
+  <table>
+    <tr>
+  
+  <td><button onclick="location.href='/modify_listings'">Modify Listings</button></td>
+  <td><button onclick="location.href='/dashboard'">Back</button></td>
+    </tr>
+  </table>
   <h1>Current Listings</h1>
-  <button onclick="location.href='/modify_listings'">Modify Listings</button>
-  <button onclick="location.href='/dashboard'">Back</button>
-</html>
+{% endblock %}
+<!--</html>-->
