@@ -27,7 +27,7 @@ python3 --version
 ```
 2. To install Django, run
 ```
-pip3 install requests
+pip3 install django
 ```
 3. To install the Python requests module, run
 ```
