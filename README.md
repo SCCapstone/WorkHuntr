@@ -2,7 +2,7 @@
 
 WorkHuntr is a website that aids users in their job search or their search for help on projects. Each user is divided into one of two categories: a hunter, someone who is looking for assistance on a job/project, or a huntee, someone who is looking to be hired for a job/project. Your category is determined by your choice on the create profile screen, which is where you will also provide your general personal information (name, age, sex) and the company you currently work for (you'll also have the ability to declare unemployed). Once on the home screen, you will get the option to navigate between the different pages (https://github.com/SCCapstone/GiantNerds/wiki/Design). The goal is to create an easy to use hub where potential employers and employees can have quick access to one another in a centralized place. A lot of the interaction between users comes from the built-in inbox functionality and the listing pages, where hunters can post jobs they're looking for assistance on, or huntees can search for new projects to work on. We will also have a built-in payment function, allowing hunters to pay the huntees that work on their projects.
 
-## External Requirements
+## Prerequisites
 
 In order to build this project you will first have to install:
 * [Python 3](https://www.python.org/downloads/)
@@ -25,13 +25,9 @@ sudo apt-get install python3.6
 ```
 python3 --version
 ```
-2. To install Django, run
+2. To install dependencies, run
 ```
-pip3 install django
-```
-3. To install the Python requests module, run
-```
-pip3 install requests
+pip3 install -r requirements.txt
 ```
 
 ## Running
