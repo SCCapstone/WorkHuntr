@@ -1,33 +1,20 @@
 from django.core.exceptions import *
 from django.shortcuts import render, redirect, HttpResponse
 from django.template import loader
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 import requests  # Requests will need to be installed
 
-@csrf_exempt
-def login(request):
-  return render(request, 'login.html')
-
-@csrf_exempt
-def create_account(request):
-  return render(request, 'create_account.html')
-
-@csrf_exempt
-def dashboard(request):
-  return render(request, 'dashboard.html')
-
-@csrf_exempt
-def current_listings(request):
-  return render(request, 'current_listings.html')
-
-@csrf_exempt
-def modify_listings(request):
-  return render(request, 'modify_listings.html')
-
-@csrf_exempt
-def profile(request):
-  return render(request, 'profile.html')
-
-@csrf_exempt
 def home(request):
-  return render(request, 'home.html')
+  return redirect('login')
+
+@login_required
+def dashboard(request):
+  return render(request, 'workhuntr/dashboard.html')
+
+@login_required
+def current_listings(request):
+  return render(request, 'workhuntr/current_listings.html')
+
+@login_required
+def modify_listings(request):
+  return render(request, 'workhuntr/modify_listings.html')
