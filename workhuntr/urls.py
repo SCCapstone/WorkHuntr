@@ -26,6 +26,7 @@ urlpatterns = [
   path('', workhuntr_views.home, name='home'),
   path('create_account/', user_views.create_account, name='create_account'),
   path('profile/', user_views.profile, name='profile'),
+  path('edit_profile/', user_views.edit_profile, name='edit_profile'),
   path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
   path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
   path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
