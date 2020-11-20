@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
-GENDERS = (("m", "Male"), ("f", "Female"), ("o", "Other"), ("pnts", "Prefer Not to Say"))
-TITLES = (("mr", "Mr."), ("ms", "Ms."), ("mrs", "Mrs."), ("other", "Other"))
+GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer Not to Say", "Prefer Not to Say"))
+TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
 ACCOUNT_TYPES = (("Huntee", "Huntee"), ("Hunter", "Hunter"))
 
 class UserCreateAccountForm(UserCreationForm):
