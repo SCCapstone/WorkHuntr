@@ -8,7 +8,13 @@ def create_account(request):
     form = UserCreateAccountForm(request.POST)
     if form.is_valid():
       form.save()
+      title = form.cleaned_data.get('title')
+      first_name = form.cleaned_data.get('first_name')
+      last_name = form.cleaned_data.get('last_name')
+      gender = form.cleaned_data.get('gender')
       username = form.cleaned_data.get('username')
+      email = form.cleaned_data.get('email')
+      account_type = form.cleaned_data.get('account_type')
       messages.success(request, f'Your account has been created! You can now login.')
       return redirect('login')
   else:
