@@ -11,10 +11,9 @@ class UserCreateAccountForm(UserCreationForm):
   title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
   first_name = forms.CharField(max_length=20, min_length=1, strip=True)
   last_name = forms.CharField(max_length=20, min_length=1, strip=True)
-  gender = forms.ChoiceField(choices=GENDERS)
+  gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
+  account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
   email = forms.EmailField(required=True)
-  account_type = forms.ChoiceField(choices=ACCOUNT_TYPES)
-  #resume = forms.FileField()
 
   class Meta:
     model = User
