@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'workhuntr',
     'users',
-    'listings',
+    'listings.apps.ListingsConfig',
     'crispy_forms'
 ]
 
