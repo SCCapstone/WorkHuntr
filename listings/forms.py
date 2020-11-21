@@ -3,8 +3,8 @@ from django.forms import ModelForm
 
 from .models import *
 
-class ListingsForm(forms.ModelForm):
+class ListingsForm(ModelForm):
 
     class Meta:
         model = Listings
-        fields = Listings.title, Listings.description
+        fields = '__all__'
