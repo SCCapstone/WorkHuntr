@@ -1,0 +1,23 @@
+{% extends "workhuntr/base.html" %}
+{% block content %}
+  <table>
+    <tr>
+      <td><button onclick="location.href='/dashboard'">Back</button></td>
+      <td><button onclick="location.href='/modify_listings'">Modify Listings</button></td>
+      <td><button onclick="location.href='/'">Log Out</button></td>
+    </tr>
+  </table>
+  <h2>Current Listings</h2>
+{% endblock %}
+
+  {% if current_listings %}
+    <ul>
+      {% for listing in current_listings %}
+        <li><a href="/listings/{{ listing.id }}/">
+          listing.title }} </a> </li>
+        {% endfor %}
+    </ul>
+  {% else %}
+    <p> No listings are available.</p>
+  {% endif %}
+

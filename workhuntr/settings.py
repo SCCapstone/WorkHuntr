@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'workhuntr',
     'users.apps.UsersConfig',
     'crispy_forms',
+    'listings'
 ]
 
 MIDDLEWARE = [
