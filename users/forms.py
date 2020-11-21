@@ -3,18 +3,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
-GENDERS = (("m", "Male"), ("f", "Female"), ("o", "Other"), ("pnts", "Prefer Not to Say"))
-TITLES = (("mr", "Mr."), ("ms", "Ms."), ("mrs", "Mrs."), ("other", "Other"))
+GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer Not to Say", "Prefer Not to Say"))
+TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
 ACCOUNT_TYPES = (("Huntee", "Huntee"), ("Hunter", "Hunter"))
 
 class UserCreateAccountForm(UserCreationForm):
   title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
   first_name = forms.CharField(max_length=20, min_length=1, strip=True)
   last_name = forms.CharField(max_length=20, min_length=1, strip=True)
-  gender = forms.ChoiceField(choices=GENDERS)
+  gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
+  account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
   email = forms.EmailField(required=True)
-  account_type = forms.ChoiceField(choices=ACCOUNT_TYPES)
-  #resume = forms.FileField()
 
   class Meta:
     model = User
