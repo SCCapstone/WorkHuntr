@@ -8,16 +8,16 @@
     </tr>
   </table>
   <h2>Current Listings</h2>
+
 {% endblock %}
 
-  {% if current_listings %}
-    <ul>
-      {% for listing in current_listings %}
-        <li><a href="/listings/{{ listing.id }}/">
-          listing.title }} </a> </li>
-        {% endfor %}
-    </ul>
-  {% else %}
-    <p> No listings are available.</p>
-  {% endif %}
+<a href ="{% url 'create_listings' listing.id %}"> Create New Listing</a>
 
+{% for listing in listings %}
+    {div}
+  <a href ="{% url 'modify_listings' listing.id %}"> Modify </a>
+  <a href ="{% url 'delete_listing' listing.id %}"> Delete </a>
+
+  <p>{{listing}}</p>
+    {/div}
+{% endfor %}

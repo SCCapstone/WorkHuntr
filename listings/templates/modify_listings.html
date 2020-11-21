@@ -7,3 +7,11 @@
   </table>
   <h2>Modify Listings</h2>
 {% endblock %}
+
+<form method="post" action="/current_listings">
+    {% csrf_token %}
+
+    {{form}}
+
+    <input type="submit" name="Modify Listing">
+</form>

@@ -30,8 +30,6 @@ urlpatterns = [
   path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
   path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
   path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
-  path('current_listings/', workhuntr_views.current_listings, name='current_listings'),
-  path('modify_listings/', workhuntr_views.modify_listings, name='modify_listings'),
   path('listings/', include('listings.urls')),
 ]
 
