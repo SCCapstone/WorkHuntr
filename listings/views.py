@@ -15,7 +15,7 @@ def create_listings(request):
         form = ListingsForm(request.post)
         if form.is_valid():
             form.save()
-        return redirect('/current_listings')
+        return redirect('/current_listings/')
 
     context = {'listings':listings, 'form':form}
     return render(request, 'listings/create_listings.html', context)
@@ -34,7 +34,7 @@ def modify_listings(request, pk):
         form = ListingsForm(request.post, instance=listing)
         if form.is_valid():
             form.save()
-        return redirect('/current_listings')
+        return redirect('/current_listings/')
 
     context = {'form':form}
     return render(request, 'listings/modify_listings.html')
@@ -44,7 +44,7 @@ def delete_listing(request,pk):
 
     if request.method == 'post':
         item.delete()
-        return redirect('/current_listings')
+        return redirect('/current_listings/')
 
     context = {'item':item}
     return render(request, 'listings/delete_listing.html')
