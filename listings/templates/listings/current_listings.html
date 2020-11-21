@@ -3,15 +3,13 @@
   <table>
     <tr>
       <td><button onclick="location.href='/dashboard'">Back</button></td>
-      <td><button onclick="location.href='/modify_listings'">Modify Listings</button></td>
       <td><button onclick="location.href='/'">Log Out</button></td>
+      <td><button onclick="location.href='/create_listings'">Create Listing</button></td>
     </tr>
   </table>
   <h2>Current Listings</h2>
 
-{% endblock %}
 
-<a href ="{% url 'create_listings' listing.id %}"> Create New Listing</a>
 
 {% for listing in listings %}
     {div}
@@ -21,3 +19,4 @@
   <p>{{listing}}</p>
     {/div}
 {% endfor %}
+{% endblock %}

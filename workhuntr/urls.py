@@ -31,8 +31,8 @@ urlpatterns = [
   path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
   path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
   path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
-  path('create_listings', listing_views.create_listings, name='create_listings'),
-  path('current_listings',listing_views.current_listings, name='current_listings'),
+  path('create_listings/', listing_views.create_listings, name='create_listings'),
+  path('current_listings/',listing_views.current_listings, name='current_listings'),
   path('modify_listings/<str:pk>/', listing_views.modify_listings, name='modify_listings'),
   path('delete_listing/<str:pk>/', listing_views.delete_listing, name='delete_listing')
 ]
