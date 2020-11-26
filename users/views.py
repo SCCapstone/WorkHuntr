@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm
 
@@ -7,8 +8,13 @@ def create_account(request):
   if request.method == 'POST':
     form = UserCreateAccountForm(request.POST)
     if form.is_valid():
-      form.save()
-      username = form.cleaned_data.get('username')
+      user = form.save()
+      user.refresh_from_db()
+      user.profile.email = form.cleaned_data.get('email')
+      user.profile.gender = form.cleaned_data.get('gender')
+      user.profile.title = form.cleaned_data.get('title')
+      user.profile.account_type = form.cleaned_data.get('account_type')
+      user.profile.save()
       messages.success(request, f'Your account has been created! You can now login.')
       return redirect('login')
   else:
