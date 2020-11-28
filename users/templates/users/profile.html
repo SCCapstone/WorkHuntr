@@ -5,12 +5,29 @@
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
         <div class="media-body">
-          <h2 class="account-heading">{{ user.profile.title }} {{ user.first_name }} {{ user.last_name }}</h2>
+          <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
           <p class="text-secondary">{{ user.profile.username }}</h2>
           <p class="text-secondary">{{ user.profile.email }}</p>
-          <p class="text-secondary">{{ user.profile.gender }}</p>
           <p class="text-secondary">{{ user.profile.account_type }}</p>
           <a class="btn btn-outline-info" type="button" href="{% url 'edit_profile' %}">Edit Profile</a>
+        </div>
+      </div>
+    </div>
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="account-heading">Demographic Information</h2>
+          <p class="text-secondary">Gender: {{ user.profile.gender }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="account-heading">Resume</h2>
+          <div>
+            <a href="{% url 'create_account' %}">Resume</a>
+          </div>
         </div>
       </div>
     </div>

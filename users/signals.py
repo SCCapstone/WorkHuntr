@@ -5,11 +5,8 @@ from .models import Profile
 
 @receiver(post_save, sender=User, dispatch_uid='save_new_user_profile')
 def create_profile(sender, instance, created, **kwargs):
-  print('REACHED SIGNAL')
   user = instance
   if created:
     profile = Profile(user=user)
     profile.save()
-    print('REACHED CREATED')
   instance.profile.save()
-  print('REACHED SAVED')

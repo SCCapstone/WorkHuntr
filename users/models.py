@@ -1,13 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import FileExtensionValidator
 from PIL import Image
 
 class Profile(models.Model):
+
+  def update_resume_filename(instance, filename):
+    return 'resumes/' + f'{instance.user.username}_resume.pdf'
+
   user = models.OneToOneField(User, on_delete=models.CASCADE)
   title = models.CharField(default='Other', max_length=5)
   gender = models.CharField(default='Prefer Not to Say', max_length=20)
   account_type = models.CharField(default='Huntee', max_length=6)
   profile_picture = models.ImageField(default='default.jpg', upload_to='profile_pics')
+  resume = models.FileField(default='default.pdf', upload_to=update_resume_filename, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
 
   def __str__(self):
     return f'{self.user.username} Profile'
