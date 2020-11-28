@@ -6,6 +6,7 @@ from .models import Profile
 GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer Not to Say", "Prefer Not to Say"))
 TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
 ACCOUNT_TYPES = (("Huntee", "Huntee"), ("Hunter", "Hunter"))
+PRIVACY = (("Public", "Public"), ("Private", "Private"))
 
 class UserCreateAccountForm(UserCreationForm):
   title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
@@ -27,6 +28,7 @@ class UserUpdateForm(forms.ModelForm):
     fields = ['username', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
+  privacy = forms.ChoiceField(widget=forms.Select(), choices=PRIVACY)
   class Meta:
     model = Profile
-    fields = ['profile_picture', 'resume']
+    fields = ['profile_picture', 'resume', 'website', 'privacy']

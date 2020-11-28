@@ -14,6 +14,8 @@ class Profile(models.Model):
   account_type = models.CharField(default='Huntee', max_length=6)
   profile_picture = models.ImageField(default='default.jpg', upload_to='profile_pics')
   resume = models.FileField(default='default.pdf', upload_to=update_resume_filename, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
+  website = models.URLField(default='', max_length=200, blank=True)
+  privacy = models.CharField(default='Public', max_length=10)
 
   def __str__(self):
     return f'{self.user.username} Profile'
