@@ -1,0 +1,13 @@
+{% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <table>
+    <tr>
+      <td><button onclick="location.href='/dashboard'">Back</button></td>
+      <td><button onclick="location.href='/modify_listings'">Modify Listings</button></td>
+      <td><button onclick="location.href='/'">Log Out</button></td>
+    </tr>
+  </table>
+
+
+{% endblock %}

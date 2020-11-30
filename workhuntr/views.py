@@ -12,6 +12,10 @@ def dashboard(request):
   return render(request, 'workhuntr/dashboard.html')
 
 @login_required
+def create_listing(request):
+  return render(request, 'workhuntr/create_listing.html')
+
+@login_required
 def current_listings(request):
   return render(request, 'workhuntr/current_listings.html')
 

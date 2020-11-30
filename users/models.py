@@ -16,3 +16,11 @@ class Profile(models.Model):
       output_size = (300, 300)
       img.thumbnail(output_size)
       img.save(self.profile_picture.path)
+
+class Listing(models.Model):
+  title = models.CharField(max_length=200, null=False)
+  description = models.CharField(max_length=2000, null=False)
+  owner = models.CharField(max_length=30, null=False)
+
+  def __str__(self):
+    return self.title

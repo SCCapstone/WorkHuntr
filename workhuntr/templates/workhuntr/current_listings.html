@@ -3,9 +3,25 @@
   <table>
     <tr>
       <td><button onclick="location.href='/dashboard'">Back</button></td>
+      <td><button onclick="location.href='../create_listing/'">Create Listing</button></td>
       <td><button onclick="location.href='/modify_listings'">Modify Listings</button></td>
       <td><button onclick="location.href='/'">Log Out</button></td>
     </tr>
   </table>
   <h2>Current Listings</h2>
+  <table>
+    <tr>
+      <th >TITLE</th>
+      <th>DESCRIPTION</th>
+      <th>OWNER</th>
+    </tr>
+    {% for i in Listings %}
+      <tr>
+        <td><a href="../listing/{{i.owner}}/{{i.title}}">{{i.title}}</a></td>
+        <td>{{i.description}}</td>
+        <td>{{i.owner}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
 {% endblock %}
