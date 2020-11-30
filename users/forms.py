@@ -7,7 +7,7 @@ GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer 
 TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
 ACCOUNT_TYPES = (("Huntee", "Huntee"), ("Hunter", "Hunter"))
 PRIVACY = (("Public", "Public"), ("Private", "Private"))
-
+RATING = (("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"))
 class UserCreateAccountForm(UserCreationForm):
   title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
   first_name = forms.CharField(max_length=20, min_length=1, strip=True)
@@ -29,6 +29,16 @@ class UserUpdateForm(forms.ModelForm):
 
 class ProfileUpdateForm(forms.ModelForm):
   privacy = forms.ChoiceField(widget=forms.Select(), choices=PRIVACY)
+
   class Meta:
     model = Profile
     fields = ['profile_picture', 'resume', 'website', 'privacy']
+
+class AddCommentForm(forms.ModelForm):
+  employment = forms.CharField(max_length=150, min_length=1, strip=True)
+  comment = forms.CharField(max_length=1000, min_length=1, strip=True)
+  rating = forms.ChoiceField(widget=forms.Select(), choices=RATING)
+
+  class Meta:
+    model = Profile
+    fields = ['employment', 'comment', 'rating']

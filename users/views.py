@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render, redirect
-from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm, AddCommentForm
 
 def create_account(request):
   if request.method == 'POST':
@@ -64,3 +64,18 @@ def resume(request, username):
     return FileResponse(open(resume_path, 'rb'), content_type='application/pdf')
   except:
     raise Http404()
+
+@login_required
+def add_comment(request, username):
+  if request.method == 'POST':
+    commentForm = AddCommentForm(request.POST)
+    if commentForm.is_valid():
+      commentForm.save()
+      messages.success(request, f'Your comment have been added!')
+      return redirect('profile', username)
+  else:
+    commentForm = AddCommentForm()
+  context = {
+    'comment_form': commentForm
+  }
+  return render(request, 'users/comment.html', context)
