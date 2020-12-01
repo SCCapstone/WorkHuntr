@@ -37,7 +37,7 @@ def profile(request, username):
     if user.profile.privacy == 'Private':
       viewable = False
     can_comment = True
-  return render(request, 'users/profile.html', {'user':user, 'viewable':viewable, 'editable':editable, 'can_comment':can_comment, 'comments':Comment.objects.all()})
+  return render(request, 'users/profile.html', {'user': user, 'viewable': viewable, 'editable': editable, 'can_comment': can_comment, 'comments': Comment.objects.all()})
 
 @login_required
 def edit_profile(request, username):

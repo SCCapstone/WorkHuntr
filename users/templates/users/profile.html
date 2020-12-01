@@ -48,9 +48,12 @@
       {% if can_comment %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
       {% if comments %}
         {% for comment in comments %}
-          {{ comment.author }}
-          <div class="alert alert-{{ message.tags }}">
-            {{ comment.content }}
+          <div style="width:500px;height:100px;border:1px solid #000;">
+            <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
+            {{ comment.author }}
+            <div class="alert alert-{{ message.tags }}">
+              {{ comment.content }}
+            </div>
           </div>
         {% endfor %}
       {% endif %}
