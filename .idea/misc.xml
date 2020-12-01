@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/users/migrations/0020_auto_20201201_0102.py" />
+    <file url="file://$PROJECT_DIR$/users/migrations/0021_auto_20201201_0233.py" />
+    <file url="file://$PROJECT_DIR$/users/migrations/0022_auto_20201201_0237.py" />
+    <file url="file://$PROJECT_DIR$/users/migrations/0023_auto_20201201_0241.py" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9" project-jdk-type="Python SDK" />
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
