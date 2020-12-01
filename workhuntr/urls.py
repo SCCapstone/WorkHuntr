@@ -33,7 +33,7 @@ urlpatterns = [
   path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
   path('current_listings/', workhuntr_views.current_listings, name='current_listings'),
   path('modify_listings/', workhuntr_views.modify_listings, name='modify_listings'),
-  path('add_comment/', user_views.add_comment, name="add_comment")
+  path('add_comment/<username>/', user_views.add_comment, name="add_comment")
 ]
 
 if settings.DEBUG:

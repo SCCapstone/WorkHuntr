@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render, redirect
 from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm, AddCommentForm
+from .models import Profile
 
 def create_account(request):
   if request.method == 'POST':
@@ -70,7 +71,9 @@ def add_comment(request, username):
   if request.method == 'POST':
     commentForm = AddCommentForm(request.POST)
     if commentForm.is_valid():
-      commentForm.save()
+      comment = commentForm.save(commit=False)
+      comment.profile = profile
+      comment.save()
       messages.success(request, f'Your comment have been added!')
       return redirect('profile', username)
   else:
@@ -79,3 +82,4 @@ def add_comment(request, username):
     'comment_form': commentForm
   }
   return render(request, 'users/comment.html', context)
+

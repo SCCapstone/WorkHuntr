@@ -4,7 +4,7 @@ from django.core.validators import FileExtensionValidator
 from PIL import Image
 
 class Profile(models.Model):
-
+  author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, related_name="Profile_Author", default=1)
   def update_resume_filename(instance, filename):
     return 'resumes/' + f'{instance.user.username}_resume.pdf'
 
@@ -27,3 +27,13 @@ class Profile(models.Model):
       output_size = (300, 300)
       img.thumbnail(output_size)
       img.save(self.profile_picture.path)
+
+
+class Comment(models.Model):
+  profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments', default=1)
+  author = models.CharField(max_length=100, default='')
+  comment = models.TextField()
+  active = models.BooleanField(default=False)
+
+  def __str__(self):
+    return self.text
