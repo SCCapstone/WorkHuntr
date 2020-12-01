@@ -37,7 +37,8 @@ def profile(request, username):
     if user.profile.privacy == 'Private':
       viewable = False
     can_comment = True
-  return render(request, 'users/profile.html', {'user': user, 'viewable': viewable, 'editable': editable, 'can_comment': can_comment, 'comments': Comment.objects.all()})
+  comments = Comment.objects.filter(user=user)
+  return render(request, 'users/profile.html', {'user':user, 'viewable':viewable, 'editable':editable, 'can_comment':can_comment, 'comments':comments})
 
 @login_required
 def edit_profile(request, username):
@@ -77,6 +78,7 @@ def add_comment(request, username):
       comment.rating = form.cleaned_data.get('rating')
       comment.content = form.cleaned_data.get('content')
       comment.author = request.user
+      comment.user = User.objects.get(username=username)
       messages.success(request, f'Your comment have been added!')
       return redirect('profile', username)
   else:

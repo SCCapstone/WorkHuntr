@@ -32,7 +32,8 @@ class Comment(models.Model):
   employer = models.CharField(default='', max_length=150)
   rating = models.CharField(default='1', max_length=1)
   content = models.TextField(default='')
-  author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default='1')
+  author = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, default='1', related_name='comment_author')
+  user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, default='1', related_name='comment_user')
 
   def __str__(self):
     return self.employer
