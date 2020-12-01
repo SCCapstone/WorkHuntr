@@ -1,0 +1,21 @@
+{% extends "workhuntr/base.html" %}
+{% block content %}
+  <table>
+    <tr>
+      <td><button onclick="location.href='/create_listings'">Create Listing</button></td>
+      <td><button onclick="location.href='/dashboard'">Back</button></td>
+      <td><button onclick="location.href='/'">Log Out</button></td>
+    </tr>
+  </table>
+  <h2>Current Listings</h2>
+
+{% for listing in listings %}
+    {div}
+
+  <a href ="{% url '/modify_listings/' listing.id %}"> Modify </a>
+  <a href ="{% url '/delete_listing/' listing.id %}"> Delete </a>
+
+  <p>{{listing}}</p>
+    {/div}
+{% endfor %}
+{% endblock %}

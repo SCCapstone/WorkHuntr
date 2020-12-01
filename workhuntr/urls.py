@@ -19,20 +19,26 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from users import views as user_views
+from listings import views as listing_views
 from workhuntr import views as workhuntr_views
 
 urlpatterns = [
   path('admin/', admin.site.urls),
   path('', workhuntr_views.home, name='home'),
   path('create_account/', user_views.create_account, name='create_account'),
-  path('profile/', user_views.profile, name='profile'),
-  path('edit_profile/', user_views.edit_profile, name='edit_profile'),
+  path('profile/<username>/', user_views.profile, name='profile'),
+  path('edit_profile/<username>/', user_views.edit_profile, name='edit_profile'),
+  path('resume/<username>/', user_views.resume, name="resume"),
   path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
   path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
   path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
-  path('create_listing/',workhuntr_views.create_listing, name='create_listing'),
-  path('current_listings/', workhuntr_views.current_listings, name='current_listings'),
-  path('modify_listings/', workhuntr_views.modify_listings, name='modify_listings')
+
+  path('create_listings/', listing_views.create_listings, name='create_listings'),
+  path('current_listings/',listing_views.current_listings, name='current_listings'),
+  path('modify_listings/<str:pk>/', listing_views.modify_listings, name='modify_listings'),
+  path('delete_listing/<str:pk>/', listing_views.delete_listing, name='delete_listing')
+  path('add_comment/<username>/', user_views.add_comment, name="add_comment")
+
 ]
 
 if settings.DEBUG:
