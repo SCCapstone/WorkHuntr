@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http.response import FileResponse, Http404
 from django.shortcuts import render, redirect
-from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm, AddCommentForm
+from .models import Comment
 
 def create_account(request):
   if request.method == 'POST':
@@ -22,11 +24,24 @@ def create_account(request):
   return render(request, 'users/create_account.html', {'form': form})
 
 @login_required
-def profile(request):
-  return render(request, 'users/profile.html')
+def profile(request, username):
+  if request.method == 'POST':
+    search_user = request.POST.get('search', None)
+    return redirect('profile', search_user)
+  user = User.objects.get(username=username)
+  viewable = True
+  editable = True
+  can_comment = False
+  if request.user != user:
+    editable = False
+    if user.profile.privacy == 'Private':
+      viewable = False
+    can_comment = True
+  comments = Comment.objects.filter(user=user)
+  return render(request, 'users/profile.html', {'user':user, 'viewable':viewable, 'editable':editable, 'can_comment':can_comment, 'comments':comments})
 
 @login_required
-def edit_profile(request):
+def edit_profile(request, username):
   if request.method == 'POST':
     u_form = UserUpdateForm(request.POST, instance=request.user)
     p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -34,7 +49,7 @@ def edit_profile(request):
       u_form.save()
       p_form.save()
       messages.success(request, f'Your account has been updated!')
-      return redirect('profile')
+      return redirect('profile', username)
   else:
     u_form = UserUpdateForm(instance=request.user)
     p_form = ProfileUpdateForm(instance=request.user.profile)
@@ -43,3 +58,32 @@ def edit_profile(request):
     'p_form': p_form
   }
   return render(request, 'users/edit_profile.html', context)
+
+@login_required
+def resume(request, username):
+  resume_path = 'media/resumes/' + request.user.username + '_resume.pdf'
+  try:
+    return FileResponse(open(resume_path, 'rb'), content_type='application/pdf')
+  except:
+    raise Http404()
+
+@login_required
+def add_comment(request, username):
+  if request.method == 'POST':
+    form = AddCommentForm(request.POST)
+    if form.is_valid():
+      comment = form.save()
+      comment.refresh_from_db()
+      comment.employer = form.cleaned_data.get('employer')
+      comment.rating = form.cleaned_data.get('rating')
+      comment.content = form.cleaned_data.get('content')
+      comment.author = request.user
+      comment.user = User.objects.get(username=username)
+      messages.success(request, f'Your comment have been added!')
+      return redirect('profile', username)
+  else:
+    form = AddCommentForm()
+  context = {
+    'comment_form': form
+  }
+  return render(request, 'users/comment.html', context)
