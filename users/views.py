@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render, redirect
 from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm, AddCommentForm
+from .models import Comment
 
 def create_account(request):
   if request.method == 'POST':
@@ -36,7 +37,7 @@ def profile(request, username):
     if user.profile.privacy == 'Private':
       viewable = False
     can_comment = True
-  return render(request, 'users/profile.html', {'user':user, 'viewable':viewable, 'editable':editable, 'can_comment':can_comment})
+  return render(request, 'users/profile.html', {'user':user, 'viewable':viewable, 'editable':editable, 'can_comment':can_comment, 'comments':Comment.objects.all()})
 
 @login_required
 def edit_profile(request, username):
@@ -68,14 +69,19 @@ def resume(request, username):
 @login_required
 def add_comment(request, username):
   if request.method == 'POST':
-    commentForm = AddCommentForm(request.POST)
-    if commentForm.is_valid():
-      commentForm.save(commit=False)
+    form = AddCommentForm(request.POST)
+    if form.is_valid():
+      comment = form.save()
+      comment.refresh_from_db()
+      comment.employer = form.cleaned_data.get('employer')
+      comment.rating = form.cleaned_data.get('rating')
+      comment.content = form.cleaned_data.get('content')
+      comment.author = request.user
       messages.success(request, f'Your comment have been added!')
       return redirect('profile', username)
   else:
-    commentForm = AddCommentForm()
+    form = AddCommentForm()
   context = {
-    'comment_form': commentForm
+    'comment_form': form
   }
   return render(request, 'users/comment.html', context)

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import Comment, Profile
 
 GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer Not to Say", "Prefer Not to Say"))
 TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
@@ -35,9 +35,9 @@ class ProfileUpdateForm(forms.ModelForm):
     fields = ['profile_picture', 'resume', 'website', 'privacy']
 
 class AddCommentForm(forms.ModelForm):
-  employment = forms.CharField(max_length=150, min_length=1, strip=True)
+  employer = forms.CharField(max_length=150, min_length=1, strip=True)
   rating = forms.ChoiceField(widget=forms.Select(), choices=RATING)
-  comment = forms.CharField(max_length=1500, min_length=1, strip=False)
+  content = forms.CharField(max_length=1500, min_length=1, strip=False)
   class Meta:
-    model = Profile
-    fields = ['rating', 'employment', 'comment']
+    model = Comment
+    fields = ['rating', 'employer', 'content']

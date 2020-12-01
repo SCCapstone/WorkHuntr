@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
+from django.urls import reverse
 from PIL import Image
 
 class Profile(models.Model):
@@ -27,3 +28,14 @@ class Profile(models.Model):
       img.thumbnail(output_size)
       img.save(self.profile_picture.path)
 
+class Comment(models.Model):
+  employer = models.CharField(default='', max_length=150)
+  rating = models.CharField(default='1', max_length=1)
+  content = models.TextField(default='')
+  author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default='1')
+
+  def __str__(self):
+    return self.employer
+
+  def get_absolute_url(self):
+    return reverse('post-detail', kwargs={'pk': self.pk})
