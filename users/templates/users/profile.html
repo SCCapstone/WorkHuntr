@@ -47,18 +47,6 @@
       <h2 class="account-heading">Comments & Rating</h2>
       {% if can_comment %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
       <hr>
-      {% for comment in comments %}
-        <div class="comments" style="padding: 10px;">
-          <p class="font-weight-bold">
-            {{ comment.author }}
-            </span>
-          </p>
-          {{ comment.comment | linebreaks }}
-        </div>
-      {% empty %}
-          <p>No comments here yet :(</p>
-        {% endfor %}
-
     </div>
   </div>
 </div>
