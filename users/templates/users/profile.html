@@ -35,7 +35,7 @@
     <div class="media-body">
       <h2 class="account-heading">Resume & Work Samples</h2>
       <div>
-        <a class="ml" href="{% url 'resume' username=user.username %}">Resume</a>
+        <a class="ml" href="{{ user.profile.resume.url }}">Resume</a>
         <a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>
       </div>
     </div>
@@ -48,14 +48,8 @@
       {% if can_comment %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
       {% if comments %}
         {% for comment in comments %}
-        <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
-        <div class="media-body">
-          <h5>{{ comment.author }}    {{ comment.employer }}</h5>
-            <div class="alert alert-{{ message.tags }}">
-              {{ comment.content }}
-            </div>
-          {% endfor %}
-        </div>
+          <h5>{{ comment.author.username }}</h5> <h8>{{ comment.title }}</h8>
+        {% endfor %}
       {% endif %}
     </div>
   </div>
