@@ -1,8 +1,11 @@
+{% extends "workhuntr/base.html" %}
+{% block content %}
 <p>Are you sure you want to delete listing?"{{item}}?</p>
 
-<a href="{%url '/current_listings/' %}">No</a>
+<a href="{% url '/current_listings/' %}">No</a>
 
-<form method="post" action="/current_listings/">
+<form method="POST">
     {% csrf_token %}
     <input type="submit" name="Yes">
 </form>
+{% endblock %}
