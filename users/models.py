@@ -9,8 +9,8 @@ class Profile(models.Model):
   title = models.CharField(default='Other', max_length=5)
   gender = models.CharField(default='Prefer Not to Say', max_length=20)
   account_type = models.CharField(default='Huntee', max_length=6)
-  profile_picture = models.ImageField(default='profile_pics/default.jpg', upload_to='profile_pics')
-  resume = models.FileField(default='resumes/default.pdf', upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)')
+  profile_picture = models.ImageField(default='default/default.jpg', upload_to='profile_pics')
+  resume = models.FileField(default='default/default.pdf', upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)')
   website = models.URLField(default='', max_length=200, blank=True)
   privacy = models.CharField(default='Public', max_length=10)
 
