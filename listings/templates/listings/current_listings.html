@@ -1,4 +1,5 @@
 {% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
   <table>
     <tr>
@@ -8,14 +9,21 @@
     </tr>
   </table>
   <h2>Current Listings</h2>
+  <table>
+    <tr>
+      <th style="padding-right: 15px">Title</th>
+      <th style="padding-right: 15px">Description</th>
+      <th>Owner</th>
+    </tr>
+    {% for i in listings %}
+    <tr>
+    <td style="padding-right: 15px">{{i.title}}</td>
+    <td style="padding-right: 15px">{{i.description}}</td>
+    <td style="padding-right: 15px">{{i.owner}}</td>
+    <td style="padding-right: 15px"><a href ="{% url 'modify_listings' pk=i.id %}"> Modify </a></td>
+    <td><a href ="{% url 'delete_listing' i.id %}"> Delete </a></td>
+    </tr>
 
-{% for listing in listings %}
-    {div}
-
-  <a href ="{% url '/modify_listings/' listing.id %}"> Modify </a>
-  <a href ="{% url '/delete_listing/' listing.id %}"> Delete </a>
-
-  <p>{{listing}}</p>
-    {/div}
-{% endfor %}
+  {% endfor %}
+  </table>
 {% endblock %}
