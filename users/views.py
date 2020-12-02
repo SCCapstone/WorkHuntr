@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http.response import FileResponse, Http404
 from django.shortcuts import render, redirect
-from .forms import UserCreateAccountForm, UserUpdateForm, ProfileUpdateForm, AddCommentForm
-from .models import Comment
+from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm
+from .models import Comment, Profile
 
 def create_account(request):
   if request.method == 'POST':
@@ -27,6 +27,8 @@ def create_account(request):
 def profile(request, username):
   if request.method == 'POST':
     search_user = request.POST.get('search', None)
+    if search_user == '':
+      return redirect('profile', username)
     return redirect('profile', search_user)
   user = User.objects.get(username=username)
   viewable = True
@@ -37,7 +39,7 @@ def profile(request, username):
     if user.profile.privacy == 'Private':
       viewable = False
     can_comment = True
-  comments = Comment.objects.filter(user=user)
+  comments = Comment.objects.filter(profile=user.profile)
   return render(request, 'users/profile.html', {'user':user, 'viewable':viewable, 'editable':editable, 'can_comment':can_comment, 'comments':comments})
 
 @login_required
@@ -60,30 +62,18 @@ def edit_profile(request, username):
   return render(request, 'users/edit_profile.html', context)
 
 @login_required
-def resume(request, username):
-  resume_path = 'media/resumes/' + request.user.username + '_resume.pdf'
-  try:
-    return FileResponse(open(resume_path, 'rb'), content_type='application/pdf')
-  except:
-    raise Http404()
-
-@login_required
 def add_comment(request, username):
   if request.method == 'POST':
     form = AddCommentForm(request.POST)
     if form.is_valid():
-      comment = form.save()
-      comment.refresh_from_db()
-      comment.employer = form.cleaned_data.get('employer')
-      comment.rating = form.cleaned_data.get('rating')
-      comment.content = form.cleaned_data.get('content')
+      comment = form.save(commit=False)
+      comment.title = form.cleaned_data.get('title')
+      profile_user = User.objects.get(username=username)
+      comment.profile = profile_user.profile
       comment.author = request.user
-      comment.user = User.objects.get(username=username)
-      messages.success(request, f'Your comment have been added!')
+      comment.save()
+      messages.success(request, f'Your comment has been added!')
       return redirect('profile', username)
   else:
     form = AddCommentForm()
-  context = {
-    'comment_form': form
-  }
-  return render(request, 'users/comment.html', context)
+  return render(request, 'users/comment.html', {'comment_form': form})
