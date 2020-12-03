@@ -41,7 +41,7 @@ The style guide that was used is the [Google Python Style Guide](https://google.
 
 # Deployment
 
-Deployment is not currently available.
+WorkHuntr is currently deployed to www.workhuntr.com
 
 # Testing
 
