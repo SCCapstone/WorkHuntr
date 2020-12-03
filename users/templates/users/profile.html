@@ -9,60 +9,60 @@
 {% if request.user == user or user.profile.privacy == 'Public' %}
 <div class="search"> 
   <form method="POST">
-    {% csrf_token %}
-    <input type="text" placeholder="Search Users" name="search"> 
-    <button class="btn btn-outline-info" type="submit">Submit</button> 
+  {% csrf_token %}
+      <input type="text" placeholder="Search Users" name="search"> 
+      <button class="btn btn-outline-info" type="submit">Submit</button> 
   </form> 
 </div>
 <br>
 <div class="content-section">
-  <div class="media">
-    <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
-    <div class="media-body">
-      <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
-      <p class="text-secondary">{{ user.profile.account_type }}</p>
-      {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'edit_profile' username=user.username %}">Edit Profile</a>{% endif %}
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+            <p class="text-secondary">{{ user.profile.account_type }}</p>
+            {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'edit_profile' username=user.username %}">Edit Profile</a>{% endif %}
+        </div>
     </div>
-  </div>
 </div>
 <div class="content-section">
-  <div class="media">
-    <div class="media-body">
-      <h2 class="account-heading">About</h2>
-      <p class="text-secondary">Username:   {{ user.username }}</h2>
-      <p class="text-secondary">Email:    {{ user.email }}</p>
-      <p class="text-secondary">Gender:   {{ user.profile.gender }}</p>
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">About</h2>
+            <p class="text-secondary">Username:   {{ user.username }}</h2>
+            <p class="text-secondary">Email:    {{ user.email }}</p>
+            <p class="text-secondary">Gender:   {{ user.profile.gender }}</p>
+        </div>
     </div>
-  </div>
 </div>
 <div class="content-section">
-  <div class="media">
-    <div class="media-body">
-      <h2 class="account-heading">Resume & Work Samples</h2>
-      <div>
-        <a class="ml" href="{{ user.profile.resume.url }}">Resume</a>
-        <a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>
-      </div>
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Resume & Work Samples</h2>
+            <div>
+                <a class="ml" href="{{ user.profile.resume.url }}">Resume</a>
+                <a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="content-section">
-  <div class="media">
-    <div class="media-body">
-      <h2 class="account-heading">Comments & Rating</h2>
-      {% if request.user != user and request.user.profile.account_type == 'Hunter' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
-      {% if comments %}
-        {% for comment in comments %}
-        <hr class="rounded">
-          <h5><img class="circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
-          {{ comment.author.username }}  |  Company:  {{comment.company}}</h5>
-          <h6>Rating:  {{comment.rating}}</h6>
-          <h8>{{ comment.comment }}</h8>
-        <hr class="rounded">
-        {% endfor %}
-      {% endif %}
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Comments & Rating</h2>
+            {% if request.user != user and request.user.profile.account_type == 'Hunter' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
+            {% if comments %}
+            {% for comment in comments %}
+            <hr class="rounded">
+            <h5><img class="circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
+            {{ comment.author.username }}  |  Company:  {{comment.company}}</h5>
+            <h6>Rating:  {{comment.rating}}</h6>
+            <h8>{{ comment.comment }}</h8>
+            <hr class="rounded">
+            {% endfor %}
+            {% endif %}
+        </div>
     </div>
-  </div>
 </div>
 {% else %}
 <h2>This user's profile is private.</h2>
