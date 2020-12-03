@@ -27,7 +27,12 @@ def create_account(request):
 def profile(request, username):
     if request.method == 'POST':
         search_user = request.POST.get('search', None)
-        if search_user == '':
+        searched = None
+        try:
+          searched = User.objects.get(username=search_user)
+        except:
+          print('Not Found')
+        if search_user == '' or searched == None:
             return redirect('profile', username)
         return redirect('profile', search_user)
     user = User.objects.get(username=username)

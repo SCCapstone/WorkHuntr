@@ -43,7 +43,10 @@ def modify_listings(request, pk):
             listing = form.save(commit=False)
             listing.refresh_from_db()
             listing.title = form.cleaned_data.get('title')
-            listing.price = form.cleaned_data.get('price')
+            if listing.price < 0: 
+                listing.price = 0
+            else: 
+                listing.price = form.cleaned_data.get('price')
             listing.description = form.cleaned_data.get('description')
             listing.tag1 = form.cleaned_data.get('tag1')
             listing.tag2 = form.cleaned_data.get('tag2')

@@ -1,12 +1,7 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<table>
-    <tr>
-        <td><button onclick="location.href='/current_listings/'">Back</button></td>
-        <td><button onclick="location.href='/'">Log Out</button></td>
-    </tr>
-</table>
+
 <h2>Create Listing</h2>
 <form method="POST">
     {% csrf_token %}

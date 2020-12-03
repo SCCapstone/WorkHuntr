@@ -4,7 +4,6 @@
 <table>
     <tr>
     {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'">Create Listing</button></td>{% endif %}
-        <td><button onclick="location.href='/dashboard'">Back</button></td>
     </tr>
 </table>
 <h2>All Current Listings</h2>
@@ -45,14 +44,16 @@
             <th style="padding-right: 15px">Title</th>
             <th style="padding-right: 15px">Description</th>
             <th style="padding-right: 15px">Owner</th>
+            <th style="padding-right: 15px">Huntr</th>
             <th>Status</th>
         </tr>
         {% for i in listings %}
         <tr>
-        {% if i.status == 'Claimed' and i.hunter == request.user %}
+        {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user %}
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
             {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}"> Complete </a></td>{% endif %}
         {% endif %}
@@ -67,11 +68,12 @@
             <th style="padding-right: 15px">Title</th>
             <th style="padding-right: 15px">Description</th>
             <th style="padding-right: 15px">Owner</th>
+            
             <th>Status</th>
         </tr>
         {% for i in listings %}
         <tr>
-        {% if i.status == 'Completed' %}
+        {% if i.status == 'Completed' and i.huntee == request.user or i.hunter == request.user %}
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
