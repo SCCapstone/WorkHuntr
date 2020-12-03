@@ -32,7 +32,7 @@ def profile(request, username):
         return redirect('profile', search_user)
     user = User.objects.get(username=username)
     comments = Comment.objects.filter(profile=user.profile)
-    return render(request, 'users/profile.html', {'user':user})
+    return render(request, 'users/profile.html', {'user':user, 'comments':comments})
 
 @login_required
 def edit_profile(request, username):
