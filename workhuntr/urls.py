@@ -37,7 +37,8 @@ urlpatterns = [
   path('modify_listings/<str:pk>/', listing_views.modify_listings, name='modify_listings'),
   path('delete_listing/<str:pk>/', listing_views.delete_listing, name='delete_listing'),
   path('add_comment/<username>/', user_views.add_comment, name="add_comment"),
-  path('claim_listing/<str:pk>', listing_views.claim_listing, name="claim_listing")
+  path('claim_listing/<str:pk>', listing_views.claim_listing, name="claim_listing"),
+  path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing")
 
 ]
 

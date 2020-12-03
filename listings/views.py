@@ -80,8 +80,14 @@ def delete_listing(request,pk):
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
-    print(pk)
     listing.status = 'Claimed'
     listing.hunter = request.user
+    listing.save()
+    return redirect('/current_listings/')
+
+@login_required
+def complete_listing(request, pk):
+    listing = Listings.objects.get(id=pk)
+    listing.status = 'Completed'
     listing.save()
     return redirect('/current_listings/')
