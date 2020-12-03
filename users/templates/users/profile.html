@@ -50,7 +50,7 @@
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Comments & Rating</h2>
-            {% if request.user != user and request.user.profile.account_type == 'Hunter' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
+            {% if request.user != user and request.user.profile.account_type == 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}">Add Comment</a>{% endif %}
             {% if comments %}
             {% for comment in comments %}
             <hr class="rounded">
