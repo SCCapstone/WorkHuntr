@@ -36,8 +36,10 @@ class ProfileUpdateForm(forms.ModelForm):
     fields = ['profile_picture', 'resume', 'website', 'privacy']
 
 class AddCommentForm(forms.ModelForm):
-  title = forms.CharField(max_length=150, min_length=1, strip=True)
+  rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
+  company = forms.CharField(max_length=100, min_length=1, strip=True)
+  comment = forms.CharField(max_length=500, min_length=1, strip=True)
 
   class Meta:
     model = Comment
-    fields = ['title']
+    fields = ['rating', 'company', 'comment']

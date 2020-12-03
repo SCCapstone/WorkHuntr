@@ -34,7 +34,7 @@ def profile(request, username):
   viewable = True
   editable = True
   can_comment = False
-  if request.user != user:
+  if request.user != user and request.user.profile.account_type == 'Huntee':
     editable = False
     if user.profile.privacy == 'Private':
       viewable = False
@@ -67,7 +67,9 @@ def add_comment(request, username):
     form = AddCommentForm(request.POST)
     if form.is_valid():
       comment = form.save(commit=False)
-      comment.title = form.cleaned_data.get('title')
+      comment.comment = form.cleaned_data.get('comment')
+      comment.rating = form.cleaned_data.get('rating')
+      comment.company = form.cleaned_data.get('company')
       profile_user = User.objects.get(username=username)
       comment.profile = profile_user.profile
       comment.author = request.user

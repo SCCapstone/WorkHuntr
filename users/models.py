@@ -28,7 +28,9 @@ class Profile(models.Model):
 class Comment(models.Model):
   profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
   author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-  title = models.CharField(default='', max_length=100)
+  comment = models.CharField(default='', max_length=500)
+  rating = models.CharField(default='1', max_length=1)
+  company = models.CharField(default='', max_length=150)
 
   def __str__(self):
-    return self.title
+    return self.comment, self.rating, self.company
