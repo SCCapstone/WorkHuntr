@@ -18,8 +18,12 @@ def create_listings(request):
             listing.refresh_from_db()
             listing.title = form.cleaned_data.get('title')
             listing.description = form.cleaned_data.get('description')
-            listing.data = form.cleaned_data.get('date')
+            listing.price = form.cleaned_data.get('price')
+            listing.tag1 = form.cleaned_data.get('tag1')
+            listing.tag2 = form.cleaned_data.get('tag2')
+            listing.tag3 = form.cleaned_data.get('tag3')
             listing.status = form.cleaned_data.get('status')
+            listing.huntee = request.user
             listing.save()
             messages.success(request, f'The Listing has been created!')
             return redirect('/current_listings/')
@@ -38,28 +42,46 @@ def current_listings(request):
 @login_required
 def modify_listings(request, pk):
     listing = Listings.objects.get(id=pk)
-    form = ModifyListingForm(instance=listing)
 
     if request.method == 'POST':
-        if form.is_valid():
-            listing = form.save()
+        form = ModifyListingForm(request.POST, instance=listing)
+        if form.is_valid(): 
+            listing = form.save(commit=False)
             listing.refresh_from_db()
             listing.title = form.cleaned_data.get('title')
+            listing.price = form.cleaned_data.get('price')
+            listing.description = form.cleaned_data.get('description')
+            listing.tag1 = form.cleaned_data.get('tag1')
+            listing.tag2 = form.cleaned_data.get('tag2')
+            listing.tag3 = form.cleaned_data.get('tag3')
             listing.status = form.cleaned_data.get('status')
             listing.save()
             messages.success(request, f'Your listing has been updated!')
         return redirect('/current_listings/')
-
-    context = {'form':form}
+    else:
+        form = ModifyListingForm(instance=listing)
+    modifiable = False
+    if request.user == listing.huntee:
+        modifiable = True
+    context = {'listing':listing, 'form':form, 'modifiable': modifiable}
     return render(request, 'listings/modify_listings.html', context)
 
 @login_required
 def delete_listing(request,pk):
     item = Listings.objects.get(id=pk)
 
-    if request.method == 'post':
+    if request.method == "POST":
         item.delete()
         return redirect('/current_listings/')
 
     context = {'item':item}
-    return render(request, 'listings/delete_listing.html', context)
+    return render(request, 'listings/delete_listing.html', {'item':item})
+
+@login_required
+def claim_listing(request, pk):
+    listing = Listings.objects.get(id=pk)
+    print(pk)
+    listing.status = 'Claimed'
+    listing.hunter = request.user
+    listing.save()
+    return redirect('/current_listings/')

@@ -11,14 +11,3 @@ def home(request):
 def dashboard(request):
   return render(request, 'workhuntr/dashboard.html')
 
-#@login_required
-#def create_listing(request):
-#  return render(request, 'workhuntr/create_listing.html')
-
-#@login_required
-#def current_listings(request):
-#  return render(request, 'listings/current_listings.html')
-
-#@login_required
-#def modify_listings(request):
-#  return render(request, 'workhuntr/modify_listings.html')

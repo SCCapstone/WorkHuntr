@@ -7,10 +7,10 @@ class ListingsForm(ModelForm):
 
     class Meta:
         model = Listings
-        fields = '__all__'
+        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3', 'status']
 
 class ModifyListingForm(forms.ModelForm):
     
     class Meta: 
         model = Listings
-        fields = ['title', 'status']
+        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3', 'status']

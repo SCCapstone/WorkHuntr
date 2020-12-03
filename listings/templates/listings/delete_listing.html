@@ -2,9 +2,9 @@
 {% block content %}
 <p>Are you sure you want to delete listing?"{{item}}?</p>
 
-<a href="{% url '/current_listings/' %}">No</a>
+<a href="{% url 'current_listings' %}">No</a>
 
-<form method="POST">
+<form action="{% url 'delete_listing' item.id %}" method="POST">
     {% csrf_token %}
     <input type="submit" name="Yes">
 </form>
