@@ -36,8 +36,8 @@ def create_listings(request):
 @login_required
 def current_listings(request):
     listings = Listings.objects.all()
-    context = {'listings': listings}
-    return render(request, 'listings/current_listings.html', {'listings': listings})
+    context = {'listings': listings, 'user': request.user}
+    return render(request, 'listings/current_listings.html', context)
 
 @login_required
 def modify_listings(request, pk):
