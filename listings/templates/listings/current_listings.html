@@ -1,83 +1,88 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <table>
+<table>
     <tr>
-      {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'">Create Listing</button></td>{% endif %}
-      <td><button onclick="location.href='/dashboard'">Back</button></td>
+    {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'">Create Listing</button></td>{% endif %}
+        <td><button onclick="location.href='/dashboard'">Back</button></td>
     </tr>
-  </table>
-  <h2>All Current Listings</h2>
-  <table>
-    <tr>
-      <th style="padding-right: 15px">Title</th>
-      <th style="padding-right: 15px">Description</th>
-      <th style="padding-right: 15px">Price</th>
-      <th style="padding-right: 15px">Owner</th>
-      <th style="padding-right: 15px">Tags</th>
-      <th style="padding-right: 15px"></th>
-      <th style="padding-right: 15px"></th>
-      <th>Status</th>
-    </tr>
-    {% for i in listings %}
-    <tr>
-    {% if i.status != 'Completed' and i.status != 'Claimed' %}
-      <td style="padding-right: 15px">{{i.title}}</td>
-      <td style="padding-right: 15px">{{i.description}}</td>
-      <td style="padding-right: 15px">{{i.price}}</td>
-      <td style="padding-right: 15px">{{i.huntee}}</td>
-      <td style="padding-right: 15px">{{i.tag1}}</td>
-      <td style="padding-right: 15px">{{i.tag2}}</td>
-      <td style="padding-right: 15px">{{i.tag3}}</td>
-      <td style="padding-right: 15px">{{i.status}}</td>
-      {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}"> Modify </a></td>{% endif %}
-      {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}"> Delete </a></td>{% endif %}
-      {% if i.huntee != request.user %}<td><a href="{% url 'claim_listing' i.id %}" method="POST">Claim</a></td>{% endif %}
-    </tr>
-    {% endif %}
-  {% endfor %}
-  </table>
-  <hr>
-  <hr>
-  <table>
-    <h2>My Hunted Listings</h2>
-    <tr>
-      <th style="padding-right: 15px">Title</th>
-      <th style="padding-right: 15px">Description</th>
-      <th style="padding-right: 15px">Owner</th>
-      <th>Status</th>
-    </tr>
-    {% for i in listings %}
-    <tr>
-      {% if i.status == 'Claimed' and i.hunter == request.user %}
-      <td style="padding-right: 15px">{{i.title}}</td>
-      <td style="padding-right: 15px">{{i.description}}</td>
-      <td style="padding-right: 15px">{{i.huntee}}</td>
-      <td style="padding-right: 15px">{{i.status}}</td>
-      {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}"> Complete </a></td>{% endif %}
-    </tr>
-    {% endif %}
-    {% endfor %}
-  </table>
-  <hr>
-  <hr>
-  <table>
-    <h2>My Completed Listings</h2>
-    <tr>
-      <th style="padding-right: 15px">Title</th>
-      <th style="padding-right: 15px">Description</th>
-      <th style="padding-right: 15px">Owner</th>
-      <th>Status</th>
-    </tr>
-    {% for i in listings %}
-    <tr>
-      {% if i.status == 'Completed' %}
-      <td style="padding-right: 15px">{{i.title}}</td>
-      <td style="padding-right: 15px">{{i.description}}</td>
-      <td style="padding-right: 15px">{{i.huntee}}</td>
-      <td style="padding-right: 15px">{{i.status}}</td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-  </table>
+</table>
+
+<h2>All Current Listings</h2>
+    <table>
+        <tr>
+            <th style="padding-right: 15px">Title</th>
+            <th style="padding-right: 15px">Description</th>
+            <th style="padding-right: 15px">Price</th>
+            <th style="padding-right: 15px">Owner</th>
+            <th style="padding-right: 15px">Tags</th>
+            <th style="padding-right: 15px"></th>
+            <th style="padding-right: 15px"></th>
+            <th>Status</th>
+        </tr>
+        {% for i in listings %}
+        <tr>
+        {% if i.status != 'Completed' and i.status != 'Claimed' %}
+            <td style="padding-right: 15px">{{i.title}}</td>
+            <td style="padding-right: 15px">{{i.description}}</td>
+            <td style="padding-right: 15px">{{i.price}}</td>
+            <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.tag1}}</td>
+            <td style="padding-right: 15px">{{i.tag2}}</td>
+            <td style="padding-right: 15px">{{i.tag3}}</td>
+            <td style="padding-right: 15px">{{i.status}}</td>
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}"> Modify </a></td>{% endif %}
+            {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}"> Delete </a></td>{% endif %}
+            {% if i.huntee != request.user %}<td><a href="{% url 'claim_listing' i.id %}" method="POST">Claim</a></td>{% endif %}
+        {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+  
+    <hr>
+    <hr>
+
+    <table>
+        <h2>My Hunted Listings</h2>
+        <tr>
+            <th style="padding-right: 15px">Title</th>
+            <th style="padding-right: 15px">Description</th>
+            <th style="padding-right: 15px">Owner</th>
+            <th>Status</th>
+        </tr>
+        {% for i in listings %}
+        <tr>
+        {% if i.status == 'Claimed' and i.hunter == request.user %}
+            <td style="padding-right: 15px">{{i.title}}</td>
+            <td style="padding-right: 15px">{{i.description}}</td>
+            <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.status}}</td>
+            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}"> Complete </a></td>{% endif %}
+        {% endif %}
+        {% endfor %}
+        </tr>
+    </table>
+
+    <hr>
+    <hr>
+
+    <table>
+        <h2>My Completed Listings</h2>
+        <tr>
+            <th style="padding-right: 15px">Title</th>
+            <th style="padding-right: 15px">Description</th>
+            <th style="padding-right: 15px">Owner</th>
+            <th>Status</th>
+        </tr>
+        {% for i in listings %}
+        <tr>
+        {% if i.status == 'Completed' %}
+            <td style="padding-right: 15px">{{i.title}}</td>
+            <td style="padding-right: 15px">{{i.description}}</td>
+            <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.status}}</td>
+        {% endif %}
+        {% endfor %}
+        </tr>
+</table>
 {% endblock %}
