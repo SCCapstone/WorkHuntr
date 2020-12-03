@@ -1,7 +1,6 @@
-import re
-
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
+import re
 
 class ExtraValidators(object):
     def validate(self, password, user=None):
