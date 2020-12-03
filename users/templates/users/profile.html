@@ -40,8 +40,8 @@
         <div class="media-body">
             <h2 class="account-heading">Resume & Work Samples</h2>
             <div>
-                <a class="ml" href="{{ user.profile.resume.url }}">Resume</a>
-                <a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>
+                {% if user.profile.resume.url != 'default/default.pdf' %}<a class="ml" href="{{ user.profile.resume.url }}">Resume</a>{% endif %}
+                {% if user.profile.website != '' %}<a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>{% endif  %}
             </div>
         </div>
     </div>

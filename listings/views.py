@@ -10,15 +10,16 @@ def create_listings(request):
     form = ListingsForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
-            listing = form.save()
-            listing.refresh_from_db()
+            listing = form.save(commit=False)
             listing.title = form.cleaned_data.get('title')
             listing.description = form.cleaned_data.get('description')
-            listing.price = form.cleaned_data.get('price')
+            if listing.price < 0: 
+                listing.price = 0
+            else: 
+                listing.price = form.cleaned_data.get('price')
             listing.tag1 = form.cleaned_data.get('tag1')
             listing.tag2 = form.cleaned_data.get('tag2')
             listing.tag3 = form.cleaned_data.get('tag3')
-            listing.status = form.cleaned_data.get('status')
             listing.huntee = request.user
             listing.save()
             messages.success(request, f'The Listing has been created!')
