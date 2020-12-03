@@ -8,11 +8,11 @@
 {% block content %}
 {% if request.user == user or user.profile.privacy == 'Public' %}
 <div class="search"> 
-  <form method="POST">
-  {% csrf_token %}
-      <input type="text" placeholder="Search Users" name="search"> 
-      <button class="btn btn-outline-info" type="submit">Submit</button> 
-  </form> 
+    <form method="POST">
+    {% csrf_token %}
+        <input type="text" placeholder="Search Users" name="search"> 
+        <button class="btn btn-outline-info" type="submit">Submit</button> 
+    </form> 
 </div>
 <br>
 <div class="content-section">
