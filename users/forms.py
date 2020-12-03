@@ -10,36 +10,36 @@ PRIVACY = (("Public", "Public"), ("Private", "Private"))
 RATINGS = (("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"))
 
 class UserCreateAccountForm(UserCreationForm):
-  title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
-  first_name = forms.CharField(max_length=20, min_length=1, strip=True)
-  last_name = forms.CharField(max_length=20, min_length=1, strip=True)
-  gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
-  account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
-  email = forms.EmailField(required=True)
+    title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
+    first_name = forms.CharField(max_length=20, min_length=1, strip=True)
+    last_name = forms.CharField(max_length=20, min_length=1, strip=True)
+    gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
+    account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
+    email = forms.EmailField(required=True)
 
-  class Meta:
-    model = User
-    fields = ['title', 'first_name', 'last_name', 'gender', 'account_type', 'username', 'email', 'password1', 'password2']
+    class Meta:
+        model = User
+        fields = ['title', 'first_name', 'last_name', 'gender', 'account_type', 'username', 'email', 'password1', 'password2']
 
 class UserUpdateForm(forms.ModelForm):
-  email = forms.EmailField(required=True)
-  
-  class Meta:
-    model = User
-    fields = ['username', 'email']
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
-  privacy = forms.ChoiceField(widget=forms.Select(), choices=PRIVACY)
+    privacy = forms.ChoiceField(widget=forms.Select(), choices=PRIVACY)
 
-  class Meta:
-    model = Profile
-    fields = ['profile_picture', 'resume', 'website', 'privacy']
+    class Meta:
+        model = Profile
+        fields = ['profile_picture', 'resume', 'website', 'privacy']
 
 class AddCommentForm(forms.ModelForm):
-  rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
-  company = forms.CharField(max_length=100, min_length=1, strip=True)
-  comment = forms.CharField(max_length=500, min_length=1, strip=True)
+    rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
+    company = forms.CharField(max_length=100, min_length=1, strip=True)
+    comment = forms.CharField(max_length=500, min_length=1, strip=True)
 
-  class Meta:
-    model = Comment
-    fields = ['rating', 'company', 'comment']
+    class Meta:
+        model = Comment
+        fields = ['rating', 'company', 'comment']
