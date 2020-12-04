@@ -73,7 +73,7 @@
         </tr>
         {% for i in listings %}
         <tr>
-        {% if i.status == 'Completed' and i.huntee == request.user or i.hunter == request.user %}
+        {% if i.status == 'Completed' and i.huntee == request.user or i.status == 'Completed' and i.hunter == request.user %}
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
