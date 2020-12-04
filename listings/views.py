@@ -52,7 +52,6 @@ def modify_listings(request, pk):
             listing.tag1 = form.cleaned_data.get('tag1')
             listing.tag2 = form.cleaned_data.get('tag2')
             listing.tag3 = form.cleaned_data.get('tag3')
-            listing.status = form.cleaned_data.get('status')
             listing.save()
             messages.success(request, f'Your listing has been updated!')
         return redirect('/current_listings/')
