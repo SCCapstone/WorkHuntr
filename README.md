@@ -53,6 +53,12 @@ Currently, there are only two tests supported. Unit testing such as the one for 
 For unit tests, nothing more is currently needed outside of built in Django modules. For UI testing, selenium must be installed using pip (refer to prerequisites and setup above) and ChromeDriver must also be installed. ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 88.0.4324.104 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 88.0.4324.96.
 
 ## Running Tests
+Before running any tests, create a user profile on your local copy of the server with the following information: Title, First name, Last name, Gender, Account type, and Email can be anything. the USERNAME must be `testUser` and the PASSWORD must be `Workhuntr1`
+
+For example:
+Title=Mr. First name=test Last name=test Gender=Male Account type=Huntee Username=testUser email=test@testing.com Password=Workhuntr1 Password confirmation=Workhuntr1
+
+This is to ensure that when the UI test runs, there is actually a user for it to look for and test that it can log in successfully.
 
 To run Unit Tests, run `python3 manage.py test` in the `workhuntr/` directory. This command will run all test/test files that begin with `test`. 
 To run UI Tests, run `python3 #.py` in the `UITesting/` directory, where # is the name of the test file you wish to run. For example, run `python3 test_login.py` in the `UITesting/` directory to run the test for successful and unsuccessful logins.
