@@ -2,3 +2,4 @@ Django
 requests
 pillow
 django-crispy-forms
+selenium
