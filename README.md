@@ -9,6 +9,7 @@ In order to build this project you will first have to install:
 * [Pip3](https://pip.pypa.io/en/stable/installing/)
 * [Django](https://www.djangoproject.com/download/)
 * [Requests](https://pypi.org/project/requests/)
+* [Selenium](https://pypi.org/project/selenium/)
 
 See below for installation steps.
 
@@ -45,15 +46,16 @@ WorkHuntr is currently deployed to www.workhuntr.com
 
 # Testing
 
-Testing is not currently available.
+Currently, there are only two tests supported. Unit testing such as the one for testing listing database functionality uses Django’s built in unittest module. The UI tests utilize selenium and ChromeDriver to automate tests for login page functionality.
 
 ## Testing Technology
 
-Testing is not currently available.
+For unit tests, nothing more is currently needed outside of built in Django modules. For UI testing, selenium must be installed using pip (refer to prerequisites and setup above) and ChromeDriver must also be installed. ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 88.0.4324.104 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 88.0.4324.96.
 
 ## Running Tests
 
-Testing is not currently available.
+To run Unit Tests, run `python3 manage.py test` in the `workhuntr/` directory. This command will run all test/test files that begin with `test`. 
+To run UI Tests, run `python3 #.py` in the `UITesting/` directory, where # is the name of the test file you wish to run. For example, run `python3 test_login.py` in the `UITesting/` directory to run the test for successful and unsuccessful logins.
 
 # Authors
 
