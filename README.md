@@ -60,6 +60,8 @@ Title=Mr. First name=test Last name=test Gender=Male Account type=Huntee Usernam
 
 This is to ensure that when the UI test runs, there is actually a user for it to look for and test that it can log in successfully.
 
+Creating this testUser only needs to be done once to your local copy.
+
 To run Unit Tests, run `python3 manage.py test` in the `workhuntr/` directory. This command will run all test/test files that begin with `test`. 
 To run UI Tests, run `python3 #.py` in the `UITesting/` directory, where # is the name of the test file you wish to run. For example, run `python3 test_login.py` in the `UITesting/` directory to run the test for successful and unsuccessful logins.
 
