@@ -52,7 +52,7 @@ Currently, there are only two tests supported. Unit testing such as the one for 
 
 For unit tests, nothing more is currently needed outside of built in Django modules. For UI testing, selenium must be installed using pip (refer to prerequisites and setup above) and ChromeDriver must also be downloaded and placed in the `UITesting/` directory. ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 88.0.4324.104 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 88.0.4324.96.
 
-Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/home)
+Download Chromedriver [here](https://sites.google.com/a/chromium.org/chromedriver/home).
 
 ## Running Tests
 Before running any tests, create a user profile on your local copy of the server with the following information: Title, First name, Last name, Gender, Account type, and Email can be anything. the USERNAME must be `testUser` and the PASSWORD must be `Workhuntr1`
