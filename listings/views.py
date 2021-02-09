@@ -13,9 +13,9 @@ def create_listings(request):
             listing = form.save(commit=False)
             listing.title = form.cleaned_data.get('title')
             listing.description = form.cleaned_data.get('description')
-            if listing.price < 0: 
+            if listing.price < 0:
                 listing.price = 0
-            else: 
+            else:
                 listing.price = form.cleaned_data.get('price')
             listing.tag1 = form.cleaned_data.get('tag1')
             listing.tag2 = form.cleaned_data.get('tag2')

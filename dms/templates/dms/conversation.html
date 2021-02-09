@@ -1,0 +1,26 @@
+<!-- 
+    Code Source: https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
+    Code Author: Corey Schafer
+-->
+
+{% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Messages</h2>
+            {% if conversation %}
+            {% for m in conversation %}
+            <p class="text-secondary">{{ m.sender }}:   {{ m.content }}     {{ m.sent_at }}</h2>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <form method="POST">
+        {% csrf_token %}
+            <input type="text" placeholder="Message" name="textarea">
+            <button class="btn btn-outline-info" type="submit">Send</button>
+        </form> 
+    </div>
+</div>
+{% endblock content %}

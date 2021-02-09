@@ -55,7 +55,7 @@
             {% for comment in comments %}
             <hr class="rounded">
             <h5><img class="circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
-            {{ comment.author.username }}  |  Company:  {{comment.company}}</h5>
+            {{ comment.author.username }}  |  Company:  {{ comment.company }}</h5>
             <h6>
             {% if comment.rating == '1'%}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

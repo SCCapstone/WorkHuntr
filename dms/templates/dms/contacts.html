@@ -1,0 +1,26 @@
+<!-- 
+    Code Source: https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
+    Code Author: Corey Schafer
+-->
+
+{% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Contacts</h2>
+            {% if contacts %}
+            {% for contact in contacts %}
+            <a class="ml-2" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <form method="POST">
+        {% csrf_token %}
+            <input type="text" placeholder="Search Users" name="search">
+            <button class="btn btn-outline-info" type="submit">Submit</button>
+        </form> 
+    </div>
+</div>
+{% endblock content %}

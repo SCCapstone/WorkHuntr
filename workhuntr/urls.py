@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
+from dms import views as dms_views
 from listings import views as listing_views
 from users import views as user_views
 from workhuntr import views as workhuntr_views
@@ -38,6 +39,8 @@ urlpatterns = [
     path('delete_listing/<str:pk>/', listing_views.delete_listing, name='delete_listing'),
     path('claim_listing/<str:pk>', listing_views.claim_listing, name="claim_listing"),
     path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing"),
+    path('contacts/', dms_views.contacts, name='contacts'),
+    path('contacts/conversation/<username>', dms_views.conversation, name='conversation')
 ]
 
 if settings.DEBUG:

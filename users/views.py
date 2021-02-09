@@ -29,9 +29,9 @@ def profile(request, username):
         search_user = request.POST.get('search', None)
         searched = None
         try:
-          searched = User.objects.get(username=search_user)
+            searched = User.objects.get(username=search_user)
         except:
-          print('Not Found')
+            print('User Not Found')
         if search_user == '' or searched == None:
             return redirect('profile', username)
         return redirect('profile', search_user)
