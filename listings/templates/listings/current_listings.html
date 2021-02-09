@@ -78,6 +78,7 @@
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}"> Issue Payment </a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>
