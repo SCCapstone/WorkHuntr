@@ -11,3 +11,7 @@ def home(request):
 def dashboard(request):
     return render(request, 'workhuntr/dashboard.html')
 
+
+def faq(request):
+    return render(request, 'workhuntr/faq.html')
+

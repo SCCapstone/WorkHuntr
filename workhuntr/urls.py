@@ -40,7 +40,8 @@ urlpatterns = [
     path('claim_listing/<str:pk>', listing_views.claim_listing, name="claim_listing"),
     path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing"),
     path('contacts/', dms_views.contacts, name='contacts'),
-    path('contacts/conversation/<username>', dms_views.conversation, name='conversation')
+    path('contacts/conversation/<username>', dms_views.conversation, name='conversation'),
+    path('faq/', workhuntr_views.faq, name='faq')
 ]
 
 if settings.DEBUG:

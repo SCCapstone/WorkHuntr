@@ -1,0 +1,76 @@
+<!--
+  Code Source: https://www.solodev.com/blog/web-design/how-to-use-bootstrap-accordions-to-organize-faq-pages.stml
+  Code Author: Scott Madara
+-->
+
+{% extends "workhuntr/base.html" %}
+{% block content %}
+<section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
+  <div class="container">
+
+	  <h2>Frequently Asked Questions </h2>
+	  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">
+				What is Workhuntr?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
+			<div class="panel-body px-3 mb-4">
+			  <p>WorkHuntr is a website that aids users in their job search or their search for help on projects. Each user is divided into one of two categories: a huntee, someone who is looking for assistance on a job/project, or a hunter, someone who is looking to be hired for a job/project.</p>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+				How easy is it to start using Workhuntr?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+			<div class="panel-body px-3 mb-4">
+			  <p>Workhuntr is as easy to use as any other common website. Simply create an account and begin connecting to other users!</p>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+				Is Workhuntr safe and secure?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+			<div class="panel-body px-3 mb-4">
+				<p>We strive to ensure that all users feel as safe as possible when using our website. We allow you to choose what your profile displays and whether your profile is public, we always encrypt your private information, and we always ensure that we only use what is absolutely necessary for getting you connected to potential employers or employees is only the start of the precautions we are taking to ensure safety and security.</p>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading p-3 mb-3" role="tab" id="heading3">
+			<h3 class="panel-title">
+			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+				How can I contact somebody if I have an issue?
+			  </a>
+			</h3>
+		  </div>
+		  <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
+			<div class="panel-body px-3 mb-4">
+				<p>If you have any questions, comments, or concerns about anything you do regarding Workhuntr, feel free to email us at [pretend we have an email here] or call us at [pretend we have a phone number here] and we will gladly assist you in any way we can.</p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
+  </div>
+</section>
+{% endblock %}
