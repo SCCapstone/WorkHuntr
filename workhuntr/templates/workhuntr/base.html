@@ -33,10 +33,13 @@
                             <a class="nav-item nav-link" href="{% url 'profile' username=request.user.username %}">Profile</a>
                             <a class="nav-item nav-link" href="{% url 'current_listings' %}">Listings</a>
                             <a class="nav-item nav-link" href="{% url 'contacts' %}">Messages</a>
+                            <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+
                         {% else %}
                             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                             <a class="nav-item nav-link" href="{% url 'create_account' %}">Create Account</a>
+                            <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
                         {% endif %}
                         </div>
                     </div>
