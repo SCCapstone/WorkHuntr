@@ -23,6 +23,9 @@ from listings import views as listing_views
 from users import views as user_views
 from workhuntr import views as workhuntr_views
 
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, \
+    PasswordResetConfirmView, PasswordResetForm
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', workhuntr_views.home, name='home'),
@@ -41,7 +44,13 @@ urlpatterns = [
     path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing"),
     path('contacts/', dms_views.contacts, name='contacts'),
     path('contacts/conversation/<username>', dms_views.conversation, name='conversation'),
-    path('faq/', workhuntr_views.faq, name='faq')
+    path('faq/', workhuntr_views.faq, name='faq'),
+    path('reset_password', PasswordResetView.as_view(), name='password_reset'),
+    path('reset_password/done', PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset_password/confirm/<uidb64>/<token>/',
+         PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password/complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
 ]
 
 if settings.DEBUG:
