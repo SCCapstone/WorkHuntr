@@ -3,23 +3,23 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 # For testing a successful login
 
-# workHuntr test login
+# WorkHuntr test login
 USERNAME = "testUser"
 PASSWORD = "Workhuntr1"
 
 driver = webdriver.Chrome("chromedriver.exe")
 
-# go to login page
+# Go to login page
 urlLogin = "http://127.0.0.1:8000/login/"
 driver.get(urlLogin)
-# find username field
+# Find username field
 driver.find_element_by_name("username").send_keys(USERNAME)
-# find password field
+# Find password field
 driver.find_element_by_name("password").send_keys(PASSWORD)
-# login
+# Login
 driver.find_element_by_id("loginButton").click()
 
-# wait for load
+# Wait for load
 WebDriverWait(driver=driver, timeout=20)
 
 url = driver.current_url
@@ -29,9 +29,8 @@ if url == urlLogin:
 else:
     print("LOGIN SUCCESSFUL")
 
-# close
+# Close
 driver.close()
-
 
 # For testing failed login
 
@@ -55,6 +54,5 @@ if url == urlLogin:
 else:
     print("LOGIN SUCCESSFUL")
 
-# close
+# Close
 driver.close()
-

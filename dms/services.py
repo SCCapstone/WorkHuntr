@@ -46,7 +46,6 @@ class MessagingService(object):
         if limit:
             conversation = conversation[:limit]
 
-        # Kind of redundant
         if mark_read:
             for message in conversation:
                 self.mark_as_read(message)

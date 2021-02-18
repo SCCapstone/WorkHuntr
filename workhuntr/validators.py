@@ -14,5 +14,3 @@ class ExtraValidators(object):
     def get_help_text(self):
         return _("Your password must be of length 8 and contain at least one (1) of each: "
                  "number, uppercase letter, lowercase letter")
-
-

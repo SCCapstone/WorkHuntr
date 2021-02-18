@@ -3,7 +3,6 @@ import datetime
 from django.contrib.auth.models import User
 from .models import Listings
 
-
 class TestListing(TestCase):
 
     def setUp(self):

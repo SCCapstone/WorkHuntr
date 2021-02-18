@@ -69,7 +69,6 @@ def delete_listing(request, pk):
     if request.method == "POST":
         item.delete()
         return redirect('/current_listings/')
-    context = {'item':item}
     return render(request, 'listings/delete_listing.html', {'item':item})
 
 @login_required

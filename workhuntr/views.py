@@ -14,4 +14,3 @@ def dashboard(request):
 
 def faq(request):
     return render(request, 'workhuntr/faq.html')
-
