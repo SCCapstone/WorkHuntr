@@ -44,11 +44,11 @@ urlpatterns = [
     path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing"),
     path('contacts/', dms_views.contacts, name='contacts'),
     path('contacts/conversation/<username>', dms_views.conversation, name='conversation'),
+    path('contacts/conversation/info/<username>', dms_views.info, name='info'),
     path('faq/', workhuntr_views.faq, name='faq'),
     path('reset_password/', PasswordResetView.as_view(), name='password_reset'),
     path('reset_password/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset_password/confirm/<uidb64>/<token>/',
-         PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset_password/complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
 ]

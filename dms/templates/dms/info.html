@@ -1,0 +1,20 @@
+<!-- 
+    Code Source: https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
+    Code Author: Corey Schafer
+-->
+
+{% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Info</h2>
+        </div>
+        <form method="POST">
+        {% csrf_token %}
+            <button class="btn btn-outline-info" type="submit">Delete</button>
+        </form> 
+    </div>
+</div>
+{% endblock content %}

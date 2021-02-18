@@ -13,6 +13,7 @@
             {% if contacts %}
             {% for contact in contacts %}
             <a class="ml-2" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+            <p class="text-secondary">{{ last_message.content }}</p>
             {% endfor %}
             {% endif %}
         </div>

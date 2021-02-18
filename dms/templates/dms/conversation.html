@@ -6,21 +6,37 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
-    <div class="media">
-        <div class="media-body">
-            <h2 class="account-heading">Messages</h2>
-            {% if conversation %}
-            {% for m in conversation %}
-            <p class="text-secondary">{{ m.sender }}:   {{ m.content }}     {{ m.sent_at }}</h2>
-            {% endfor %}
-            {% endif %}
+<body onload="loadDraft()" onbeforeunload="saveDraft()">
+    <div class="content-section">
+        <div class="media">
+            <div class="media-body">
+                <h2 class="account-heading">Messages</h2>
+                {% if conversation %}
+                {% for m in conversation %}
+                <p class="text-secondary">{{ m.sender }}:   {{ m.content }}     {{ m.sent_at }}</h2>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <form method="POST">
+            {% csrf_token %}
+                <input type="text" placeholder="Message" name="textarea" id="message">
+                <button onclick="deleteDraft()" class="btn btn-outline-info" type="submit">Send</button>
+            </form> 
+            <a class="ml-2" href="{% url 'info' username=contact.username %}">Info</a>
         </div>
-        <form method="POST">
-        {% csrf_token %}
-            <input type="text" placeholder="Message" name="textarea">
-            <button class="btn btn-outline-info" type="submit">Send</button>
-        </form> 
     </div>
-</div>
+</body>
+
+<script>
+function loadDraft() {
+    document.getElementById('message').value = localStorage.getItem('message-save');
+}
+function saveDraft() {
+    localStorage.setItem('message-save', document.getElementById('message').value);
+}
+function deleteDraft() {
+    window.onbeforeunload = null;
+    localStorage.removeItem('message-save');
+}
+</script>
 {% endblock content %}
