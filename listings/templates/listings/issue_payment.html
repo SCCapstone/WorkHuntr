@@ -1,0 +1,10 @@
+{% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h2>Issue Payment</h2>
+<form method="POST">
+{% csrf_token %}
+{{form|crispy }}
+    <input type="Submit" name="Pay Hunter">
+</form>
+{% endblock %}

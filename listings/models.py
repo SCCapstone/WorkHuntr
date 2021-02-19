@@ -9,7 +9,8 @@ STATUSES = [
     ('Strutting', 'Strutting'),
     ('Spotted', 'Spotted'),
     ('Claimed', 'Claimed'),
-    ('Completed', 'Completed')
+    ('Completed', 'Completed'),
+    ('Payment Issued', 'Payment Issued'),
 ]
 
 class Listings(models.Model):

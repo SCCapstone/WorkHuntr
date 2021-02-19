@@ -78,7 +78,30 @@
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}"> Issue Payment </a></td>{% endif %}
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}"> Issue Payment </a></td>{% endif %}
+        {% endif %}
+        {% endfor %}
+        </tr>
+    </table>
+    <hr>
+    <hr>
+    <table>
+        <h2>Payment Issued for Listings</h2>
+        <tr>
+            <th style="padding-right: 15px">Title</th>
+            <th style="padding-right: 15px">Description</th>
+            <th style="padding-right: 15px">Owner</th>
+
+            <th>Status</th>
+        </tr>
+        {% for i in listings %}
+        <tr>
+        {% if i.status == 'Payment Issued' and i.huntee == request.user or i.status == 'Payment Issued' and i.hunter == request.user %}
+            <td style="padding-right: 15px">{{i.title}}</td>
+            <td style="padding-right: 15px">{{i.description}}</td>
+            <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.status}}</td>
+            {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}"> Delete </a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>

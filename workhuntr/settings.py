@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
     'listings',
-    'dms'
+    'dms',
 ]
 
 MIDDLEWARE = [

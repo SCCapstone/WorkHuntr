@@ -42,6 +42,7 @@ urlpatterns = [
     path('delete_listing/<str:pk>/', listing_views.delete_listing, name='delete_listing'),
     path('claim_listing/<str:pk>', listing_views.claim_listing, name="claim_listing"),
     path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing"),
+    path('issue_payment/<str:pk>', listing_views.issue_payment, name='issue_payment'),
     path('contacts/', dms_views.contacts, name='contacts'),
     path('contacts/conversation/<username>', dms_views.conversation, name='conversation'),
     path('contacts/conversation/info/<username>', dms_views.info, name='info'),
