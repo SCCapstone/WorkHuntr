@@ -18,7 +18,7 @@ class Listings(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     price = models.DecimalField(max_digits=6, default=0, decimal_places=2)
     description = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=STATUSES, default='Strutting', null=False)
+    status = models.CharField(max_length=14, choices=STATUSES, default='Strutting', null=False)
     tag1 = models.CharField(max_length=11, default='NONE', verbose_name='TAG ONE')
     tag2 = models.CharField(max_length=11, default='NONE', verbose_name='TAG TWO')
     tag3 = models.CharField(max_length=11, default='NONE', verbose_name='TAG THREE')
