@@ -18,10 +18,11 @@ class UserCreateAccountForm(UserCreationForm):
     account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
     email = forms.EmailField(required=True)
     birthday = forms.DateField(label='Birthday', input_formats=DATE_FORMAT)
+    current_employment = forms.CharField(max_length=50, required=False)
 
     class Meta:
         model = User
-        fields = ['title', 'first_name', 'last_name', 'birthday', 'gender', 'account_type', 'username', 'email', 'password1', 'password2']
+        fields = ['title', 'first_name', 'last_name', 'birthday', 'gender', 'current_employment', 'account_type', 'username', 'email', 'password1', 'password2']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True)

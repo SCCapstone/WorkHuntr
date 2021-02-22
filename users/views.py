@@ -17,6 +17,7 @@ def create_account(request):
             user.profile.title = form.cleaned_data.get('title')
             user.profile.account_type = form.cleaned_data.get('account_type')
             user.profile.birthday = form.cleaned_data.get('birthday')
+            user.profile.current_employment = form.cleaned_data.get('current_employment')
             user.profile.save()
             messages.success(request, f'Your account has been created! You can now login.')
             return redirect('login')
