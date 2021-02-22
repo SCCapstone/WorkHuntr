@@ -89,6 +89,11 @@ def complete_listing(request, pk):
 @login_required
 def issue_payment(request, pk):
     listing = Listings.objects.get(id=pk)
-    context = {}
-    context['form'] = PaymentForm()
-    return render(request, "listings/issue_payment.html", context)
+    if request.method == "POST":
+        listing.status = 'Payment Issued'
+        listing.save()
+        return redirect('/current_listings/')
+    else:
+        context = {}
+        context['form'] = PaymentForm()
+        return render(request, "listings/issue_payment.html", context)
