@@ -8,6 +8,7 @@ TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
 ACCOUNT_TYPES = (("Huntee", "Huntee"), ("Hunter", "Hunter"))
 PRIVACY = (("Public", "Public"), ("Private", "Private"))
 RATINGS = (("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"))
+DATE_FORMAT = ['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y']
 
 class UserCreateAccountForm(UserCreationForm):
     title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
@@ -16,10 +17,11 @@ class UserCreateAccountForm(UserCreationForm):
     gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
     account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
     email = forms.EmailField(required=True)
+    birthday = forms.DateField(label='Birthday', input_formats=DATE_FORMAT)
 
     class Meta:
         model = User
-        fields = ['title', 'first_name', 'last_name', 'gender', 'account_type', 'username', 'email', 'password1', 'password2']
+        fields = ['title', 'first_name', 'last_name', 'birthday', 'gender', 'account_type', 'username', 'email', 'password1', 'password2']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True)

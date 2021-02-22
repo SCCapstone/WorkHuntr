@@ -8,6 +8,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(default='Other', max_length=5)
     gender = models.CharField(default='Prefer Not to Say', max_length=20)
+    birthday = models.CharField(default="XXXX-XX-XX", max_length=10)
     account_type = models.CharField(default='Huntee', max_length=6)
     profile_picture = models.ImageField(default='default/default.jpg', upload_to='profile_pics')
     resume = models.FileField(upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)', null=True, blank=True)
