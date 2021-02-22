@@ -20,7 +20,7 @@
         </tr>
         {% for i in listings %}
         <tr>
-        {% if i.status != 'Completed' and i.status != 'Claimed' %}
+        {% if i.status != 'Completed' and i.status != 'Claimed' and i.status != 'Payment Issued' %}
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.price}}</td>
@@ -68,6 +68,7 @@
             <th style="padding-right: 15px">Title</th>
             <th style="padding-right: 15px">Description</th>
             <th style="padding-right: 15px">Owner</th>
+            <th style="padding-right: 15px">Huntr</th>
             
             <th>Status</th>
         </tr>
@@ -77,6 +78,7 @@
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
             {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}"> Issue Payment </a></td>{% endif %}
         {% endif %}
@@ -91,6 +93,7 @@
             <th style="padding-right: 15px">Title</th>
             <th style="padding-right: 15px">Description</th>
             <th style="padding-right: 15px">Owner</th>
+            <th style="padding-right: 15px">Huntr</th>
 
             <th>Status</th>
         </tr>
@@ -100,6 +103,7 @@
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
+            <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
             {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../delete_listing/{{i.id}}"> Delete Listing </a></td>{% endif %}
         {% endif %}
