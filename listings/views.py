@@ -89,19 +89,6 @@ def complete_listing(request, pk):
 @login_required
 def issue_payment(request, pk):
     listing = Listings.objects.get(id=pk)
-    if request.method == 'POST':
-        form = PaymentForm(request.POST, instance=listing)
-        if form.is_valid():
-            listing = form.save(commit=False)
-            listing.refresh_from_db()
-            listing.status = 'Payment Issued'
-            listing.save()
-            messages.success(request, f'Your hunter has been paid!')
-        return redirect('/current_listings/')
-    else:
-        form = PaymentForm(instance=listing)
-    payable = False
-    if request.user == listing.huntee:
-        payable = True
-    context = {'listing': listing, 'form': form, 'payable': payable}
-    return render(request, 'listings/issue_payment.html', context)
+    context = {}
+    context['form'] = PaymentForm()
+    return render(request, "listings/issue_payment.html", context)

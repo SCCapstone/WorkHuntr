@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <h2>Issue Payment</h2>
-<form method="POST">
+<form method="GET">
 {% csrf_token %}
 {{form|crispy }}
-    <input type="Submit" name="Pay Hunter">
+    <input type="submit" name="Pay Hunter">
 </form>
 {% endblock %}
