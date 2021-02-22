@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
+from dms.services import *
 
 @login_required
 def create_listings(request):
@@ -92,6 +93,10 @@ def issue_payment(request, pk):
     if request.method == "POST":
         listing.status = 'Payment Issued'
         listing.save()
+        # Receipt
+        hunter = listing.hunter
+        content = 'Receipt for ' + listing.title + ' (' + pk + ').'
+        MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('/current_listings/')
     else:
         context = {}
