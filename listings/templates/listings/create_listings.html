@@ -6,7 +6,8 @@
     {% csrf_token %}
     <fieldset class="form-group">
         {{ form|crispy }}
-        <input type= "submit" name="Create Listing">
+        <input class="btn btn-primary" type="submit" value="Create Listing" />
+	<a href="{% url 'current_listings' %}" class="btn btn-secondary">Cancel</a>
     </fieldset>
 </form>
 {% endblock %}

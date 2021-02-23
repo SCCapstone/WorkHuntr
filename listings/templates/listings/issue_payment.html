@@ -5,6 +5,7 @@
 <form method="POST">
 {% csrf_token %}
 {{form|crispy }}
-    <input type="submit" name="Pay Hunter">
+    <input class="btn btn-primary" type="submit" value="Issue Payment" />
+	<a href="{% url 'current_listings' %}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}

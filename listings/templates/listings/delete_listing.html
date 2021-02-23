@@ -1,10 +1,11 @@
 {% extends "workhuntr/base.html" %}
 {% block content %}
-<p>Are you sure you want to delete {{item}} listing?</p>
+<p>Are you sure you want to delete {{item}} listing forever?</p>
 
 <form action="{% url 'delete_listing' item.id %}" method="POST">
 {% csrf_token %}
-    <button class="btn btn-outline-info" type="submit" href="{% url 'current_listings' %}">Delete</button>
+    <input class="btn btn-danger" type="submit" value="Delete" />
+	<a href="{% url 'current_listings' %}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}
 {% url 'current_listings' %}
