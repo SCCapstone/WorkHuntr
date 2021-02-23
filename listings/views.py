@@ -23,7 +23,7 @@ def create_listings(request):
             listing.tag3 = form.cleaned_data.get('tag3')
             listing.huntee = request.user
             listing.save()
-            messages.success(request, f'The Listing has been created!')
+            messages.success(request, f'The listing '+ listing.title +' has been created!')
             return redirect('/current_listings/')
         else:
             messages.error(request, f'Could not create!')
@@ -54,7 +54,7 @@ def modify_listings(request, pk):
             listing.tag2 = form.cleaned_data.get('tag2')
             listing.tag3 = form.cleaned_data.get('tag3')
             listing.save()
-            messages.success(request, f'Your listing has been updated!')
+            messages.success(request, f'Your listing '+ listing.title + ' has been modified!')
         return redirect('/current_listings/')
     else:
         form = ModifyListingForm(instance=listing)
@@ -78,6 +78,10 @@ def claim_listing(request, pk):
     listing.status = 'Claimed'
     listing.hunter = request.user
     listing.save()
+    huntee = listing.huntee
+    content = 'Your listing ' + listing.title + ' has been marked claimed by '\
+              + str(listing.hunter) + '! Please contact this user if more instructions are needed.'
+    MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
     return redirect('/current_listings/')
 
 @login_required
@@ -85,6 +89,9 @@ def complete_listing(request, pk):
     listing = Listings.objects.get(id=pk)
     listing.status = 'Completed'
     listing.save()
+    huntee = listing.huntee
+    content = 'Your listing ' + listing.title + ' has been marked completed by ' + str(listing.hunter) + '! Please issue payment for completed listing.'
+    MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
     return redirect('/current_listings/')
 
 @login_required
@@ -93,9 +100,11 @@ def issue_payment(request, pk):
     if request.method == "POST":
         listing.status = 'Payment Issued'
         listing.save()
+        messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + '!')
         # Receipt
         hunter = listing.hunter
-        content = 'Receipt for ' + listing.title + ' (' + pk + ').'
+        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: ' + str(listing.price) + \
+                  ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('/current_listings/')
     else:
