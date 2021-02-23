@@ -108,6 +108,5 @@ def issue_payment(request, pk):
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('/current_listings/')
     else:
-        context = {}
-        context['form'] = PaymentForm()
+        context = {'form': PaymentForm()}
         return render(request, "listings/issue_payment.html", context)
