@@ -1,10 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http.response import FileResponse, Http404
 from django.shortcuts import render, redirect
 from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm
-from .models import Comment, Profile
+from .models import Comment
 
 def create_account(request):
     if request.method == 'POST':
