@@ -10,6 +10,7 @@ PRIVACY = (("Public", "Public"), ("Private", "Private"))
 RATINGS = (("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"))
 DATE_FORMAT = ['%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y']
 
+
 class UserCreateAccountForm(UserCreationForm):
     title = forms.ChoiceField(widget=forms.Select(), choices=TITLES)
     first_name = forms.CharField(max_length=20, min_length=1, strip=True)
@@ -23,6 +24,7 @@ class UserCreateAccountForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['title', 'first_name', 'last_name', 'birthday', 'gender', 'current_employment', 'account_type', 'username', 'email', 'password1', 'password2']
+
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True)

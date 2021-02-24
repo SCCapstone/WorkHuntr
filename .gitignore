@@ -47,7 +47,7 @@ share/python-wheels/
 MANIFEST
 
 # Secrets
-secrets.py
+workhuntr/secrets.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
