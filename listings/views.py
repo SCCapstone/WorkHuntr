@@ -103,7 +103,7 @@ def issue_payment(request, pk):
         messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + '!')
         # Receipt
         hunter = listing.hunter
-        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: ' + str(listing.price) + \
+        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + \
                   ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('/current_listings/')
