@@ -82,8 +82,7 @@ class ListingsForm(ModelForm):
 
     class Meta:
         model = Listings
-        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3']
-        
+        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3']  
 
 class ModifyListingForm(forms.ModelForm):
 

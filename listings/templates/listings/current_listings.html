@@ -29,8 +29,8 @@
             <td style="padding-right: 15px">{{i.tag2}}</td>
             <td style="padding-right: 15px">{{i.tag3}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}"> Modify </a></td>{% endif %}
-            {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}"> Delete </a></td>{% endif %}
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
+            {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
             {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><a href="{% url 'claim_listing' i.id %}" method="POST">Claim</a></td>{% endif %}
         {% endif %}
         </tr>
@@ -55,7 +55,7 @@
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}"> Complete </a></td>{% endif %}
+            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}">Complete</a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>
@@ -80,7 +80,7 @@
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}"> Issue Payment </a></td>{% endif %}
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>
@@ -105,7 +105,7 @@
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../delete_listing/{{i.id}}"> Delete Listing </a></td>{% endif %}
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>

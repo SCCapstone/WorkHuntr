@@ -10,9 +10,7 @@ class MessagingService(object):
             raise ValidationError("You can't send messages to yourself.")
         message = Message(sender=sender, recipient=recipient, content=str(message))
         message.save()
-
         message_sent.send(sender=message, from_user=message.sender, to_user=message.recipient)
-
         return message, 200
 
     def get_unread_messages(self, user):
@@ -40,16 +38,12 @@ class MessagingService(object):
             order = '-pk'
         else:
             order = 'pk'
-        
         conversation = Message.objects.all().filter(sender=user1, recipient=user2).order_by(order)
-
         if limit:
             conversation = conversation[:limit]
-
         if mark_read:
             for message in conversation:
                 self.mark_as_read(message)
-
         return conversation
 
     def mark_as_read(self, message):
