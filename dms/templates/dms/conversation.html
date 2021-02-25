@@ -16,7 +16,7 @@
                 {% if m.sender != request.user %}
                 <p class="text-secondary" style="text-align:left;"><img src="m.sender.profile.profile_picture.url"> {{ m.sender }}</p> <p style="text-align:left;">{{ m.content }} </p>   <p style="text-align:right;"> {{ m.sent_at }}</p></h2>
                 {% else %}
-                <p class="text-secondary" style="text-align:right;"> {{ m.sender }}<img src="m.sender.profile.profile_picture.url"></p><p style="text-align:right;">{{ m.content }} </p>   <p style="text-align:left;"> {{ m.sent_at }}</p></h2>
+                <p class="text-secondary" style="text-align:right;"> {{ m.sender }}<img src="m.sender.profile.profile_picture.url"></p><p style="text-align:right;">{{ m.content }} </p>   <p style="position:absolute; left:80px;"> {{ m.sent_at }}</p></h2>
                 {% endif %}
                 {% endfor %}
                 {% endif %}
