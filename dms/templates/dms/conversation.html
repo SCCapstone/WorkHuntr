@@ -13,17 +13,24 @@
                 <h2 class="account-heading">Messages</h2>
                 {% if conversation %}
                 {% for m in conversation %}
-                <p class="text-secondary">{{ m.sender }}:   {{ m.content }}     {{ m.sent_at }}</h2>
+                {% if m.sender != request.user %}
+                <p class="text-secondary" style="text-align:left;"><img src="m.sender.profile.profile_picture.url"> {{ m.sender }}</p> <p style="text-align:left;">{{ m.content }} </p>   <p style="text-align:right;"> {{ m.sent_at }}</p></h2>
+                {% else %}
+                <p class="text-secondary" style="text-align:right;"> {{ m.sender }}<img src="m.sender.profile.profile_picture.url"></p><p style="text-align:right;">{{ m.content }} </p>   <p style="text-align:left;"> {{ m.sent_at }}</p></h2>
+                {% endif %}
                 {% endfor %}
                 {% endif %}
             </div>
+            </div>
+            <hr class="rounded">
+            <h5>
             <form method="POST">
             {% csrf_token %}
                 <input type="text" placeholder="Message" name="textarea" id="message">
                 <button onclick="deleteDraft()" class="btn btn-outline-info" type="submit">Send</button>
             </form> 
-            <a class="ml-2" href="{% url 'info' username=contact.username %}">Info</a>
-        </div>
+                <a class="ml-2" href="{% url 'info' username=contact.username %}">Info</a></h5>
+
     </div>
 </body>
 
