@@ -16,6 +16,7 @@ STATUSES = [
 class Listings(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateTimeField(auto_now_add=True)
+    paid_date = models.DateTimeField(auto_now=True)
     price = models.DecimalField(max_digits=6, default=0, decimal_places=2)
     description = models.TextField(blank=True)
     status = models.CharField(max_length=14, choices=STATUSES, default='Strutting', null=False)

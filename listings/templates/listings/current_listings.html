@@ -23,7 +23,7 @@
         {% if i.status != 'Completed' and i.status != 'Claimed' and i.status != 'Payment Issued' %}
             <td style="padding-right: 15px">{{i.title}}</td>
             <td style="padding-right: 15px">{{i.description}}</td>
-            <td style="padding-right: 15px">{{i.price}}</td>
+            <td style="padding-right: 15px">${{i.price}}</td>
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.tag1}}</td>
             <td style="padding-right: 15px">{{i.tag2}}</td>
@@ -111,6 +111,7 @@
             <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
             {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
+            <td style="padding-right: 15px"><a href="../receipt/{{i.id}}">Receipt</a></td>
         {% endif %}
         {% endfor %}
         </tr>

@@ -114,7 +114,7 @@ def issue_payment(request, pk):
     if request.method == "POST":
         listing.status = 'Payment Issued'
         listing.save()
-        messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + ' in the amount of ' + str(listing.price) + '!')
+        messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + ' in the amount of $' + str(listing.price) + '!')
         # Receipt
         hunter = listing.hunter
         content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + \
@@ -124,3 +124,12 @@ def issue_payment(request, pk):
     else:
         context = {'form': PaymentForm(), 'listing':listing}
         return render(request, "listings/issue_payment.html", context)
+
+@login_required
+def receipt(request, pk):
+    listing = Listings.objects.get(id=pk)
+    if request.method == "POST":
+        return redirect('/current_listings/')
+    else:
+        context = {'listing': listing}
+        return render(request, 'listings/receipt.html', context)
