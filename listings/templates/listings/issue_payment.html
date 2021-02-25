@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <h2>Issue Payment</h2>
+<p>Payment to be issued in the amount of ${{listing.price}} to {{listing.hunter}} for {{listing}} listed {{listing.date}}.</p>
 <form method="POST">
 {% csrf_token %}
 {{form|crispy }}

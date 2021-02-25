@@ -72,12 +72,25 @@ def delete_listing(request, pk):
         return redirect('/current_listings/')
     return render(request, 'listings/delete_listing.html', {'item':item})
 
+def return_listing(request, pk):
+    listing = Listings.objects.get(id=pk)
+    listing.status = 'Strutting'
+    listing.hunter = request.user
+    listing.save()
+    messages.success(request, f'Listing  ' + str(listing.title) + ' has been returned to current listings. ' + str(listing.huntee) + ' has been notified!')
+    huntee = listing.huntee
+    content = 'Your listing ' + listing.title + ' has been returned to current listings by ' + str(listing.hunter) + '.'
+    MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
+    return redirect('/current_listings/')
+
+
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
     listing.status = 'Claimed'
     listing.hunter = request.user
     listing.save()
+    messages.success(request, f'Listing  ' + str(listing.title) + ' has been marked claimed! ' + str(listing.huntee) + ' has been notified!')
     huntee = listing.huntee
     content = 'Your listing ' + listing.title + ' has been marked claimed by '\
               + str(listing.hunter) + '! Please contact this user if more instructions are needed.'
@@ -89,6 +102,7 @@ def complete_listing(request, pk):
     listing = Listings.objects.get(id=pk)
     listing.status = 'Completed'
     listing.save()
+    messages.success(request, f'Listing  ' + str(listing.title) + ' has been marked completed! ' + str(listing.huntee) + ' has been notified!')
     huntee = listing.huntee
     content = 'Your listing ' + listing.title + ' has been marked completed by ' + str(listing.hunter) + '! Please issue payment for completed listing.'
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
@@ -100,13 +114,13 @@ def issue_payment(request, pk):
     if request.method == "POST":
         listing.status = 'Payment Issued'
         listing.save()
-        messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + '!')
+        messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + ' in the amount of ' + str(listing.price) + '!')
         # Receipt
         hunter = listing.hunter
-        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: ' + str(listing.price) + \
+        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + \
                   ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('/current_listings/')
     else:
-        context = {'form': PaymentForm()}
+        context = {'form': PaymentForm(), 'listing':listing}
         return render(request, "listings/issue_payment.html", context)
