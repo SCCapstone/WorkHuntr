@@ -24,6 +24,17 @@
     <div class="col-sm-3">
       <a href="{% url 'faq' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">FAQ</a>
     </div>
+  {% else %}
+  <div class="row" style="background-color: #8fbdc7">
+      <div class="col-sm-3">
+      <a href="{% url 'login' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Login</a>
+    </div>
+    <div class="col-sm-3">
+      <a href="{% url 'create_account' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Create Account</a>
+    </div>
+    <div class="col-sm-3">
+      <a href="{% url 'faq' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">FAQ</a>
+    </div>
   {% endif %}
   </div>
 </div><br>

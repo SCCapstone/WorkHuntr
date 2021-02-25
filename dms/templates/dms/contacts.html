@@ -6,7 +6,7 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
+<div class="content-section" style="background-color: #8fbdc7">
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Contacts</h2>
@@ -14,17 +14,17 @@
             {% for contact in contacts %}
             <hr class="rounded">
             <h5>
-                <img class="rounded-circle" width="50" height="50" src="{{ contact.username.profile_picture.url }}">
-            <a class="ml-2" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+                <img class="rounded-circle" width="50" height="50" src="{{ contact.profile.profile_picture.url }}">
+                <a class="ml-2" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a> <p class="text-secondary" style="text-align:right;"><a class="ml-2" href="{% url 'info' username=contact.username %}">Delete</a></p>
             <p class="text-secondary">{{ last_message.content }}</p>
             {% endfor %}
-                </h5>
+            </h5>
             {% endif %}
         </div>
         <form method="POST">
         {% csrf_token %}
-            <input type="text" placeholder="Search Users" name="search">
-            <button class="btn btn-outline-info" type="submit">Submit</button>
+            <input type="text" placeholder="Search Users" name="search" style="background-color: #e3d6ab;">
+            <button class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;">Submit</button>
         </form> 
     </div>
 </div>

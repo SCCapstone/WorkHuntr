@@ -7,16 +7,16 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <body onload="loadDraft()" onbeforeunload="saveDraft()">
-    <div class="content-section">
+    <div class="content-section" style="background-color: #8fbdc7">
         <div class="media">
             <div class="media-body">
                 <h2 class="account-heading">Messages</h2>
                 {% if conversation %}
                 {% for m in conversation %}
                 {% if m.sender != request.user %}
-                <p class="text-secondary" style="text-align:left;"><img src="m.sender.profile.profile_picture.url"> {{ m.sender }}</p> <p style="text-align:left;">{{ m.content }} </p>   <p style="text-align:right;"> {{ m.sent_at }}</p></h2>
+                <p class="text-secondary" style="text-align:left;"><img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}"> {{ m.sender }}</p> <p style="text-align:left;">{{ m.content }} </p>   <p style="text-align:right;"> {{ m.sent_at }}</p></h2>
                 {% else %}
-                <p class="text-secondary" style="text-align:right;"> {{ m.sender }}<img src="m.sender.profile.profile_picture.url"></p><p style="text-align:right;">{{ m.content }} </p>   <p style="text-align:left;"> {{ m.sent_at }}</p></h2>
+                <p class="text-secondary" style="text-align:right;"> {{ m.sender }}<img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}"></p><p style="text-align:right;">{{ m.content }} </p>   <p style="text-align:left;"> {{ m.sent_at }}</p></h2>
                 {% endif %}
                 {% endfor %}
                 {% endif %}
@@ -26,10 +26,11 @@
             <h5>
             <form method="POST">
             {% csrf_token %}
-                <input type="text" placeholder="Message" name="textarea" id="message">
-                <button onclick="deleteDraft()" class="btn btn-outline-info" type="submit">Send</button>
+                <input type="text" placeholder="Message" name="textarea" id="message" style="background-color: #e3d6ab;">
+                <button onclick="deleteDraft()" class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;">Send</button>
             </form> 
-                <a class="ml-2" href="{% url 'info' username=contact.username %}">Info</a></h5>
+                <a href="{% url 'contacts' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Back</a>
+            </h5>
 
     </div>
 </body>
