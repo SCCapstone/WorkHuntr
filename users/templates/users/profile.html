@@ -56,7 +56,7 @@
             {% for comment in comments %}
             <hr class="rounded">
             <h5>
-                <img class="circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
+                <img class="rounded-circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
                 {{ comment.author.username }}  |  Company:  {{ comment.company }}
             </h5>
             <h6>
