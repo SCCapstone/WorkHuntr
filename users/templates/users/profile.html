@@ -22,6 +22,7 @@
             <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
             <p class="text-secondary">{{ user.profile.account_type }}</p>
             {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'edit_profile' username=user.username %}">Edit Profile</a>{% endif %}
+            {% if request.user != user %}<a class="btn btn-outline-info" type="button" href="{% url 'conversation' username=user.username %}">Message</a>{% endif %}
         </div>
     </div>
 </div>
