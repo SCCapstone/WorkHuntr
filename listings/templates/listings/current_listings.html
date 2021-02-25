@@ -57,8 +57,8 @@
             <td style="padding-right: 15px">{{i.status}}</td>
             {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../return_listing/{{i.id}}">Release</a></td>{% endif %}
             {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}">Complete</a></td>{% endif %}
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../contacts/">Contact Hunter</a></td>{% endif %}
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../contacts/">Contact Huntee</a></td>{% endif %}
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.hunter}}">Contact Hunter</a></td>{% endif %}
+            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.huntee}}">Contact Huntee</a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>
@@ -84,8 +84,8 @@
             <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
             {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../contacts/">Contact Hunter</a></td>{% endif %}
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../contacts/">Contact Huntee</a></td>{% endif %}
+            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.hunter}}">Contact Hunter</a></td>{% endif %}
+            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.huntee}}">Contact Huntee</a></td>{% endif %}
         {% endif %}
         {% endfor %}
         </tr>
