@@ -55,6 +55,7 @@
             <td style="padding-right: 15px">{{i.huntee}}</td>
             <td style="padding-right: 15px">{{i.hunter}}</td>
             <td style="padding-right: 15px">{{i.status}}</td>
+            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../return_listing/{{i.id}}">Release</a></td>{% endif %}
             {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}">Complete</a></td>{% endif %}
         {% endif %}
         {% endfor %}

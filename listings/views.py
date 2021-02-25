@@ -72,6 +72,18 @@ def delete_listing(request, pk):
         return redirect('/current_listings/')
     return render(request, 'listings/delete_listing.html', {'item':item})
 
+def return_listing(request, pk):
+    listing = Listings.objects.get(id=pk)
+    listing.status = 'Strutting'
+    listing.hunter = request.user
+    listing.save()
+    huntee = listing.huntee
+    content = 'Your listing ' + listing.title + ' has been returned to current listings by ' + str(listing.hunter) + '.'
+    MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
+    return redirect('/current_listings/')
+
+
+
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
