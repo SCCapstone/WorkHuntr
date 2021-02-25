@@ -3,9 +3,8 @@ from django.core.exceptions import *
 from django.shortcuts import render, redirect
 
 def home(request):
-    return redirect('login')
+    return redirect('dashboard')
 
-@login_required
 def dashboard(request):
     return render(request, 'workhuntr/dashboard.html')
 
