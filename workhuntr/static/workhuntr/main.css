@@ -18,7 +18,7 @@ ul {
 }
 
 .bg-steel {
-    background-color: #5f788a;
+    background-color: #8fbdc7;
 }
 
 .site-header .navbar-nav .nav-link {
@@ -127,7 +127,14 @@ body{
     cursor: pointer;
     font-size: 20px;
 }
-
+.logo {
+    display: inline-block;
+    vertical-align: top;
+    width: 52px;
+    height: 52px;
+    margin-right: 20px;
+    margin-top: -10px;
+    margin-bottom: -10px;
 /*Resize the wrap to see the search bar change!*/
 .wrap{
     width: 30%;

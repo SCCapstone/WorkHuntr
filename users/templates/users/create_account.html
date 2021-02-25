@@ -6,17 +6,17 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
+<div class="content-section" style="background-color:#8fbdc7;">
     <form method="POST">
     {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4"><img class="circle" width="50" height="50" src="huntr_lgo.jpg"><b>Join Today</b></legend>
+            <legend class="border-bottom mb-4"><img class="square account-img" src="/media/workhuntr/huntr_person.jpg"><b>Join Today</b></legend>
             <div class="form-row">
               <div class="form-group col-md-4 mb-0"><b>
                   <abbr title="Hunter are hunting for a project &#013;Huntee are hunting helper">{{ form.account_type|as_crispy_field }}</abbr></b>
               </div>
                 <div class="form-group col-md-6 mb-0"><b>
-                    {{ form.username|as_crispy_field }}</b>
+                    {{ form.email|as_crispy_field }}</b>
               </div>
             </div>
             <div class="form-row">
