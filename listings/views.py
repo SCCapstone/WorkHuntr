@@ -27,7 +27,7 @@ def create_listings(request):
             messages.success(request, f'The listing '+ listing.title +' has been created!')
             return redirect('/current_listings/')
         else:
-            messages.error(request, f'Could not create!')
+            messages.error(request, f'The listing could not be created!')
     context = {'listings':listings, 'form':form}
     return render(request, 'listings/create_listings.html', context)
 
@@ -104,7 +104,6 @@ def return_listing(request, pk):
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
     return redirect('/current_listings/')
 
-
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -113,8 +112,7 @@ def claim_listing(request, pk):
     listing.save()
     messages.success(request, f'Listing  ' + str(listing.title) + ' has been marked claimed! ' + str(listing.huntee) + ' has been notified!')
     huntee = listing.huntee
-    content = 'Your listing ' + listing.title + ' has been marked claimed by '\
-              + str(listing.hunter) + '! Please contact this user if more instructions are needed.'
+    content = 'Your listing ' + listing.title + ' has been marked claimed by ' + str(listing.hunter) + '! Please contact this user if more instructions are needed.'
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
     return redirect('/current_listings/')
 
@@ -138,8 +136,7 @@ def issue_payment(request, pk):
         messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + ' in the amount of $' + str(listing.price) + '!')
         # Receipt
         hunter = listing.hunter
-        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + \
-                  ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
+        content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('/current_listings/')
     else:

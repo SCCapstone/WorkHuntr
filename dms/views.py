@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -14,11 +15,11 @@ def contacts(request):
             searched = User.objects.get(username=search_user)
         except:
             print('User Not Found')
-        if search_user == '' or searched == None:
+        if search_user == '' or search_user == request.user.username or searched == None:
             return redirect('contacts')
         return redirect('conversation', search_user)
     all_messages = Message.objects.all().order_by('sent_at')
-    contacts = []
+    contacts_messages = {}
     contact = None
     last_message = None
     for message in all_messages:
@@ -27,15 +28,17 @@ def contacts(request):
         elif message.recipient == request.user:
             contact = message.sender
         users = [contact, request.user]
-        contacts.append(contact)
         last_message = Message.objects.filter(sender__in=users, recipient__in=users).order_by('sent_at').last()
-    contacts = set(contacts)
-    return render(request, 'dms/contacts.html', {'contacts': contacts, 'last_message': last_message})
+        contacts_messages[contact] = last_message
+    return render(request, 'dms/contacts.html', {'contacts_messages': contacts_messages})
 
 @login_required
 def conversation(request, username):
     contact = User.objects.get(username=username)
     if request.method == 'POST':
+        if contact == request.user:
+            messages.error(request, 'You cannot send a message to yourself!')
+            return redirect('contacts')
         content = request.POST.get('textarea', None)
         MessagingService.send_message(request, sender=request.user, recipient=contact, message=content)
         return redirect('conversation', username)
