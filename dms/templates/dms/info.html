@@ -6,14 +6,15 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section">
+<div class="content-section" style="background-color: #8fbdc7">
     <div class="media">
         <div class="media-body">
-            <h2 class="account-heading">Info</h2>
+            <h2>Are you sure you want to delete this conversation?</h2>
         </div>
         <form method="POST">
         {% csrf_token %}
-            <button class="btn btn-outline-info" type="submit">Delete</button>
+            <a href="{% url 'contacts' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Back</a>
+            <button class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab">Delete</button>
         </form> 
     </div>
 </div>
