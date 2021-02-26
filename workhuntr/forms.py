@@ -3,9 +3,6 @@ from django import forms
 
 
 class UserLoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
     remember_me = forms.BooleanField(required=False, widget=forms.CheckboxInput())
