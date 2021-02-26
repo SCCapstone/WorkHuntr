@@ -19,8 +19,8 @@
     <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
         <div class="media-body">
-            <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}{% if request.user != user %}
-                <a class="btn btn-outline-info" type="button" href="{% url 'conversation' username=user.username %}" style="background-color: #e3d6ab; float:right;">Message</a>{% endif %}</h2>
+            <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
+            {% if request.user != user %}<a class="btn btn-outline-info" type="button" href="{% url 'conversation' username=user.username %}" style="background-color: #e3d6ab; float:right;">Message</a>{% endif %}
             <p>{{ user.profile.account_type }}</p>
             {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'edit_profile' username=user.username %}" style="background-color: #e3d6ab;">Edit Profile</a>{% endif %}
         </div>
@@ -31,7 +31,7 @@
         <div class="media-body">
             <h2 class="account-heading">About</h2>
             <hr class="rounded">
-            <p>Username:   {{ user.username }}</p></h2>
+            <p>Username:   {{ user.username }}</p>
             <p >Email:    {{ user.email }}</p>
             <p>Gender:   {{ user.profile.gender }}</p>
         </div>
@@ -44,7 +44,7 @@
             <div>
                 <hr class="rounded">
                 {% if user.profile.resume.url != 'default/default.pdf' %}<a class="ml" href="{{ user.profile.resume.url }}">Resume</a>{% endif %}
-                {% if user.profile.website != '' %}<a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>{% endif  %}
+                {% if user.profile.website != '' %}<a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>{% endif %}
             </div>
         </div>
     </div>
@@ -52,8 +52,8 @@
 <div class="content-section" style="background-color: #8fbdc7">
     <div class="media">
         <div class="media-body">
-            <h2 class="account-heading">Comments & Rating
-            {% if request.user != user and request.user.profile.account_type == 'Huntee' and user.profile.account_type != 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add Comment</a></h2>{% endif %}
+            <h2 class="account-heading">Comments & Rating</h2>
+            {% if request.user != user and request.user.profile.account_type == 'Huntee' and user.profile.account_type != 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add Comment</a>{% endif %}
             <hr class="rounded">
             {% if comments %}
             {% for comment in comments %}
@@ -101,7 +101,7 @@
                 <span class="fa fa-star checked" style="color:orange"></span>
                 <span class="fa fa-star checked" style="color:orange"></span>
                 <span class="fa fa-star checked" style="color:orange"></span>
-            {%endif%}
+                {%endif%}
             <h6>
             <h8>{{ comment.comment }}</h8>
             <hr class="rounded">
