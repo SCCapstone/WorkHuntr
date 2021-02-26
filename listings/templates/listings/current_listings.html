@@ -9,7 +9,7 @@
 <!--If searching, don't display-->
 <div id="ListingsMain">
     <div class="content-section">
-    <h2>All Current Listings</h2>
+    <h2>All Open Listings</h2>
         <table>
             <tr>
                 <th style="padding-right: 15px">Title</th>
@@ -23,7 +23,7 @@
             </tr>
             {% for i in listings %}
             <tr>
-            {% if i.status != 'Complete' and i.status != 'Claimed' and i.status != 'Payment Issued' %}
+            {% if i.status == 'Strutting' %}
                 <td style="padding-right: 15px">{{i.title}}</td>
                 <td style="padding-right: 15px">{{i.description}}</td>
                 <td style="padding-right: 15px">${{i.price}}</td>
@@ -53,7 +53,7 @@
             </tr>
             {% for i in listings %}
             <tr>
-            {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
+            {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Started' and i.hunter == request.user or i.status == 'Started' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
                 <td style="padding-right: 15px">{{i.title}}</td>
                 <td style="padding-right: 15px">{{i.description}}</td>
                 <td style="padding-right: 15px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
