@@ -6,12 +6,15 @@
 <div class="container-fluid bg-3 text-center" style="background-color: #8fbdc7">
     <div class="row">
     <img style="max-width: 100%; max-height: 100%; object-fit: contain; margin-left: auto; margin-right: auto;"src="/media/workhuntr/huntr_person.jpg">
+    </div>
+<div class="container-fluid bg-3 text-left" style="background-color: #8fbdc7">
+    <div class="row">
     <p><b>Welcome to the WorkHuntr Dashboard! WorkHuntr is a job board where employers, known as hunters, can post jobs to be bid on by candidates.
         Qualified candidates, known as huntees, can create a profile listing their qualifications and skills, search current listings of projects, and bid on the desired project.
         The huntee with the winning bid can then provide progress reports to the hunter using the progress tracker and communicate using the inbox.</b></p>
   </div>
   {% if user.is_authenticated %}
-  <div class="row" style="background-color: #8fbdc7">
+  <div class="row text-center" style="background-color: #8fbdc7">
     <div class="col-sm-3">
       <a href="{% url 'profile' username=request.user.username %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Profile</a>
     </div>
@@ -24,8 +27,9 @@
     <div class="col-sm-3">
       <a href="{% url 'faq' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">FAQ</a>
     </div>
+  </div>
   {% else %}
-  <div class="row" style="background-color: #8fbdc7">
+  <div class="row text-center" style="background-color: #8fbdc7">
       <div class="col-sm-3">
       <a href="{% url 'login' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Login</a>
     </div>
@@ -35,7 +39,7 @@
     <div class="col-sm-3">
       <a href="{% url 'faq' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">FAQ</a>
     </div>
-  {% endif %}
   </div>
+  {% endif %}
 </div><br>
 {% endblock %}
