@@ -43,6 +43,7 @@ urlpatterns = [
     path('claim_listing/<str:pk>', listing_views.claim_listing, name="claim_listing"),
     path('return_listing/<str:pk>', listing_views.return_listing, name="return_listing"),
     path('complete_listing/<str:pk>', listing_views.complete_listing, name="complete_listing"),
+    path('progress/<str:pk>', listing_views.progress, name="progress"),
     path('issue_payment/<str:pk>', listing_views.issue_payment, name='issue_payment'),
     path('receipt/<str:pk>', listing_views.receipt, name='receipt'),
     path('contacts/', dms_views.contacts, name='contacts'),

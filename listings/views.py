@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import *
@@ -35,6 +36,26 @@ def current_listings(request):
     listings = Listings.objects.all()
     context = {'listings': listings, 'user': request.user}
     return render(request, 'listings/current_listings.html', context)
+
+@login_required
+def progress(request, pk):
+    listings = Listings.objects.all()
+    updates = Update.objects.all()
+    ownedListings = MyListingsForm()
+    item = Listings.objects.get(id=pk)
+    form = UpdateForm(request.POST)
+    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form, 'ownedListings': ownedListings}
+    if request.method == 'POST':
+        if form.is_valid():
+                update = form.save(commit=False)
+                update.date = timezone.now()
+                update.description = form.cleaned_data.get('description')
+                update.status = form.cleaned_data.get('status')
+                update.listing = item
+                update.save()
+                item.status = update.status
+                item.save()
+    return render(request, 'listings/progress.html', context)
 
 @login_required
 def modify_listings(request, pk):

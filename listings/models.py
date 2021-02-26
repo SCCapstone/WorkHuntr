@@ -7,9 +7,12 @@ import string
 
 STATUSES = [
     ('Strutting', 'Strutting'),
-    ('Spotted', 'Spotted'),
     ('Claimed', 'Claimed'),
-    ('Completed', 'Completed'),
+    ('Started', 'Started'),
+    ('Milestone 1', 'Milestone 1'),
+    ('Milestone 2', 'Milestone 2'),
+    ('Milestone 3', 'Milestone 3'),
+    ('Complete', 'Complete'),
     ('Payment Issued', 'Payment Issued'),
 ]
 
@@ -25,6 +28,16 @@ class Listings(models.Model):
     tag3 = models.CharField(max_length=11, default='NONE', verbose_name='TAG THREE')
     huntee = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='huntee')
     hunter = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='hunter')
-    
+
     def __str__(self):
         return self.title
+
+
+class Update(models.Model):
+    date = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=14, choices=STATUSES, default='Started', null=False)
+    description = models.CharField(max_length=300, blank=True, null=False)
+    listing = models.ForeignKey(Listings, default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.status

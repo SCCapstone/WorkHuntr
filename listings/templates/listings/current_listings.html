@@ -6,114 +6,119 @@
     {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'">Create Listing</button></td>{% endif %}
     </tr>
 </table>
-<h2>All Current Listings</h2>
-    <table>
-        <tr>
-            <th style="padding-right: 15px">Title</th>
-            <th style="padding-right: 15px">Description</th>
-            <th style="padding-right: 15px">Price</th>
-            <th style="padding-right: 15px">Owner</th>
-            <th style="padding-right: 15px">Tags</th>
-            <th style="padding-right: 15px"></th>
-            <th style="padding-right: 15px"></th>
-            <th>Status</th>
-        </tr>
-        {% for i in listings %}
-        <tr>
-        {% if i.status != 'Completed' and i.status != 'Claimed' and i.status != 'Payment Issued' %}
-            <td style="padding-right: 15px">{{i.title}}</td>
-            <td style="padding-right: 15px">{{i.description}}</td>
-            <td style="padding-right: 15px">${{i.price}}</td>
-            <td style="padding-right: 15px">{{i.huntee}}</td>
-            <td style="padding-right: 15px">{{i.tag1}}</td>
-            <td style="padding-right: 15px">{{i.tag2}}</td>
-            <td style="padding-right: 15px">{{i.tag3}}</td>
-            <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
-            {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
-            {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><a href="{% url 'claim_listing' i.id %}" method="POST">Claim</a></td>{% endif %}
-        {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
-    <hr>
-    <hr>
-    <table>
-        <h2>My Hunted Listings</h2>
-        <tr>
-            <th style="padding-right: 15px">Title</th>
-            <th style="padding-right: 15px">Description</th>
-            <th style="padding-right: 15px">Owner</th>
-            <th style="padding-right: 15px">Huntr</th>
-            <th>Status</th>
-        </tr>
-        {% for i in listings %}
-        <tr>
-        {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user %}
-            <td style="padding-right: 15px">{{i.title}}</td>
-            <td style="padding-right: 15px">{{i.description}}</td>
-            <td style="padding-right: 15px">{{i.huntee}}</td>
-            <td style="padding-right: 15px">{{i.hunter}}</td>
-            <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../return_listing/{{i.id}}">Release</a></td>{% endif %}
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../complete_listing/{{i.id}}">Complete</a></td>{% endif %}
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.hunter}}">Contact Hunter</a></td>{% endif %}
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.huntee}}">Contact Huntee</a></td>{% endif %}
-        {% endif %}
-        {% endfor %}
-        </tr>
-    </table>
-    <hr>
-    <hr>
-    <table>
-        <h2>My Completed Listings</h2>
-        <tr>
-            <th style="padding-right: 15px">Title</th>
-            <th style="padding-right: 15px">Description</th>
-            <th style="padding-right: 15px">Owner</th>
-            <th style="padding-right: 15px">Huntr</th>
-            
-            <th>Status</th>
-        </tr>
-        {% for i in listings %}
-        <tr>
-        {% if i.status == 'Completed' and i.huntee == request.user or i.status == 'Completed' and i.hunter == request.user %}
-            <td style="padding-right: 15px">{{i.title}}</td>
-            <td style="padding-right: 15px">{{i.description}}</td>
-            <td style="padding-right: 15px">{{i.huntee}}</td>
-            <td style="padding-right: 15px">{{i.hunter}}</td>
-            <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.hunter}}">Contact Hunter</a></td>{% endif %}
-            {% if i.hunter == request.user %}<td style="padding-right: 15px"><a href="../contacts/conversation/{{i.huntee}}">Contact Huntee</a></td>{% endif %}
-        {% endif %}
-        {% endfor %}
-        </tr>
-    </table>
-    <hr>
-    <hr>
-    <table>
-        <h2>Payment Issued for Listings</h2>
-        <tr>
-            <th style="padding-right: 15px">Title</th>
-            <th style="padding-right: 15px">Description</th>
-            <th style="padding-right: 15px">Owner</th>
-            <th style="padding-right: 15px">Huntr</th>
+<!--If searching, don't display-->
+<div id="ListingsMain">
+    <div class="content-section">
+    <h2>All Current Listings</h2>
+        <table>
+            <tr>
+                <th style="padding-right: 15px">Title</th>
+                <th style="padding-right: 15px">Description</th>
+                <th style="padding-right: 15px">Price</th>
+                <th style="padding-right: 15px">Owner</th>
+                <th style="padding-right: 15px">Tags</th>
+                <th style="padding-right: 15px"></th>
+                <th style="padding-right: 15px"></th>
+                <th>Status</th>
+            </tr>
+            {% for i in listings %}
+            <tr>
+            {% if i.status != 'Complete' and i.status != 'Claimed' and i.status != 'Payment Issued' %}
+                <td style="padding-right: 15px">{{i.title}}</td>
+                <td style="padding-right: 15px">{{i.description}}</td>
+                <td style="padding-right: 15px">${{i.price}}</td>
+                <td style="padding-right: 15px">{{i.huntee}}</td>
+                <td style="padding-right: 15px">{{i.tag1}}</td>
+                <td style="padding-right: 15px">{{i.tag2}}</td>
+                <td style="padding-right: 15px">{{i.tag3}}</td>
+                <td style="padding-right: 15px">{{i.status}}</td>
+                {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
+                {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
+                {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><form method="POST" action="{% url 'claim_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" type="submit" value="Claim"></form></td>{% endif %}
+            {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        <hr>
+        <div class="content-section">
+        <table>
+            <h2>My Hunted Listings</h2>
+            <tr>
+                <th style="padding-right: 15px">Title</th>
+                <th style="padding-right: 15px">Description</th>
+                <th style="padding-right: 15px">Owner</th>
+                <th style="padding-right: 15px">Huntr</th>
+                <th>Status</th>
+            </tr>
+            {% for i in listings %}
+            <tr>
+            {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
+                <td style="padding-right: 15px">{{i.title}}</td>
+                <td style="padding-right: 15px">{{i.description}}</td>
+                <td style="padding-right: 15px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
+                <td style="padding-right: 15px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
+                {% if i.hunter == request.user and i.status == 'Claimed' %}<td><form method="POST" action="{% url 'return_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" type="submit" value="Release"></form></td>{% endif %}
 
-            <th>Status</th>
-        </tr>
-        {% for i in listings %}
-        <tr>
-        {% if i.status == 'Payment Issued' and i.huntee == request.user or i.status == 'Payment Issued' and i.hunter == request.user %}
-            <td style="padding-right: 15px">{{i.title}}</td>
-            <td style="padding-right: 15px">{{i.description}}</td>
-            <td style="padding-right: 15px">{{i.huntee}}</td>
-            <td style="padding-right: 15px">{{i.hunter}}</td>
-            <td style="padding-right: 15px">{{i.status}}</td>
-            {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
-            <td style="padding-right: 15px"><a href="../receipt/{{i.id}}">Receipt</a></td>
-        {% endif %}
-        {% endfor %}
-        </tr>
-</table>
+            {% endif %}
+            {% endfor %}
+            </tr>
+        </table>
+        </div>
+        <hr>
+        <div class="content-section">
+        <table>
+            <h2>My Completed Listings</h2>
+            <tr>
+                <th style="padding-right: 15px">Title</th>
+                <th style="padding-right: 15px">Description</th>
+                <th style="padding-right: 15px">Owner</th>
+                <th style="padding-right: 15px">Huntr</th>
+                
+                <th>Status</th>
+            </tr>
+            {% for i in listings %}
+            <tr>
+            {% if i.status == 'Complete' and i.huntee == request.user or i.status == 'Complete' and i.hunter == request.user %}
+                <td style="padding-right: 15px">{{i.title}}</td>
+                <td style="padding-right: 15px">{{i.description}}</td>
+                <td style="padding-right: 15px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
+                <td style="padding-right: 15px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
+                {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
+            {% endif %}
+            {% endfor %}
+            </tr>
+        </table>
+        </div>
+        <hr>
+        <div class="content-section">
+        <table>
+            <h2>Payment Issued for Listings</h2>
+            <tr>
+                <th style="padding-right: 15px">Title</th>
+                <th style="padding-right: 15px">Description</th>
+                <th style="padding-right: 15px">Owner</th>
+                <th style="padding-right: 15px">Huntr</th>
+
+                <th>Status</th>
+            </tr>
+            {% for i in listings %}
+            <tr>
+            {% if i.status == 'Payment Issued' and i.huntee == request.user or i.status == 'Payment Issued' and i.hunter == request.user %}
+                <td style="padding-right: 15px">{{i.title}}</td>
+                <td style="padding-right: 15px">{{i.description}}</td>
+                <td style="padding-right: 15px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
+                <td style="padding-right: 15px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
+                {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
+                <td style="padding-right: 15px"><a href="../receipt/{{i.id}}">Receipt</a></td>
+            {% endif %}
+            {% endfor %}
+            </tr>
+    </table>
+    </div>
+</div>
+<!--endif-->
 {% endblock %}

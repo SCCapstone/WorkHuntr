@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Listings
+from .models import Update
 
 TAGS = [
     ('NONE', 'NONE'),
@@ -18,6 +19,14 @@ TYPE = [
     ('Visa', 'Visa'),
     ('American Express', 'American Express'),
     ('Discover', 'Discover')
+]
+
+UPDATESTATUSES = [
+    ('Started', 'Started'),
+    ('Milestone 1', 'Milestone 1'),
+    ('Milestone 2', 'Milestone 2'),
+    ('Milestone 3', 'Milestone 3'),
+    ('Complete', 'Complete')
 ]
 
 STATE = [
@@ -107,3 +116,14 @@ class PaymentForm(forms.Form):
     billing_state = forms.ChoiceField(widget=forms.Select(), choices=STATE, required=True, help_text="State Containing Billing Street Address")
     zip = forms.IntegerField(min_value=501, max_value=99999, required=True, help_text="Zip Code of Billing Address")
     
+class UpdateForm(forms.ModelForm):
+
+    status = forms.ChoiceField(choices = UPDATESTATUSES, required=True)
+    description = forms.CharField(required=True)
+
+    class Meta:
+        model = Update
+        fields = ['status','description']
+
+class MyListingsForm(forms.Form):
+    Listings = forms.ModelChoiceField(queryset=Listings.objects.values_list("title", flat=True).distinct(), empty_label=None)
