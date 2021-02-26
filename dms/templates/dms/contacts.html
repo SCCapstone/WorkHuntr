@@ -9,15 +9,17 @@
 <div class="content-section" style="background-color: #8fbdc7">
     <div class="media">
         <div class="media-body">
-            <h2 class="account-heading">Contacts</h2>
+            <h2 class="account-heading">Messages</h2>
             {% if contacts_messages %}
             {% for contact, message in contacts_messages.items %}
+            {% if contact %}
             <hr class="rounded">
             <h5>
                 <img class="rounded-circle" width="50" height="50" src="{{ contact.profile.profile_picture.url }}">
                 <a class="ml-2" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a><p class="text-secondary" style="text-align:right;"><a class="ml-2" href="{% url 'info' username=contact.username %}">Delete</a></p>
                 <p class="text-secondary">{{ message.content }}</p>
             </h5>
+            {% endif %}
             {% endfor %}
             {% endif %}
         </div>
