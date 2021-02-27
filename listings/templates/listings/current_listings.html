@@ -3,13 +3,14 @@
 {% block content %}
 <table>
     <tr>
-    {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'">Create Listing</button></td>{% endif %}
+    {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'"  class="btn btn-outline-info" style="background-color: #e3d6ab;">Create Listing</button></td>{% endif %}
     </tr>
 </table>
 <!--If searching, don't display-->
 <div id="ListingsMain">
-    <div class="content-section">
+    <div class="content-section" style="background-color: #8fbdc7; width: 190%">
     <h2>All Open Listings</h2>
+        <hr class="rounded">
         <table>
             <tr>
                 <th style="padding-right: 15px">Title</th>
@@ -32,18 +33,19 @@
                 <td style="padding-right: 15px">{{i.tag2}}</td>
                 <td style="padding-right: 15px">{{i.tag3}}</td>
                 <td style="padding-right: 15px">{{i.status}}</td>
-                {% if i.huntee == request.user %}<td style="padding-right: 15px"><a href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
-                {% if i.huntee == request.user %}<td><a href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
-                {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><form method="POST" action="{% url 'claim_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" type="submit" value="Claim"></form></td>{% endif %}
+                {% if i.huntee == request.user %}<td style="padding-right: 15px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
+                {% if i.huntee == request.user %}<td><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
+                {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><form method="POST" action="{% url 'claim_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Claim"></form></td>{% endif %}
             {% endif %}
             </tr>
             {% endfor %}
         </table>
         </div>
         <hr>
-        <div class="content-section">
+        <div class="content-section" style="background-color: #8fbdc7; width: 190%">
         <table>
             <h2>My Hunted Listings</h2>
+            <hr class="rounded">
             <tr>
                 <th style="padding-right: 15px">Title</th>
                 <th style="padding-right: 15px">Description</th>
@@ -67,9 +69,10 @@
         </table>
         </div>
         <hr>
-        <div class="content-section">
+        <div class="content-section" style="background-color: #8fbdc7; width: 190%">
         <table>
             <h2>My Completed Listings</h2>
+            <hr class="rounded">
             <tr>
                 <th style="padding-right: 15px">Title</th>
                 <th style="padding-right: 15px">Description</th>
@@ -93,7 +96,7 @@
         </table>
         </div>
         <hr>
-        <div class="content-section">
+        <div class="content-section" style="background-color: #8fbdc7; width: 190%">
         <table>
             <h2>Payment Issued for Listings</h2>
             <tr>

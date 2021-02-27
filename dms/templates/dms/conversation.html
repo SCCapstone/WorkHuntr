@@ -13,6 +13,7 @@
                 <h2 class="account-heading">{{ contact.username }}</h2>
                 {% if conversation %}
                 {% for m in conversation %}
+                <hr class="rounded">
                 {% if m.sender != request.user %}
                 <p class="text-secondary" style="text-align:left;"><img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}">{{ m.sender }}</p><p style="text-align:left;">{{ m.content }}</p><p style="text-align:right;">{{ m.sent_at }}</p></h2>
                 {% else %}

@@ -6,7 +6,7 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="content-section" style="background-color:#8fbdc7;">
+<div class="content-section" style="background-color:#8fbdc7; width: 100%;">
     <form method="POST">
     {% csrf_token %}
         <fieldset class="form-group">
@@ -28,13 +28,13 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-3 mb-0">
+                <div class="form-group col-md-4 mb-0">
                     <b>{{ form.title|as_crispy_field }}</b>
                 </div>
-                <div class="form-group col-md-3 mb-0">
+                <div class="form-group col-md-4 mb-0">
                     <b>{{ form.birthday|as_crispy_field }}</b>
                 </div>
-                <div class="form-group col-md-5 mb-0">
+                <div class="form-group col-md-4 mb-0">
                     <b>{{ form.gender|as_crispy_field }}</b>
                 </div>
             </div>
@@ -60,7 +60,7 @@
             </div>
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            <button class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;">Sign Up</button>
         </div>
     </form>
     <div class="border-top pt-3">
