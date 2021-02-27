@@ -1,0 +1,74 @@
+{% extends "workhuntr/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div id="mainContent" style="height: 100%; float: left; margin: 10px;">
+    <form method="POST"> 
+        {{ ownedListings }}
+    </form>
+    <h3>{{item.title}}</h3>
+    <p>Current Status: {{item.status}}</p>
+    <br>
+    <div class="content-section" style="position: relative; width: 100%;">
+        {% if item.status == 'Started' %}
+            <div id="ProgressBar" style="background-color: green; width: 18.2%; z-index: 10; position: absolute;">&nbsp;</div>
+        {% elif item.status == 'Milestone 1' %}
+            <div id="ProgressBar" style="background-color: green; width: 36.4%; z-index: 10; position: absolute;">&nbsp;</div>
+        {% elif item.status == 'Milestone 2' %}
+            <div id="ProgressBar" style="background-color: green; width: 54.6%; z-index: 10; position: absolute;">&nbsp;</div>
+        {% elif item.status == 'Milestone 3' %}
+            <div id="ProgressBar" style="background-color: green; width: 72.8%; z-index: 10; position: absolute;">&nbsp;</div>
+        {% elif item.status == 'Complete' or item.status == 'Payment Issued' %}
+            <div id="ProgressBar" style="background-color: green; width: 91%; z-index: 10; position: absolute;">&nbsp;</div>
+        {% else %}
+            <div id="ProgressBar" style="background-color: green; width: 1%; z-index: 10; position: absolute;">&nbsp;</div>
+        {% endif %}
+        <div id= "progressBackground" style="background-color: red; width: 91%; position: absolute;">&nbsp;</div>
+        <hr>
+        <table>
+            <tr>
+                <td style="width: 18.2%; text-align: center;"><font size = "2">Started</font></td>
+                <td style="width: 18.2%; text-align: center;"><font size = "2">Milestone 1</font></td>
+                <td style="width: 18.2%; text-align: center;"><font size = "2">Milestone 2</font></td>
+                <td style="width: 18.2%; text-align: center;"><font size = "2">Milestone 3</font></td>
+                <td style="width: 18.2%; text-align: center;"><font size = "2">Complete</font></td>
+            </tr>
+        </table>
+    </div>
+
+    <br>
+    <div class="content-section">
+        <table>
+            <tr>
+                <th> | </th>
+                <th style="width: 21%;">Date</th>
+                <th> | </th>
+                <th style="width: 79%;">Update</th>
+                <th> | </th>
+            </tr>
+            {% for update in updates %}
+            {% if update.listing.id == item.id %}
+            <tr>
+                <td> | </td>
+                <td style="width: 21%;">{{update.date}}</td>
+                <td> | </td>
+                <td style="width: 79%;">{{update.status}}: {{update.description}}</td>
+                <td> | </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% if item.hunter == request.user and item.status != 'Payment Issued' %}
+    <div class="content-section" id="updateForm" style="width: 30%; float: left; position: fixed; left: 65%; top: 25%;">
+        <p style="text-align: center;">New Update</p>
+        <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{ form|crispy }}
+            <input class="btn btn-primary" type="submit" value="Update" name='update' style="position: relative; left: 36.5%;"/>
+        </fieldset>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}
