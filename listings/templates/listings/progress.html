@@ -2,9 +2,17 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div id="mainContent" style="height: 100%; width: 100%; float: left; margin: 10px; background-color: #8fbdc7;">
-    <form method="POST"> 
-        {{ ownedListings }}
+    <form method="POST" style="display: inline;"> 
+    {% csrf_token %}
+        <select id="myListings" name="selected">
+        {% for listing in listings %}
+        {% if listing.huntee == request.user or listing.hunter == request.user %}
+            <option value="{{ listing.id }}">{{listing.title}}</option>
+        {% endif %}
+        {% endfor %}
+        </select>
     </form>
+    <button type="submit" onclick="../progress/{{">Go</button>
     <h3>{{item.title}}</h3>
     <p>Current Status: {{item.status}}</p>
     <br>

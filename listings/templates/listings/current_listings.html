@@ -7,6 +7,15 @@
     </tr>
 </table>
 <!--If searching, don't display-->
+
+<div id="searching">
+    <form action="{% url 'current_listings' %}">
+    {% csrf_token %}
+    <input type="search" placeholder="Search" aria-label="Search" name="search">
+
+    <button type="submit" class="btn btn-outline-info" style="background-color: #e3d6ab;">Search</button>
+    </form>
+</div>
 <div id="ListingsMain">
     <div class="content-section" style="background-color: #8fbdc7; width: 190%">
     <h2>All Open Listings</h2>

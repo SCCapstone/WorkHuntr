@@ -33,7 +33,12 @@ def create_listings(request):
 
 @login_required
 def current_listings(request):
-    listings = Listings.objects.all()
+    
+    search_query = request.GET.get('search', '')
+    if search_query:
+        listings = Listings.objects.filter(title__icontains=search_query)
+    else:
+        listings = Listings.objects.all()
     context = {'listings': listings, 'user': request.user}
     return render(request, 'listings/current_listings.html', context)
 
@@ -41,10 +46,14 @@ def current_listings(request):
 def progress(request, pk):
     listings = Listings.objects.all()
     updates = Update.objects.all()
-    ownedListings = MyListingsForm()
-    item = Listings.objects.get(id=pk)
+
+    select_page = request.GET.get('selected', '')
+    if select_page:
+        item = Listings.objects.get(title=select_page)
+    else: 
+        item = Listings.objects.get(id=pk)
     form = UpdateForm(request.POST)
-    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form, 'ownedListings': ownedListings}
+    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form}
     if request.method == 'POST':
         if form.is_valid():
                 update = form.save(commit=False)
@@ -151,3 +160,4 @@ def receipt(request, pk):
     else:
         context = {'listing': listing}
         return render(request, 'listings/receipt.html', context)
+
