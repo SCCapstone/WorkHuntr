@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -36,7 +37,7 @@ def current_listings(request):
     
     search_query = request.GET.get('search', '')
     if search_query:
-        listings = Listings.objects.filter(title__icontains=search_query)
+        listings = Listings.objects.filter(Q(title__icontains=search_query) | Q(tag1__icontains=search_query) | Q(tag2__icontains=search_query) | Q(tag3__icontains=search_query))
     else:
         listings = Listings.objects.all()
     context = {'listings': listings, 'user': request.user}
