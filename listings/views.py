@@ -102,6 +102,7 @@ def delete_listing(request, pk):
         return redirect('/current_listings/')
     return render(request, 'listings/delete_listing.html', {'item':item})
 
+@login_required
 def return_listing(request, pk):
     listing = Listings.objects.get(id=pk)
     listing.status = 'Strutting'

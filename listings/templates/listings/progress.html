@@ -7,12 +7,16 @@
         <select id="myListings" name="selected">
         {% for listing in listings %}
         {% if listing.huntee == request.user or listing.hunter == request.user %}
-            <option value="{{ listing.id }}">{{listing.title}}</option>
+            {% if listing.id == item.id %}
+            <option value="{{ listing.id }}" selected="selected">{{listing.title}}</option>
+            {% else %}
+            <option value="{{ listing.id }}" >{{listing.title}}</option>
+            {% endif %}
         {% endif %}
         {% endfor %}
         </select>
     </form>
-    <button type="submit" onclick="../progress/{{">Go</button>
+    <button type="submit" onclick=onClick()>Go</button>
     <h3>{{item.title}}</h3>
     <p>Current Status: {{item.status}}</p>
     <br>
@@ -63,6 +67,7 @@
     </div>
 </div>
 {% if item.hunter == request.user and item.status != 'Payment Issued' %}
+    {% if item.hunter == request.user and item.status != 'Complete' %}
     <div class="content-section" id="updateForm" style="background-color: #8fbdc7; width: 30%; float: left; position: fixed; left: 65%; top: 25%;">
         <h2 style="text-align: center;">New Update</h2>
         <form method="POST">
@@ -73,5 +78,12 @@
         </fieldset>
         </form>
     </div>
+    {% endif %}
 {% endif %}
+<script>
+function onClick() {
+    listing = document.getElementById('myListings').value
+    window.location = "../progress/" + listing
+}
+</script>
 {% endblock %}
