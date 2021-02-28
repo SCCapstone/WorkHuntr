@@ -1,12 +1,56 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h2>Issue Payment</h2>
-<p>Payment to be issued in the amount of ${{listing.price}} to {{listing.hunter}} for {{listing}} completed {{listing.paid_date}}.</p>
-<form method="POST">
-{% csrf_token %}
-{{form|crispy }}
-    <input class="btn btn-primary" type="submit" value="Issue Payment" />
-	<a href="{% url 'current_listings' %}" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="content-section" style="background-color:#8fbdc7; width: 100%;">
+    <h2>Issue Payment</h2>
+    <p>Payment to be issued in the amount of ${{listing.price}} to {{listing.hunter}} for {{listing}} completed {{listing.paid_date}}.</p>
+    <form method="POST">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-0">
+            <b>{{ form.first_name|as_crispy_field }}</b>
+        </div>
+        <div class="form-group col-md-6 mb-0">
+            <b>{{ form.last_name|as_crispy_field }}</b>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.type|as_crispy_field }}</b>
+        </div>
+        <div class="form-group col-md-8 mb-0">
+            <b>{{ form.card_number|as_crispy_field }}</b>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.exp_month|as_crispy_field }}</b>
+        </div>
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.exp_year|as_crispy_field }}</b>
+        </div>
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.cvv|as_crispy_field }}</b>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12 mb-0">
+            <b>{{ form.street_address|as_crispy_field }}</b>
+        </div>
+    </div>
+        <div class="form-row">
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.billing_city|as_crispy_field }}</b>
+        </div>
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.billing_state|as_crispy_field }}</b>
+        </div>
+        <div class="form-group col-md-4 mb-0">
+            <b>{{ form.zip|as_crispy_field }}</b>
+        </div>
+    </div>
+        <input class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;" value="Issue Payment" />
+        <a href="{% url 'current_listings' %}" class="btn btn-outline-info" style="background-color: #e3d6ab;">Cancel</a>
+    </form>
+</div>
 {% endblock %}

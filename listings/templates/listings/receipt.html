@@ -1,6 +1,7 @@
 {% extends "workhuntr/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="content-section" style="background-color:#8fbdc7; width: 100%;">
 <h2>Receipt for {{listing}}</h2>
 <p>Listing Title: {{listing.title}}</p>
 <p>Listing ID: {{listing.id}}</p>
@@ -8,8 +9,7 @@
 <p>Paid by: {{listing.huntee}}</p>
 <p>Paid to: {{listing.hunter}}</p>
 <p>Paid on: {{listing.paid_date}}</p>
-{% csrf_token %}
-{{form|crispy }}
-	<a href="{% url 'current_listings' %}" class="btn btn-secondary">Back</a>
+	<a href="{% url 'current_listings' %}" class="btn btn-outline-info" style="background-color: #e3d6ab;"">Back</a>
 </form>
+</div>
 {% endblock %}
