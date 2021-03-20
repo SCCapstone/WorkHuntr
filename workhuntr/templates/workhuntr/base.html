@@ -26,20 +26,23 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle">
-                        <div class="navbar-nav mr-auto"></div>
-                        <div class="navbar-nav">
                         {% if user.is_authenticated %}
+                        <div class="navbar-nav">
                             <a class="nav-item nav-link" href="{% url 'profile' username=request.user.username %}">Profile</a>
                             <a class="nav-item nav-link" href="{% url 'current_listings' %}">Listings</a>
                             <a class="nav-item nav-link" href="{% url 'contacts' %}">Messages</a>
+                        </div>
+                            <div class="navbar-nav ml-auto">
                             <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                            </div>
                         {% else %}
+                            <div class="navbar-nav ml-auto">
                             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                             <a class="nav-item nav-link" href="{% url 'create_account' %}">Create Account</a>
-                            <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
+                                <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
+                            </div>
                         {% endif %}
-                        </div>
                     </div>
                 </div>
             </nav>
