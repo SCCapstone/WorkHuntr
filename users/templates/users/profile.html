@@ -37,6 +37,7 @@
         </div>
     </div>
 </div>
+{% if user.profile.resume.url != 'default/default.pdf' or user.profile.website != '' %}
 <div class="content-section" style="background-color: #8fbdc7;  width:120%;">
     <div class="media">
         <div class="media-body">
@@ -49,13 +50,15 @@
         </div>
     </div>
 </div>
+{% endif %}
+{% if comments %}
 <div class="content-section" style="background-color: #8fbdc7;  width:120%;" >
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Comments & Rating
             {% if request.user != user and request.user.profile.account_type == 'Huntee' and user.profile.account_type != 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add Comment</a> </h2>{% endif %}
             <hr class="rounded">
-            {% if comments %}
+
             {% for comment in comments %}
             <h5>
                 <img class="rounded-circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">

@@ -144,3 +144,6 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.nav-item.active a {
+  color: #e3d6ab;
+}
