@@ -3,7 +3,7 @@
     Code Author: Corey Schafer
 -->
 
-{% extends "workhuntr/base.html" %}
+{% extends "workhuntr/profileNav.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
 {% if request.user == user or user.profile.privacy == 'Public' %}
@@ -51,7 +51,7 @@
     </div>
 </div>
 {% endif %}
-{% if comments %}
+{% if comments or request.user != user and request.user.profile.account_type == 'Huntee' and user.profile.account_type != 'Huntee'%}
 <div class="content-section" style="background-color: #8fbdc7;  width:120%;" >
     <div class="media">
         <div class="media-body">
