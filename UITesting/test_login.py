@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 # For testing a successful login
 
 # WorkHuntr test login
-USERNAME = "testUser"
+USERNAME = "testMaker"
 PASSWORD = "Workhuntr1"
 
 driver = webdriver.Chrome("chromedriver.exe")

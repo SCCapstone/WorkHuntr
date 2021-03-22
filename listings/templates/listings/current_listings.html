@@ -36,7 +36,7 @@
 
 <table>
     <tr>
-    {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'"  class="btn btn-outline-info" style="background-color: #e3d6ab;">Create Listing</button></td>{% endif %}
+    {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'" id="CreateListingBTN" class="btn btn-outline-info" style="background-color: #e3d6ab;">Create Listing</button></td>{% endif %}
     </tr>
 </table>
 <!--If searching, don't display-->

@@ -14,16 +14,16 @@
         {% if user.is_authenticated %}
         <div class="row text-center" style="background-color: #8fbdc7">
             <div class="col-sm-3">
-                <a href="{% url 'profile' username=request.user.username %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Profile</a>
+                <a href="{% url 'profile' username=request.user.username %}" class="btn btn-outline-info" id="dashProfileButton" type="button" style="background-color: #e3d6ab">Profile</a>
             </div>
             <div class="col-sm-3">
-                <a href="{% url 'current_listings' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Listing</a>
+                <a href="{% url 'current_listings' %}" class="btn btn-outline-info" id="dashListingButton" type="button" style="background-color: #e3d6ab">Listing</a>
             </div>
             <div class="col-sm-3">
-                <a href="{% url 'contacts' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Messages</a>
+                <a href="{% url 'contacts' %}" class="btn btn-outline-info" id="dashMessageButton" type="button" style="background-color: #e3d6ab">Messages</a>
             </div>
             <div class="col-sm-3">
-                <a href="{% url 'faq' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">FAQ</a>
+                <a href="{% url 'faq' %}" class="btn btn-outline-info" id="dashFAQButton" type="button" style="background-color: #e3d6ab">FAQ</a>
             </div>
         </div>
         {% else %}
