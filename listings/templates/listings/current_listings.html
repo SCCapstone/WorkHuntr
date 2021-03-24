@@ -6,51 +6,35 @@
 <head>
     <style>
         button.accordion {
-        background-color: #8fbdc7;
-        color: #444;
-        cursor: pointer;
-        padding: 15px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-        transition: 0.4s;
-    }
-
-    button.accordion.active, button.accordion:hover {
-        background-color: #e3d6ab;
-    }
-
-    div.panel {
-        padding: 0 18px;
-        display: none;
-        background-color: #8fbdc7;
-    }
-
-    div.panel.show {
-        display: block !important;
-}
+            background-color: #8fbdc7;
+            color: #444;
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+        button.accordion.active, button.accordion:hover {
+            background-color: #e3d6ab;
+        }
+        div.panel {
+            padding: 0 18px;
+            display: none;
+            background-color: #8fbdc7;
+        }
+        div.panel.show {
+            display: block !important;
+        }
     </style>
 </head>
-
 <table>
     <tr>
     {% if request.user.profile.account_type == 'Huntee' %}<td><button onclick="location.href='/create_listings'" id="CreateListingBTN" class="btn btn-outline-info" style="background-color: #e3d6ab;">Create Listing</button></td>{% endif %}
     </tr>
 </table>
-<!--If searching, don't display-->
-
-<div id="searching">
-    <form action="{% url 'current_listings' %}">
-    {% csrf_token %}
-    <input type="search" placeholder="Search" aria-label="Search" name="search">
-
-    <button type="submit" class="btn btn-outline-info" style="background-color: #e3d6ab;">Search</button>
-    </form>
-</div>
-
-
 <div id="ListingsMain">
     <div class="content-section" style="background-color: #8fbdc7; width: 190%">
     <h2>All Open Listings</h2>
@@ -100,7 +84,6 @@
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
                 {% if i.hunter == request.user and i.status == 'Claimed' %}<td><form method="POST" action="{% url 'return_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Release"></form></td>{% endif %}
-
             {% endif %}
             {% endfor %}
             </tr>
@@ -159,18 +142,14 @@
     </table>
     </div>
 </div>
-<!--endif-->
-
 <script>
     var acc = document.getElementsByClassName("accordion");
     var i;
-
     for (i = 0; i < acc.length; i++) {
-        acc[i].onclick = function(){
+        acc[i].onclick = function() {
             this.classList.toggle("active");
             this.nextElementSibling.classList.toggle("show");
-  }
-}
+        }
+    }
 </script>
-
 {% endblock %}

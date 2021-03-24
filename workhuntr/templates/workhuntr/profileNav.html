@@ -32,16 +32,23 @@
                             <a class="nav-item nav-link" href="{% url 'current_listings' %}">Listings</a>
                             <a class="nav-item nav-link" href="{% url 'contacts' %}">Messages</a>
                         </div>
-                            <div class="navbar-nav ml-auto">
+                        <div id="searching">
+                            <form action="{% url 'current_listings' %}">
+                                {% csrf_token %}
+                                <input type="search" placeholder="Search" aria-label="Search" name="search">
+                                <button type="submit" class="btn btn-outline-info" style="background-color: #e3d6ab;">Search</button>
+                            </form>
+                        </div>
+                        <div class="navbar-nav ml-auto">
                             <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                            </div>
+                        </div>
                         {% else %}
-                            <div class="navbar-nav ml-auto">
+                        <div class="navbar-nav ml-auto">
                             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                             <a class="nav-item nav-link" href="{% url 'create_account' %}">Create Account</a>
-                                <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
-                            </div>
+                            <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
