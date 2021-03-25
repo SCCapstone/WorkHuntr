@@ -25,7 +25,7 @@ class UserCreateAccountForm(UserCreationForm):
         fields = ['title', 'first_name', 'last_name', 'birthday', 'gender', 'current_employment', 'account_type', 'username', 'email', 'password1', 'password2']
 
 class CodeForm(forms.ModelForm):
-    number = forms.CharField(label='Code', help_text='Enter SMS verification code.')
+    number = forms.CharField(label='Code', help_text='Enter email verification code.')
 
     class Meta:
         model = Code
