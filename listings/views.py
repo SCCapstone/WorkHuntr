@@ -26,7 +26,7 @@ def create_listings(request):
             listing.huntee = request.user
             listing.save()
             messages.success(request, f'The listing '+ listing.title +' has been created!')
-            return redirect('/current_listings/')
+            return redirect('current_listings')
         else:
             messages.error(request, f'The listing could not be created!')
     context = {'listings':listings, 'form':form}
@@ -34,7 +34,6 @@ def create_listings(request):
 
 @login_required
 def current_listings(request):
-    
     search_query = request.GET.get('search', '')
     if search_query:
         listings = Listings.objects.filter(Q(title__icontains=search_query) | Q(tag1__icontains=search_query) | Q(tag2__icontains=search_query) | Q(tag3__icontains=search_query))
@@ -47,7 +46,6 @@ def current_listings(request):
 def progress(request, pk):
     listings = Listings.objects.all()
     updates = Update.objects.all()
-
     select_page = request.GET.get('selected', '')
     if select_page:
         item = Listings.objects.get(title=select_page)
@@ -86,7 +84,7 @@ def modify_listings(request, pk):
             listing.tag3 = form.cleaned_data.get('tag3')
             listing.save()
             messages.success(request, f'Your listing '+ listing.title + ' has been modified!')
-        return redirect('/current_listings/')
+        return redirect('current_listings')
     else:
         form = ModifyListingForm(instance=listing)
     modifiable = False
@@ -100,7 +98,7 @@ def delete_listing(request, pk):
     item = Listings.objects.get(id=pk)
     if request.method == "POST":
         item.delete()
-        return redirect('/current_listings/')
+        return redirect('current_listings')
     return render(request, 'listings/delete_listing.html', {'item':item})
 
 @login_required
@@ -113,7 +111,7 @@ def return_listing(request, pk):
     huntee = listing.huntee
     content = 'Your listing ' + listing.title + ' has been returned to current listings by ' + str(listing.hunter) + '.'
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
-    return redirect('/current_listings/')
+    return redirect('current_listings')
 
 @login_required
 def claim_listing(request, pk):
@@ -125,7 +123,7 @@ def claim_listing(request, pk):
     huntee = listing.huntee
     content = 'Your listing ' + listing.title + ' has been marked claimed by ' + str(listing.hunter) + '! Please contact this user if more instructions are needed.'
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
-    return redirect('/current_listings/')
+    return redirect('current_listings')
 
 @login_required
 def complete_listing(request, pk):
@@ -136,7 +134,7 @@ def complete_listing(request, pk):
     huntee = listing.huntee
     content = 'Your listing ' + listing.title + ' has been marked completed by ' + str(listing.hunter) + '! Please issue payment for completed listing.'
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
-    return redirect('/current_listings/')
+    return redirect('current_listings')
 
 @login_required
 def issue_payment(request, pk):
@@ -149,7 +147,7 @@ def issue_payment(request, pk):
         hunter = listing.hunter
         content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
-        return redirect('/current_listings/')
+        return redirect('current_listings')
     else:
         context = {'form': PaymentForm(), 'listing':listing}
         return render(request, "listings/issue_payment.html", context)
@@ -158,7 +156,7 @@ def issue_payment(request, pk):
 def receipt(request, pk):
     listing = Listings.objects.get(id=pk)
     if request.method == "POST":
-        return redirect('/current_listings/')
+        return redirect('current_listings')
     else:
         context = {'listing': listing}
         return render(request, 'listings/receipt.html', context)

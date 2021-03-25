@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Comment, Profile
+from .models import Code, Comment, Profile
 
 GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer Not to Say", "Prefer Not to Say"))
 TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
@@ -23,6 +23,13 @@ class UserCreateAccountForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['title', 'first_name', 'last_name', 'birthday', 'gender', 'current_employment', 'account_type', 'username', 'email', 'password1', 'password2']
+
+class CodeForm(forms.ModelForm):
+    number = forms.CharField(label='Code', help_text='Enter SMS verification code.')
+
+    class Meta:
+        model = Code
+        fields = ['number']
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True)

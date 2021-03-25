@@ -3,13 +3,32 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from django.urls import reverse
 from PIL import Image
+import random
+
+class Code(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    number = models.CharField(max_length=5, blank=True)
+
+    def __str__(self):
+        return str(self.number)
+
+    def save(self):
+        super().save()
+        number_list = [x for x in range(0, 10)]
+        code_items = []
+        for i in range(0, 5):
+            num = random.choice(number_list)
+            code_items.append(num)
+        code_string = "".join(str(item) for item in code_items)
+        self.number = code_string
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone_number = models.CharField(max_length=12)
     title = models.CharField(default='Other', max_length=5)
     gender = models.CharField(default='Prefer Not to Say', max_length=20)
-    birthday = models.CharField(default="XXXX-XX-XX", max_length=10)
-    current_employment = models.CharField(default="No Employment", max_length=50)
+    birthday = models.CharField(default='XXXX-XX-XX', max_length=10)
+    current_employment = models.CharField(default='No Employment', max_length=50)
     account_type = models.CharField(default='Huntee', max_length=6)
     profile_picture = models.ImageField(default='default/default.jpg', upload_to='profile_pics')
     resume = models.FileField(upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)', null=True, blank=True)
