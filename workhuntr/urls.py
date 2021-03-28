@@ -17,13 +17,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, \
+    PasswordResetConfirmView, PasswordResetForm
 from django.urls import path, include
 from dms import views as dms_views
 from listings import views as listing_views
 from users import views as user_views
 from workhuntr import views as workhuntr_views
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, \
-    PasswordResetConfirmView, PasswordResetForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,6 +35,10 @@ urlpatterns = [
     path('login/', workhuntr_views.user_login, name='login'),
     path('verify/', workhuntr_views.verify, name='verify'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('reset_password/', PasswordResetView.as_view(template_name='users/password_reset.html'), name='password_reset'),
+    path('reset_password/done/', PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), name='password_reset_done'),
+    path('reset_password/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset_password/complete/', PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
     path('create_listings/', listing_views.create_listings, name='create_listings'),
     path('current_listings/',listing_views.current_listings, name='current_listings'),
@@ -49,11 +53,7 @@ urlpatterns = [
     path('contacts/', dms_views.contacts, name='contacts'),
     path('contacts/conversation/<username>', dms_views.conversation, name='conversation'),
     path('contacts/conversation/info/<username>', dms_views.info, name='info'),
-    path('faq/', workhuntr_views.faq, name='faq'),
-    path('reset_password/', PasswordResetView.as_view(), name='password_reset'),
-    path('reset_password/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset_password/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset_password/complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('faq/', workhuntr_views.faq, name='faq')
 ]
 
 if settings.DEBUG:
