@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 import datetime
 from django.contrib.auth.models import User
@@ -11,6 +10,7 @@ class TestListing(TestCase):
         Listings.objects.create(title='test', date=datetime.datetime.now(), price=1.0, description='this is a test',
                                 status='test', tag1='test1', tag2='test2', tag3='test3', huntee=self.user,
                                 hunter=self.user2)
+
     def test_Huntee(self):
         listing = Listings.objects.get(id=1)
         field_object = Listings._meta.get_field('huntee')
@@ -31,7 +31,6 @@ class TestListing(TestCase):
         value = field_object.value_from_object(listing)
         self.assertEqual(value, 'test')
         print("Title PASS")
-
 
     def test_Price(self):
         listing = Listings.objects.get(id=1)

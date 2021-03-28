@@ -11,8 +11,8 @@
         <div class="media">
             <div class="media-body">
                 <h2 class="account-heading">{{ contact.username }}</h2>
-                {% if conversation %}
-                {% for m in conversation %}
+                {% if msgs %}
+                {% for m in msgs %}
                 <hr class="rounded">
                 {% if m.sender != request.user %}
                 <p class="text-secondary" style="text-align:left;"><img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}">{{ m.sender }}</p><p style="float: left; padding-right: 30%;">{{ m.content }}</p><br><p style="text-align:right;">{{ m.sent_at }}</p></h2>
@@ -20,6 +20,23 @@
                 <p class="text-secondary" style="text-align:right;">{{ m.sender }}<img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}"></p><p style="float: right; padding-left: 30%;">{{ m.content }}</p><br><p style="text-align:left;">{{ m.sent_at }}</p></h2>
                 {% endif %}
                 {% endfor %}
+                {% endif %}
+                {% if msgs.has_other_pages %}
+                {% if msgs.has_previous %}
+                <a class="btn btn-outline-info mb-4" style="background-color: #e3d6ab;" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" style="background-color: #e3d6ab;" href="?page={{ msgs.previous_page_number }}">Previous</a>
+                {% endif %}
+                {% for num in msgs.paginator.page_range %}
+                {% if msgs.number == num %}
+                <a class="btn btn-info mb-4" style="background-color: #e3d6ab;" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > msgs.number|add:'-3' and num < msgs.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" style="background-color: #e3d6ab;" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+                {% if msgs.has_next %}
+                <a class="btn btn-outline-info mb-4" style="background-color: #e3d6ab;" href="?page={{ msgs.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" style="background-color: #e3d6ab;" href="?page={{ msgs.paginator.num_pages }}">Last</a>
+                {% endif %}
                 {% endif %}
             </div>
         </div>

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from .models import Message
 from .services import MessagingService
@@ -48,7 +49,15 @@ def conversation(request, username):
     for message in all_messages:
         if message.sender in users and message.recipient in users:
             conversation.append(message)
-    return render(request, 'dms/conversation.html', {'contact': contact, 'conversation': conversation})
+    page = request.GET.get('page', 1)
+    paginator = Paginator(conversation, 4)
+    try:
+        msgs = paginator.page(page)
+    except PageNotAnInteger:
+        msgs = paginator.page(1)
+    except EmptyPage:
+        msgs = paginator.page(paginator.num_pages)
+    return render(request, 'dms/conversation.html', {'contact': contact, 'msgs': msgs})
 
 @login_required
 def info(request, username):

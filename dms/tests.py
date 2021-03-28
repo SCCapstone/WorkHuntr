@@ -6,7 +6,6 @@ import pytz
 from django.db import models
 from django.utils import timezone
 
-
 class TestListing(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='sender', email='sender@...', password='test123')
