@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from .models import Message
 from .services import MessagingService
@@ -50,6 +50,7 @@ def conversation(request, username):
         if message.sender in users and message.recipient in users:
             conversation.append(message)
     page = request.GET.get('page', 1)
+    conversation = list(reversed(conversation))
     paginator = Paginator(conversation, 4)
     try:
         msgs = paginator.page(page)
