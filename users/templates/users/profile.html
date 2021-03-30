@@ -15,7 +15,7 @@
     </form> 
 </div>
 <br>
-<div class="content-section" style="background-color: #8fbdc7; width:120%;">
+<div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
         <div class="media-body">
@@ -27,7 +27,7 @@
         </div>
     </div>
 </div>
-<div class="content-section" style="background-color: #8fbdc7;  width:120%;">
+<div class="content-section" style="background-color: #8fbdc7;  width: 80%;">
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">About</h2>
@@ -39,7 +39,7 @@
     </div>
 </div>
 {% if user.profile.resume.url != 'default/default.pdf' or user.profile.website != '' or request.user == user %}
-<div class="content-section" style="background-color: #8fbdc7;  width:120%;">
+<div class="content-section" style="background-color: #8fbdc7;  width: 80%;">
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Resume & Work Samples</h2>
@@ -53,124 +53,114 @@
 </div>
 {% endif %}
 {% if request.user == user or skills or histories %}
-<div class="content-section" style="background-color: #8fbdc7; width:120%;">
+<div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Skills & Work History
             {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a><a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>{% endif %}</h2>
-            <div>
                 <hr class="rounded">
                 {% if skills %}
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
                             <h3 class="panel-title">
-                                <a class="collapsed" style="color: #e3d6ab;" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">Skills</a>
-                            </h3>
+                                <a class="collapsed" style="color: #e3d6ab; font-size: 1.5rem;" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">Skills</a></h3>
                         </div>
                         <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
                             <div class="panel-body px-3 mb-4">
                                 {% for skill in skills %}
-                                <h6>
-                                    {{ skill.skill }}
-                                </h6>
-                            {% endfor %}
+                                <h6>{{ skill.skill }}</h6>
+                                {% endfor %}
                             </div>
                             {% endif %}
                         </div>
                     </div>
                 </div>
-                 <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
-                {% if histories %}
+                <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                    {% if histories %}
                     <div class="panel panel-default">
                         <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
                             <h3 class="panel-title">
-                                <a class="collapsed" style="color: #e3d6ab;" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">Work Histories</a>
+                                <a class="collapsed" style="color: #e3d6ab; font-size: 1.5rem;" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">Work Histories</a>
                             </h3>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
                             <div class="panel-body px-3 mb-4">
                                 {% for history in histories %}
-                                <h5><b>
-                                    {{ history.company }}  |  {{history.start_date}} - {{history.end_date}}
-                                </b></h5>
-
-                                <h6>
-                                    {{ history.description }}
-                                </h6>
+                                <h5><b>{{ history.company }} </b> |  {{history.start_date}} - {{history.end_date}}</h5>
+                                <h6>{{ history.description }}</h6>
                                 <hr class="rounded">
-                            {% endfor %}
+                                {% endfor %}
                             </div>
-                            {% endif %}
+                    {% endif %}
                         </div>
                     </div>
-            </div>
+                </div>
         </div>
     </div>
 </div>
 {% endif %}
-{% if comments or request.user == user and user.profile.account_type != 'Huntee' %}
-<div class="content-section" style="background-color: #8fbdc7;  width:120%;" >
+{% if comments or request.user == user and user.profile.account_type == 'Hunter' %}
+<div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Comments & Rating
-            {% if request.user != user and request.user.profile.account_type == 'Huntee' and user.profile.account_type != 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add Comment</a> </h2>{% endif %}
+            {% if request.user != user and request.user.profile.account_type == 'Huntee' and user.profile.account_type != 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'add_comment' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add Comment</a>{% endif %}</h2>
             <hr class="rounded">
-
             {% for comment in comments %}
-            <h5>
-                <img class="rounded-circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
-                {{ comment.author.username }}  |  Company:  {{ comment.company }}
-            </h5>
-            <h6>
-                {% if comment.rating == '1' %}
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <span class="fa fa-star checked" style="color:orange"> </span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                {%endif%}
-                {% if comment.rating == '2' %}
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <span class="fa fa-star checked" style="color:orange"> </span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                {%endif%}
-                {% if comment.rating == '3' %}
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <span class="fa fa-star checked" style="color:orange"> </span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                {%endif%}
-                {% if comment.rating == '4' %}
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <span class="fa fa-star checked" style="color:orange"> </span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star"></span>
-                {%endif%}
-                {% if comment.rating == '5' %}
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <span class="fa fa-star checked" style="color:orange"> </span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                <span class="fa fa-star checked" style="color:orange"></span>
-                {%endif%}
-            <h6>
-            <h8>{{ comment.comment }}</h8>
-            <hr class="rounded">
+                <h5>
+                    <img class="rounded-circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
+                    {{ comment.author.username }}  |  Company:  {{ comment.company }}
+                </h5>
+                <h5>
+                    {% if comment.rating == '1' %}
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <span class="fa fa-star checked" style="color:orange"> </span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    {%endif%}
+                    {% if comment.rating == '2' %}
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <span class="fa fa-star checked" style="color:orange"> </span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    {%endif%}
+                    {% if comment.rating == '3' %}
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <span class="fa fa-star checked" style="color:orange"> </span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    {%endif%}
+                    {% if comment.rating == '4' %}
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <span class="fa fa-star checked" style="color:orange"> </span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star"></span>
+                    {%endif%}
+                    {% if comment.rating == '5' %}
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                    <span class="fa fa-star checked" style="color:orange"> </span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    <span class="fa fa-star checked" style="color:orange"></span>
+                    {%endif%}
+                </h5>
+                <h6>{{ comment.comment }}</h6>
+                <hr class="rounded">
             {% endfor %}
-            {% endif %}
         </div>
     </div>
 </div>
+{% endif %}
 {% else %}
 <h2>This user's profile is private.</h2>
 {% endif %}
