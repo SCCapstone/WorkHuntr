@@ -10,6 +10,7 @@
 		<p>Paid by: {{listing.huntee}}</p>
         <p>Paid to: {{listing.hunter}}</p>
         <p>Paid on: {{listing.paid_date}}</p>
+        <a onclick="window.print()" class="btn btn-outline-info" style="background-color: #e3d6ab; color: #2b95d4">Print Receipt</a>
 		<a href="{% url 'current_listings' %}" class="btn btn-outline-info" style="background-color: #e3d6ab;">Back</a>
 	</form>
 </div>
