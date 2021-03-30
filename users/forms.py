@@ -64,7 +64,9 @@ class AddSkillForm(forms.ModelForm):
 class AddHistoryForm(forms.ModelForm):
     company = forms.CharField(max_length=100, min_length=1, strip=True)
     description = forms.CharField(max_length=500, min_length=1, strip=True)
+    start_date = forms.CharField(max_length=10)
+    end_date = forms.CharField(max_length=10, help_text="If this is your current occupation, enter present")
 
     class Meta:
         model = History
-        fields = ['company', 'description']
+        fields = ['company', 'description', 'start_date', 'end_date']

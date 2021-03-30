@@ -45,7 +45,6 @@
             <h2 class="account-heading">Resume & Work Samples</h2>
             <div>
                 <hr class="rounded">
-                <a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>
                 {% if user.profile.resume.url != 'default/default.pdf' %}<a class="ml" href="{{ user.profile.resume.url }}">Resume</a>{% endif %}
                 {% if user.profile.website != '' %}<a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>{% endif %}
             </div>
@@ -53,14 +52,14 @@
     </div>
 </div>
 {% endif %}
-{% if request.user == user or skills or history %}
+{% if request.user == user or skills or histories %}
 <div class="content-section" style="background-color: #8fbdc7; width:120%;">
     <div class="media">
         <div class="media-body">
-            <h2 class="account-heading">Skills & Work History</h2>
+            <h2 class="account-heading">Skills & Work History
+            {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a><a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>{% endif %}</h2>
             <div>
                 <hr class="rounded">
-                {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>{% endif %}
                 {% if skills %}
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
@@ -80,8 +79,9 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a>{% endif %}
-                        {% if histories %}
+                </div>
+                 <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                {% if histories %}
                     <div class="panel panel-default">
                         <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
                             <h3 class="panel-title">
@@ -91,12 +91,14 @@
                         <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
                             <div class="panel-body px-3 mb-4">
                                 {% for history in histories %}
-                                <h5>
-                                    {{ history.company }}
-                                </h5>
+                                <h5><b>
+                                    {{ history.company }}  |  {{history.start_date}} - {{history.end_date}}
+                                </b></h5>
+
                                 <h6>
                                     {{ history.description }}
                                 </h6>
+                                <hr class="rounded">
                             {% endfor %}
                             </div>
                             {% endif %}

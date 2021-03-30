@@ -105,6 +105,8 @@ def add_history(request, username):
             history = h_form.save(commit=False)
             history.description = h_form.cleaned_data.get('description')
             history.company = h_form.cleaned_data.get('company')
+            history.start_date = h_form.cleaned_data.get('start_date')
+            history.end_date = h_form.cleaned_data.get('start_date')
             profile_user = User.objects.get(username=username)
             history.profile = profile_user.profile
             history.author = request.user
