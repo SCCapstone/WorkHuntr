@@ -32,6 +32,8 @@ urlpatterns = [
     path('profile/<username>/', user_views.profile, name='profile'),
     path('edit_profile/<username>/', user_views.edit_profile, name='edit_profile'),
     path('add_comment/<username>/', user_views.add_comment, name="add_comment"),
+    path('add_skill/<username>/', user_views.add_skill, name="add_skill"),
+    path('add_work_history/<username>/', user_views.add_history, name="add_history"),
     path('login/', workhuntr_views.user_login, name='login'),
     path('verify/', workhuntr_views.verify, name='verify'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),

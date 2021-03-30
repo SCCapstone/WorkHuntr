@@ -38,13 +38,14 @@
         </div>
     </div>
 </div>
-{% if user.profile.resume.url != 'default/default.pdf' or user.profile.website != '' %}
+{% if user.profile.resume.url != 'default/default.pdf' or user.profile.website != '' or request.user == user %}
 <div class="content-section" style="background-color: #8fbdc7;  width:120%;">
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Resume & Work Samples</h2>
             <div>
                 <hr class="rounded">
+                <a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>
                 {% if user.profile.resume.url != 'default/default.pdf' %}<a class="ml" href="{{ user.profile.resume.url }}">Resume</a>{% endif %}
                 {% if user.profile.website != '' %}<a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>{% endif %}
             </div>
@@ -52,7 +53,61 @@
     </div>
 </div>
 {% endif %}
-{% if comments %}
+{% if request.user == user or skills or history %}
+<div class="content-section" style="background-color: #8fbdc7; width:120%;">
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Skills & Work History</h2>
+            <div>
+                <hr class="rounded">
+                {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>{% endif %}
+                {% if skills %}
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
+                            <h3 class="panel-title">
+                                <a class="collapsed" style="color: #e3d6ab;" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">Skills</a>
+                            </h3>
+                        </div>
+                        <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
+                            <div class="panel-body px-3 mb-4">
+                                {% for skill in skills %}
+                                <h6>
+                                    {{ skill.skill }}
+                                </h6>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a>{% endif %}
+                        {% if histories %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
+                            <h3 class="panel-title">
+                                <a class="collapsed" style="color: #e3d6ab;" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">Work Histories</a>
+                            </h3>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+                            <div class="panel-body px-3 mb-4">
+                                {% for history in histories %}
+                                <h5>
+                                    {{ history.company }}
+                                </h5>
+                                <h6>
+                                    {{ history.description }}
+                                </h6>
+                            {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if comments or request.user == user and user.profile.account_type != 'Huntee' %}
 <div class="content-section" style="background-color: #8fbdc7;  width:120%;" >
     <div class="media">
         <div class="media-body">

@@ -55,3 +55,20 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment, self.rating, self.company
+
+class Skill(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    skill = models.CharField(default='', max_length=100)
+
+    def __str__(self):
+        return self.skill
+
+class History(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    company = models.CharField(default='', max_length=150)
+    description = models.CharField(default='', max_length=500)
+
+    def __str__(self):
+        return self.company, self.description

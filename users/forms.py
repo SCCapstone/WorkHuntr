@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Code, Comment, Profile
+from .models import Code, Comment, Profile, Skill, History
 
 GENDERS = (("Male", "Male"), ("Female", "Female"), ("Other", "Other"), ("Prefer Not to Say", "Prefer Not to Say"))
 TITLES = (("Mr.", "Mr."), ("Ms.", "Ms."), ("Mrs.", "Mrs."), ("Other", "Other"))
@@ -53,3 +53,18 @@ class AddCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['rating', 'company', 'comment']
+
+class AddSkillForm(forms.ModelForm):
+    skill = forms.CharField(max_length=100, min_length=1, strip=True)
+
+    class Meta:
+        model = Skill
+        fields = ['skill']
+
+class AddHistoryForm(forms.ModelForm):
+    company = forms.CharField(max_length=100, min_length=1, strip=True)
+    description = forms.CharField(max_length=500, min_length=1, strip=True)
+
+    class Meta:
+        model = History
+        fields = ['company', 'description']

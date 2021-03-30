@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm
-from .models import Comment
+from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm, AddSkillForm, AddHistoryForm
+from .models import Comment, Skill, History
 
 def create_account(request):
     if request.method == 'POST':
@@ -38,7 +38,9 @@ def profile(request, username):
         return redirect('profile', search_user)
     user = User.objects.get(username=username)
     comments = Comment.objects.filter(profile=user.profile)
-    return render(request, 'users/profile.html', {'user':user, 'comments':comments})
+    skills = Skill.objects.filter(profile=user.profile)
+    histories = History.objects.filter(profile=user.profile)
+    return render(request, 'users/profile.html', {'user':user, 'comments':comments, 'skills':skills, 'histories':histories})
 
 @login_required
 def edit_profile(request, username):
@@ -77,3 +79,38 @@ def add_comment(request, username):
     else:
         form = AddCommentForm()
     return render(request, 'users/comment.html', {'comment_form': form})
+
+@login_required
+def add_skill(request, username):
+    if request.method == 'POST':
+        s_form = AddSkillForm(request.POST)
+        if s_form.is_valid():
+            skill = s_form.save(commit=False)
+            skill.skill = s_form.cleaned_data.get('skill')
+            profile_user = User.objects.get(username=username)
+            skill.profile = profile_user.profile
+            skill.author = request.user
+            skill.save()
+            messages.success(request, f'Your skill has been added!')
+            return redirect('profile', username)
+    else:
+        s_form = AddSkillForm()
+    return render(request, 'users/skill.html', {'skill_form': s_form})
+
+@login_required
+def add_history(request, username):
+    if request.method == 'POST':
+        h_form = AddHistoryForm(request.POST)
+        if h_form.is_valid():
+            history = h_form.save(commit=False)
+            history.description = h_form.cleaned_data.get('description')
+            history.company = h_form.cleaned_data.get('company')
+            profile_user = User.objects.get(username=username)
+            history.profile = profile_user.profile
+            history.author = request.user
+            history.save()
+            messages.success(request, f'Your work history has been added!')
+            return redirect('profile', username)
+    else:
+        h_form = AddHistoryForm()
+    return render(request, 'users/history.html', {'h_form': h_form})

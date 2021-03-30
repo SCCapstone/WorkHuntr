@@ -1,0 +1,30 @@
+<!--
+    Code Source: https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
+    Code Author: Corey Schafer
+-->
+
+{% extends "workhuntr/profileNav.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section" style="background-color:#8fbdc7;">
+    <form method="POST">
+    {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">New Work History</legend>
+            <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                    <b>{{ h_form.company|as_crispy_field }}</b>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                    <b>{{ h_form.description|as_crispy_field }}</b>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
