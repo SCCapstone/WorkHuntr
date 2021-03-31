@@ -25,10 +25,10 @@ def create_listings(request):
             listing.tag3 = form.cleaned_data.get('tag3')
             listing.huntee = request.user
             listing.save()
-            messages.success(request, f'The listing '+ listing.title +' has been created!')
+            messages.success(request, f'Your listing "'+ listing.title +'" has been created!')
             return redirect('current_listings')
         else:
-            messages.error(request, f'The listing could not be created!')
+            messages.error(request, f'Error: The listing could not be created!')
     context = {'listings':listings, 'form':form}
     return render(request, 'listings/create_listings.html', context)
 
@@ -83,7 +83,7 @@ def modify_listings(request, pk):
             listing.tag2 = form.cleaned_data.get('tag2')
             listing.tag3 = form.cleaned_data.get('tag3')
             listing.save()
-            messages.success(request, f'Your listing '+ listing.title + ' has been modified!')
+            messages.success(request, f'Your listing "'+ listing.title + '" has been modified!')
         return redirect('current_listings')
     else:
         form = ModifyListingForm(instance=listing)
