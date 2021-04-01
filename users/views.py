@@ -74,6 +74,7 @@ def add_comment(request, username):
             comment.profile = profile_user.profile
             comment.author = request.user
             comment.save()
+            messages.success(request, f'Your comment was added!')
             return redirect('profile', username)
     else:
         form = AddCommentForm()
@@ -90,6 +91,7 @@ def add_skill(request, username):
             skill.profile = profile_user.profile
             skill.author = request.user
             skill.save()
+            messages.success(request, f'Your skill was added!')
             return redirect('profile', username)
     else:
         s_form = AddSkillForm()
@@ -109,6 +111,7 @@ def add_history(request, username):
             history.profile = profile_user.profile
             history.author = request.user
             history.save()
+            messages.success(request, f'Your work history was added!')
             return redirect('profile', username)
     else:
         h_form = AddHistoryForm()
