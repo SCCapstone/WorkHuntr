@@ -1,11 +1,12 @@
 import sys
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# IN ORDER TO RUN TESTS, YOU SHOULD TRY TO LOG INTO THE EMAIL PROVIDED BELOW
+# IN ORDER TO RUN TESTS, YOU MUST HAVE THE ACCOUNT CREATED WITH THE INFORMATION BELOW (username & password)
+# YOU SHOULD THEN TRY TO LOG INTO THE EMAIL PROVIDED BELOW (gmail & gmailpassword)
 # CHROME HAS WAS TOO MANY SECURITY FEATURES I HAVE NO CLUE ON HOW TO BYPASS
 # LOGGING IN ON ANY CHROME BROWSER FIRST SHOULD IDEALLY ENSURE THAT WHEN THE TESTS TRY TO RUN
 # YOU DON'T GET THAT "hey you're logging in from a new location" MESSAGE
@@ -17,10 +18,15 @@ USERNAME = "WorkhuntrTester"
 PASSWORD = "Thispass142"
 GMAIL = "WorkhuntrTester@gmail.com"
 GMAILPASSWORD = "thispass142"
+testCount = 0
+failedTests = ""
 
 driver = webdriver.Chrome("chromedriver.exe")
 
+print("RUNNING TESTS...")
+
 try:
+    print("RUNNING LOGIN TEST...")
     # Go to login page
     urlLogin = "http://127.0.0.1:8000/login/"
     driver.get(urlLogin)
@@ -64,7 +70,10 @@ try:
 
     driver.find_element_by_xpath("//*[@id=\":28\"]/div[1]/span").click()
 
+
     driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
+
+    driver.close()#close gmail
 
     driver.switch_to.window(driver.window_handles[0])#workhuntr
 
@@ -72,15 +81,70 @@ try:
 
     driver.find_element_by_id("loginButton").click()
 
-
-
-
-
-    print("Login successful")
+    print("LOGIN SUCCESSFUL")
+    testCount += 1
 except:
     print("Login failed")
+    failedTests += "\nlogin test fail\n"
 
+try:
+    print("RUNNING PROFILE UPDATE TEST...")
+
+    #go to the profile and start editing
+    driver.find_element_by_xpath("//*[@id=\"dashProfileButton\"]").click()
+    driver.find_element_by_xpath("/html/body/main/div[2]/div/div/a").click()
+
+    #add a website
+    driver.find_element_by_name("website").send_keys("http://Workhuntr.com")
+
+    # update the privacy of the profile
+    dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_privacy\"]"))
+    dropdown.select_by_value("Private")
+
+    #update the profile
+    driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
+    print("PROFILE UPDATE SUCCESSFUL")
+    testCount += 1
+except:
+    failedTests += "\nprofile update test fail\n"
+
+try:
+    wait = WebDriverWait(driver, 10)
+    wait.until(lambda driver: driver.current_url == "127.0.0.1:8000/profile/WorkhuntrTester/")
+    print("TESTING ADDING SKILLS AND HISTORY...")
+    # from profile, click on the skills
+    driver.find_element_by_xpath("/html/body/main/div[5]/div/div/h2/a[2]").click()
+
+    # add a skill and submit
+    driver.find_element_by_xpath("//*[@id=\"id_skill\"]").send_keys("writing tests")
+    driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
+
+    wait = WebDriverWait(driver, 20)
+    wait.until(lambda driver: driver.current_url == "127.0.0.1:8000/profile/WorkhuntrTester/")
+
+    # click on history
+    driver.find_element_by_xpath("/html/body/main/div[6]/div/div/h2/a[1]")
+
+    # Fill out the history form
+    driver.find_element_by_xpath("//*[@id=\"id_company\"]").send_keys("Worhuntr development")
+    driver.find_element_by_xpath("//*[@id=\"id_start_date\"]").send_keys("08/22/2015")
+    driver.find_element_by_xpath("//*[@id=\"id_end_date\"]").send_keys("08/22/2018")
+    driver.find_element_by_xpath("//*[@id=\"id_description\"]").send_keys("try to do things without breaking more")
+
+    # submit
+    driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
+
+    print("ADDING SKILLS AND HISTORY SUCCESSFUL")
+    testCount += 1
+except:
+    print("ADDING SKILLS AND HISTORY FILED")
+    failedTests += "\nadding skills and history fail\n"
+
+
+
+
+"""
 driver.switch_to.window(driver.window_handles[1])#chrome
 driver.close()
 driver.switch_to.window(driver.window_handles[0])#workhuntr
-driver.close()
+driver.close()"""
