@@ -109,21 +109,17 @@ except:
     failedTests += "\nprofile update test fail\n"
 
 try:
-    wait = WebDriverWait(driver, 10)
-    wait.until(lambda driver: driver.current_url == "127.0.0.1:8000/profile/WorkhuntrTester/")
     print("TESTING ADDING SKILLS AND HISTORY...")
     # from profile, click on the skills
-    driver.find_element_by_xpath("/html/body/main/div[5]/div/div/h2/a[2]").click()
+    driver.find_element_by_id("skillBTN").click()
 
     # add a skill and submit
     driver.find_element_by_xpath("//*[@id=\"id_skill\"]").send_keys("writing tests")
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
 
-    wait = WebDriverWait(driver, 20)
-    wait.until(lambda driver: driver.current_url == "127.0.0.1:8000/profile/WorkhuntrTester/")
-
     # click on history
-    driver.find_element_by_xpath("/html/body/main/div[6]/div/div/h2/a[1]")
+    #driver.find_element_by_id("historyBTN")
+    driver.get("http://127.0.0.1:8000/add_work_history/WorkhuntrTester/")
 
     # Fill out the history form
     driver.find_element_by_xpath("//*[@id=\"id_company\"]").send_keys("Worhuntr development")

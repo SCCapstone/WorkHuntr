@@ -57,7 +57,7 @@
     <div class="media">
         <div class="media-body">
             <h2 class="account-heading">Skills & Work History
-            {% if request.user == user %}<a class="btn btn-outline-info" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a><a class="btn btn-outline-info" type="button" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>{% endif %}</h2>
+            {% if request.user == user %}<a class="btn btn-outline-info" id="historyBTN" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a><a class="btn btn-outline-info" type="button" id="skillBTN" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>{% endif %}</h2>
                 <hr class="rounded">
                 {% if skills %}
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
