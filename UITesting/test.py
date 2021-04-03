@@ -118,7 +118,6 @@ try:
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
 
     # click on history
-    #driver.find_element_by_id("historyBTN")
     driver.get("http://127.0.0.1:8000/add_work_history/WorkhuntrTester/")
 
     # Fill out the history form
@@ -153,14 +152,15 @@ try:
     driver.find_element_by_id("ListingSubmitBTN").click()
 
     fetch = driver.find_element_by_xpath("/html/body/main/div/div/div[1]").text
-
+    testCount += 1
 except:
     print("LISTING TEST FAILED")
     failedTests += "\nlisting test fail\n"
 
+print("\n\nSUCCESSFULLY RAN " + str(testCount) + " TESTS")
+if failedTests != "":
+    print(str(failedTests) + " TESTS FAILED DURING RUNNING")
 
-"""
-driver.switch_to.window(driver.window_handles[1])#chrome
+
+driver.switch_to.window(driver.window_handles[0])  # workhuntr
 driver.close()
-driver.switch_to.window(driver.window_handles[0])#workhuntr
-driver.close()"""
