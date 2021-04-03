@@ -45,8 +45,7 @@ The style guide that was used is the [Google Python Style Guide](https://google.
 WorkHuntr is currently deployed to www.workhuntr.com
 
 # Testing
-
-Currently, there are only two tests supported. Unit testing such as the one for testing listing database functionality uses Django’s built in unittest module. The UI tests utilize selenium and ChromeDriver to automate tests for login page functionality.
+Unit testing such as the one for testing listing database functionality uses Django’s built in unittest module. There are currently 11 tests for Workhuntr's databases. The UI tests utilize selenium and ChromeDriver to automate tests for login page functionality. Including the "test" for creating the test user, there are currently 5 UI Tests.
 
 ## Testing Technology
 
@@ -55,17 +54,10 @@ For unit tests, nothing more is currently needed outside of built in Django modu
 Download Chromedriver [here](https://sites.google.com/a/chromium.org/chromedriver/home).
 
 ## Running Tests
-Before running any tests, create a user profile on your local copy of the server with the following information: Title, First name, Last name, Gender, Account type, and Email can be anything. the USERNAME must be `testUser` and the PASSWORD must be `Workhuntr1`
-
-For example:
-Title=Mr. First name=test Last name=test Gender=Male Account type=Huntee Username=testUser email=test@testing.com Password=Workhuntr1 Password confirmation=Workhuntr1
-
-This is to ensure that when the UI test runs, there is actually a user for it to look for and test that it can log in successfully.
-
-Creating this testUser only needs to be done once to your local copy.
 
 To run Unit Tests, run `python3 manage.py test` in the `workhuntr/` directory. This command will run all test/test files that begin with `test`. 
-To run UI Tests, run `python3 #.py` in the `UITesting/` directory, where # is the name of the test file you wish to run. For example, run `python3 test_login.py` in the `UITesting/` directory to run the test for successful and unsuccessful logins.
+
+To run UI Tests, go into the `UITesting/` and read the README associated with UI Testing for specific information / instrctions.
 
 # Authors
 
