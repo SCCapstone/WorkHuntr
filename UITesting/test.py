@@ -136,7 +136,27 @@ except:
     print("ADDING SKILLS AND HISTORY FILED")
     failedTests += "\nadding skills and history fail\n"
 
+try:
+    print("TESTING LISTING CREATION")
+    # find listing field
+    driver.get("http://127.0.0.1:8000/current_listings/")
 
+    # create Listing
+    driver.find_element_by_id("CreateListingBTN").click()
+
+    ListingTitle = "CREATE THIS TEST"
+
+    driver.find_element_by_name("title").send_keys(ListingTitle)
+    driver.find_element_by_name("price").send_keys("10")
+    driver.find_element_by_name("description").send_keys("This is a generated test listing")
+
+    driver.find_element_by_id("ListingSubmitBTN").click()
+
+    fetch = driver.find_element_by_xpath("/html/body/main/div/div/div[1]").text
+
+except:
+    print("LISTING TEST FAILED")
+    failedTests += "\nlisting test fail\n"
 
 
 """
