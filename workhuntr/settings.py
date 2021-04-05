@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'workhuntr.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydb',
-        'USER': 'postgres',
-        'PASSWORD': 'GiantNerds',
-        'HOST': 'localhost',
+        'NAME': 'd2pctv9j5riiuc',
+        'USER': 'slrwmlqampexqk',
+        'PASSWORD': '4643a5f8cb01557484d9dc35768640337a214fa64d8f41d9b46d88644ec59271',
+        'HOST': 'ec2-54-167-168-52.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
