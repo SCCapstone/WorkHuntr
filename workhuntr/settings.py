@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import django_heroku
 from pathlib import Path
 from typing import Sequence
 from .secrets import *
@@ -142,3 +143,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
+
+django_heroku.settings(locals())
