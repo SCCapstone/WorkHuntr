@@ -4,3 +4,4 @@ pillow
 django-crispy-forms
 selenium
 django-remember_me
+gunicorn
