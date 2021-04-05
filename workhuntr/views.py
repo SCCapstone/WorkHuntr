@@ -42,9 +42,9 @@ def verify(request):
             send_mail(
                 subject='Two-Factor Verification Code for WorkHuntr',
                 message='Your two-factor verification code for WorkHuntr is ' + str(code) + '.',
-                from_email=None,
+                from_email='giantnerds21@gmail.com',
                 recipient_list=[user.email],
-                fail_silently=True
+                fail_silently=False
             )
         if form.is_valid():
             num = form.cleaned_data.get('number')
