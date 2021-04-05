@@ -23,6 +23,7 @@ def create_listings(request):
             listing.tag1 = form.cleaned_data.get('tag1')
             listing.tag2 = form.cleaned_data.get('tag2')
             listing.tag3 = form.cleaned_data.get('tag3')
+            listing.number_Of_Milestones = form.cleaned_data.get('number_Of_Milestones')
             listing.huntee = request.user
             listing.save()
             messages.success(request, f'Your listing "'+ listing.title +'" has been created!')
@@ -52,16 +53,18 @@ def progress(request, pk):
     else: 
         item = Listings.objects.get(id=pk)
     form = UpdateForm(request.POST)
-    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form}
+    milestones = item.milestones.split(",")
+    milestonesLength = len(milestones)
+    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form, 'milestones': milestones, 'allMilestones': range(len(milestones)), 'milestonesLength': milestonesLength}
     if request.method == 'POST':
         if form.is_valid():
                 update = form.save(commit=False)
                 update.date = timezone.now()
                 update.description = form.cleaned_data.get('description')
-                update.status = form.cleaned_data.get('status')
                 update.listing = item
+                item.currentMilestone = request.POST.get('currentMilestone', None)
+                update.currentMilestone = item.currentMilestone
                 update.save()
-                item.status = update.status
                 item.save()
     return render(request, 'listings/progress.html', context)
 
@@ -82,6 +85,8 @@ def modify_listings(request, pk):
             listing.tag1 = form.cleaned_data.get('tag1')
             listing.tag2 = form.cleaned_data.get('tag2')
             listing.tag3 = form.cleaned_data.get('tag3')
+            milestones = form.cleaned_data.get('milestones')
+            listing.milestones = milestones
             listing.save()
             messages.success(request, f'Your listing "'+ listing.title + '" has been modified!')
         return redirect('current_listings')
@@ -90,7 +95,8 @@ def modify_listings(request, pk):
     modifiable = False
     if request.user == listing.huntee:
         modifiable = True
-    context = {'listing':listing, 'form':form, 'modifiable': modifiable}
+    numMilestones = int(listing.number_Of_Milestones)
+    context = {'listing':listing, 'form':form, 'modifiable': modifiable, 'numMilestones': range(numMilestones)}
     return render(request, 'listings/modify_listings.html', context)
 
 @login_required

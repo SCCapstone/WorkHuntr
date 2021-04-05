@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Listings
+from django.contrib.postgres.fields import ArrayField
 from .models import Update
 
 TAGS = [
@@ -88,20 +89,22 @@ class ListingsForm(ModelForm):
     tag1 = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag2 = forms.ChoiceField(choices=TAGS, required=False)
     tag3 = forms.ChoiceField(choices=TAGS, required=False)
+    number_Of_Milestones = forms.CharField(required=True)
 
     class Meta:
         model = Listings
-        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3']  
+        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3', 'number_Of_Milestones']  
 
 class ModifyListingForm(forms.ModelForm):
 
     tag1 = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag2 = forms.ChoiceField(choices=TAGS, required=False)
     tag3 = forms.ChoiceField(choices=TAGS, required=False)
+    milestones = forms.CharField(help_text="Enter Milestone Names seperated by a comma")
 
     class Meta: 
         model = Listings
-        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3']
+        fields = ['title', 'price', 'description', 'tag1', 'tag2', 'tag3', 'milestones']
 
 class PaymentForm(forms.Form):
     first_name = forms.CharField(max_length=20, min_length=1, strip=True, required=True, help_text="First Name Listed on Credit Card")
@@ -117,13 +120,13 @@ class PaymentForm(forms.Form):
     zip = forms.IntegerField(min_value=501, max_value=99999, required=True, help_text="Zip Code of Billing Address")
     
 class UpdateForm(forms.ModelForm):
-
-    status = forms.ChoiceField(choices = UPDATESTATUSES, required=True)
+    # status = forms.ChoiceField(choices=Listings.milestones, required=True)
     description = forms.CharField(required=True)
+    # currentMilestone = forms.CharField(required=True)
 
     class Meta:
         model = Update
-        fields = ['status','description']
+        fields = ['description']
 
 class MyListingsForm(forms.Form):
     Listings = forms.ModelChoiceField(queryset=Listings.objects.values_list("title", flat=True).distinct(), empty_label=None)

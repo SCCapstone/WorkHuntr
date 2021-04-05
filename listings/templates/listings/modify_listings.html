@@ -30,6 +30,11 @@
                 <b>{{ form.tag3|as_crispy_field }}</b>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-12 mb-0">
+                <b>{{ form.milestones|as_crispy_field }}</b>
+            </div>
+        </div>
     <input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Modify Listing" />
 	<a href="{% url 'current_listings' %}" style="background-color: #e3d6ab;" class="btn btn-outline-info">Cancel</a>
     </fieldset>

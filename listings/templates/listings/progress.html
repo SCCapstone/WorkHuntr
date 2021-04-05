@@ -1,6 +1,7 @@
 {% extends "workhuntr/listingNav.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<body onload="loadProgress()" onbeforeunload="saveProgress()">
 <div id="mainContent" style="height: 100%; width: 100%; float: left; margin: 10px; background-color: #8fbdc7;">
     <form method="POST" style="display: inline;"> 
     {% csrf_token %}
@@ -18,33 +19,26 @@
     </form>
     <button type="submit" onclick=onClick()>Go</button>
     <h3>{{item.title}}</h3>
-    <p>Current Status: {{item.status}}</p>
+    <p>Current Milestone : {{item.currentMilestone}}</p>
     <br>
-    <div class="content-section" style="background-color: #8fbdc7; position: relative; width: 100%;">
-        {% if item.status == 'Started' %}
-            <div id="ProgressBar" style="background-color: green; width: 16.2%; z-index: 10; position: absolute;">&nbsp;</div>
-        {% elif item.status == 'Milestone 1' %}
-            <div id="ProgressBar" style="background-color: green; width: 35.4%; z-index: 10; position: absolute;">&nbsp;</div>
-        {% elif item.status == 'Milestone 2' %}
-            <div id="ProgressBar" style="background-color: green; width: 56.6%; z-index: 10; position: absolute;">&nbsp;</div>
-        {% elif item.status == 'Milestone 3' %}
-            <div id="ProgressBar" style="background-color: green; width: 76.8%; z-index: 10; position: absolute;">&nbsp;</div>
-        {% elif item.status == 'Complete' or item.status == 'Payment Issued' %}
-            <div id="ProgressBar" style="background-color: green; width: 91%; z-index: 10; position: absolute;">&nbsp;</div>
-        {% else %}
-            <div id="ProgressBar" style="background-color: green; width: 3%; z-index: 10; position: absolute;">&nbsp;</div>
-        {% endif %}
+         <div class="content-section" style="background-color: #8fbdc7; position: relative; width: 100%;">
+        <div id="ProgressBar" style="background-color: green; width: 5px; z-index: 10; position: absolute;">&nbsp;</div>
         <div id= "progressBackground" style="background-color: red; width: 91%; position: absolute;">&nbsp;</div>
         <hr>
         <table>
-            <tr>
+        <tr>
+        {% comment %} {% for i in allMilestones %}
+            <td style="width: 23.2%; text-align: center;"><font size = "2">{{milestones}}.i</font></td>
+        {% endfor %}
+        </tr> {% endcomment %}
+        {% comment %}             <tr>
                 <td style="width: 0%; text-align: center;"><font size = "2">Not started</font></td>
                 <td style="width: 23.2%; text-align: center;"><font size = "2">Started</font></td>
                 <td style="width: 23.2%; text-align: center;"><font size = "2">Milestone 1</font></td>
                 <td style="width: 23.2%; text-align: center;"><font size = "2">Milestone 2</font></td>
                 <td style="width: 23.2%; text-align: center;"><font size = "2">Milestone 3</font></td>
                 <td style="width: 30.2%; text-align: center;"><font size = "2">Complete</font></td>
-            </tr>
+            </tr> {% endcomment %}
         </table>
     </div>
 
@@ -59,7 +53,7 @@
             {% if update.listing.id == item.id %}
             <tr style="border-bottom: 1px solid black">
                 <td style="padding-right: 15px">{{update.date}}</td>
-                <td style="padding-right: 15px">{{update.status}}: {{update.description}}</td>
+                <td style="padding-right: 15px">{{update.currentMilestone}}: {{update.description}}</td>
             </tr>
             {% endif %}
             {% endfor %}
@@ -73,8 +67,14 @@
         <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
+            <p>Milestone*</p>
+            <select id="milestone" name="currentMilestone">
+                {% for i in milestones %}
+                    <option value="{{i}}">{{ i }}</option>
+                {% endfor %}
+            </select>
             {{ form|crispy }}
-            <input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Update" name='update' style="position: relative; left: 36.5%;"/>
+            <button class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" name='update' style="position: relative; left: 36.5%;" onclick=updateProgress()>Update</button>
         </fieldset>
         </form>
     </div>
@@ -86,4 +86,20 @@ function onClick() {
     window.location = "../progress/" + listing
 }
 </script>
+
+<script>
+function updateProgress() {
+    allMilestones = "{{ allMilestones }}"
+
+    document.getElementById("ProgressBar").style.width = currentWidth + 50
+    saveProgress()
+}
+function loadProgress() {
+    document.getElementById("ProgressBar").style.width = localStorage.getItem('progress')
+}
+function saveProgress() {
+    localStorage.setItem('progress', document.getElementById("ProgressBar").style.width)
+}
+</script>
+</body>
 {% endblock %}

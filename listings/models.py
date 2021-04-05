@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models import IntegerField, Model
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.postgres.fields import ArrayField
 import datetime
 import random
 import string
@@ -8,10 +11,6 @@ import string
 STATUSES = [
     ('Strutting', 'Strutting'),
     ('Claimed', 'Claimed'),
-    ('Started', 'Started'),
-    ('Milestone 1', 'Milestone 1'),
-    ('Milestone 2', 'Milestone 2'),
-    ('Milestone 3', 'Milestone 3'),
     ('Complete', 'Complete'),
     ('Payment Issued', 'Payment Issued'),
 ]
@@ -28,6 +27,9 @@ class Listings(models.Model):
     tag3 = models.CharField(max_length=11, default='NONE', verbose_name='TAG THREE')
     huntee = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='huntee')
     hunter = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, related_name='hunter')
+    number_Of_Milestones = models.CharField(blank=False, null=False, default='2', max_length=2, verbose_name='Number of Milestones')
+    milestones = models.CharField(max_length=120)
+    currentMilestone = models.CharField(max_length=1)
 
     def __str__(self):
         return self.title
@@ -36,6 +38,7 @@ class Listings(models.Model):
 class Update(models.Model):
     date = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=14, choices=STATUSES, default='Started', null=False)
+    currentMilestone = models.CharField(max_length=1)
     description = models.CharField(max_length=300, blank=True, null=False)
     listing = models.ForeignKey(Listings, default=None, on_delete=models.CASCADE)
 

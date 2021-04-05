@@ -84,7 +84,7 @@
             </tr>
             {% for i in listings %}
             <tr>
-            {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Started' and i.hunter == request.user or i.status == 'Started' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
+            {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed'%}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Click Here for Listing Description</button><div class="panel"><p>{{i.description}}</p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
