@@ -7,3 +7,4 @@ django-remember_me
 gunicorn
 psycopg2
 pymongo
+django-heroku
