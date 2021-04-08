@@ -8,8 +8,8 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='sender')
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='receiver')
     content = models.TextField(_("Content"))
-    sent_at = models.DateTimeField(_("sent at"), null=True, blank=True)
-    read_at = models.DateTimeField(_("read at"), null=True, blank=True)
+    sent_at = models.DateTimeField(_("sent at"), null=False, blank=False)
+    read_at = models.DateTimeField(_("read at"), null=False, blank=False)
 
     @property
     def unread(self):
@@ -23,8 +23,6 @@ class Message(models.Model):
     def save(self, **kwargs):
         if self.sender == self.recipient:
             raise ValidationError("You can't send messages to yourself!")
-
         if not self.id:
             self.sent_at = timezone.now()
-        
         super(Message, self).save(**kwargs)
