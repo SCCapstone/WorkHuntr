@@ -17,11 +17,9 @@ def create_listings(request):
             listing.title = form.cleaned_data.get('title')
             listing.description = form.cleaned_data.get('description')
             listing.price = form.cleaned_data.get('price')
-            if listing.price < 0:
-                listing.price = 0
-            listing.tag1 = form.cleaned_data.get('tag1')
-            listing.tag2 = form.cleaned_data.get('tag2')
-            listing.tag3 = form.cleaned_data.get('tag3')
+            listing.tag_one = form.cleaned_data.get('tag_one')
+            listing.tag_two = form.cleaned_data.get('tag_two')
+            listing.tag_three = form.cleaned_data.get('tag_three')
             listing.huntee = request.user
             listing.save()
             messages.success(request, f'Your listing "'+ listing.title +'" has been created!')
@@ -35,7 +33,7 @@ def create_listings(request):
 def current_listings(request):
     search_query = request.GET.get('search', '')
     if search_query:
-        listings = Listings.objects.filter(Q(title__icontains=search_query) | Q(tag1__icontains=search_query) | Q(tag2__icontains=search_query) | Q(tag3__icontains=search_query))
+        listings = Listings.objects.filter(Q(title__icontains=search_query) | Q(tag_one__icontains=search_query) | Q(tag_two__icontains=search_query) | Q(tag_three__icontains=search_query))
     else:
         listings = Listings.objects.all()
     context = {'listings': listings, 'user': request.user}
@@ -54,14 +52,14 @@ def progress(request, pk):
     context = {'listings': listings, 'updates': updates, 'item':item, 'form': form}
     if request.method == 'POST':
         if form.is_valid():
-                update = form.save(commit=False)
-                update.date = timezone.now()
-                update.description = form.cleaned_data.get('description')
-                update.status = form.cleaned_data.get('status')
-                update.listing = item
-                update.save()
-                item.status = update.status
-                item.save()
+            update = form.save(commit=False)
+            update.date = timezone.now()
+            update.description = form.cleaned_data.get('description')
+            update.status = form.cleaned_data.get('status')
+            update.listing = item
+            update.save()
+            item.status = update.status
+            item.save()
     return render(request, 'listings/progress.html', context)
 
 @login_required
@@ -74,12 +72,10 @@ def modify_listings(request, pk):
             listing.refresh_from_db()
             listing.title = form.cleaned_data.get('title')
             listing.price = form.cleaned_data.get('price')
-            if listing.price < 0:
-                listing.price = 0
             listing.description = form.cleaned_data.get('description')
-            listing.tag1 = form.cleaned_data.get('tag1')
-            listing.tag2 = form.cleaned_data.get('tag2')
-            listing.tag3 = form.cleaned_data.get('tag3')
+            listing.tag_one = form.cleaned_data.get('tag_one')
+            listing.tag_two = form.cleaned_data.get('tag_two')
+            listing.tag_three = form.cleaned_data.get('tag_three')
             listing.save()
             messages.success(request, f'Your listing "'+ listing.title + '" has been modified!')
         return redirect('current_listings')
@@ -141,7 +137,6 @@ def issue_payment(request, pk):
         listing.status = 'Payment Issued'
         listing.save()
         messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + ' in the amount of $' + str(listing.price) + '!')
-        # Receipt
         hunter = listing.hunter
         content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
@@ -158,4 +153,3 @@ def receipt(request, pk):
     else:
         context = {'listing': listing}
         return render(request, 'listings/receipt.html', context)
-

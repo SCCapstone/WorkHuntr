@@ -57,7 +57,7 @@
             {% for i in listings %}
             <tr>
             {% if i.status == 'Strutting' %}
-                <td style="border-bottom: 1px solid black;"><div><p style="padding-right: 15px; padding-top: 55px">{{i.title}}</p></div><div><p style = "color:gray; font-style: italic; font-size: 10px; vertical-align: bottom; height = 50px">Tags: {{i.tag1}}, {{i.tag2}}, {{i.tag3}} </p></div></td>
+                <td style="border-bottom: 1px solid black;"><div><p style="padding-right: 15px; padding-top: 55px">{{i.title}}</p></div><div><p style = "color:gray; font-style: italic; font-size: 10px; vertical-align: bottom; height = 50px">Tags: {{i.tag_one}}, {{i.tag_two}}, {{i.tag_three}} </p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Click Here for Listing Description</button><div class="panel"><p>{{i.description}}</p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">${{i.price}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.huntee}}</td>
