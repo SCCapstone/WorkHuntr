@@ -2,34 +2,6 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<!--Source: http://www-db.deis.unibo.it/courses/TW/DOCS/w3schools/howto/howto_js_accordion.asp.html-->
-<head>
-    <style>
-        button.accordion {
-            background-color: #8fbdc7;
-            color: #444;
-            cursor: pointer;
-            padding: 15px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 15px;
-            transition: 0.4s;
-        }
-        button.accordion.active, button.accordion:hover {
-            background-color: #e3d6ab;
-        }
-        div.panel {
-            padding: 0 18px;
-            display: none;
-            background-color: #8fbdc7;
-        }
-        div.panel.show {
-            display: block !important;
-        }
-    </style>
-</head>
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -58,7 +30,7 @@
             <tr>
             {% if i.status == 'Strutting' %}
                 <td style="border-bottom: 1px solid black;"><div><p style="padding-right: 15px; padding-top: 55px">{{i.title}}</p></div><div><p style = "color:gray; font-style: italic; font-size: 10px; vertical-align: bottom; height = 50px">Tags: {{i.tag_one}}, {{i.tag_two}}, {{i.tag_three}} </p></div></td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Click Here for Listing Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.description}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">${{i.price}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.huntee}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.status}}</td>
@@ -73,7 +45,7 @@
         <hr>
         <div class="content-section" style="background-color: #8fbdc7; width: 180%">
         <table>
-            <h2>My Hunted Listings</h2>
+            <h2>In Progress</h2>
             <hr class="rounded">
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
@@ -86,7 +58,7 @@
             <tr>
             {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Started' and i.hunter == request.user or i.status == 'Started' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Click Here for Listing Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.description}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
@@ -112,7 +84,7 @@
             <tr>
             {% if i.status == 'Complete' and i.huntee == request.user or i.status == 'Complete' and i.hunter == request.user %}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Click Here for Listing Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.description}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
@@ -137,7 +109,7 @@
             <tr>
             {% if i.status == 'Payment Issued' and i.huntee == request.user or i.status == 'Payment Issued' and i.hunter == request.user %}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Click Here for Listing Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.description}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
@@ -149,14 +121,4 @@
     </table>
     </div>
 </div>
-<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-    for (i = 0; i < acc.length; i++) {
-        acc[i].onclick = function() {
-            this.classList.toggle("active");
-            this.nextElementSibling.classList.toggle("show");
-        }
-    }
-</script>
 {% endblock %}
