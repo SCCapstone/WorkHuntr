@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import *
 from django.shortcuts import render, redirect
@@ -18,14 +19,16 @@ def user_login(request):
         password = request.POST.get('password')
         remember_me = request.POST.get('remember_me')
         if remember_me:
-            request.session.set_expiry(60*60*24*7)  # Set a cookie time to a week
+            request.session.set_expiry(60*60*24*7)
         else:
-            request.session.set_expiry(60*60*2)  # set cookie time to a default of 2 hours
+            request.session.set_expiry(60*60*2)
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 request.session['pk'] = user.pk
                 return redirect('verify')
+        else:
+            messages.error(request, f'An account with that username and password does not exist!')
     else:
         context = {}
         context['form'] = UserLoginForm()
