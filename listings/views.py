@@ -9,6 +9,8 @@ from dms.services import *
 
 @login_required
 def create_listings(request):
+    if request.user.profile.account_type != 'huntee':
+        return redirect('current_listings')
     listings = Listings.objects.all()
     form = ListingsForm(request.POST)
     if request.method == 'POST':
@@ -48,6 +50,8 @@ def progress(request, pk):
         item = Listings.objects.get(title=select_page)
     else: 
         item = Listings.objects.get(id=pk)
+    if request.user != item.hunter or request.user != item.huntee:
+        return redirect('current_listings')
     form = UpdateForm(request.POST)
     context = {'listings': listings, 'updates': updates, 'item':item, 'form': form}
     if request.method == 'POST':
@@ -104,6 +108,8 @@ def delete_listing(request, pk):
 @login_required
 def return_listing(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.hunter:
+        return redirect('current_listings')
     listing.status = 'Strutting'
     listing.hunter = request.user
     listing.save()
@@ -117,7 +123,6 @@ def return_listing(request, pk):
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
     if listing.status == 'Claimed':
-        messages.error(request, f'Listing ' + str(listing.title) + ' has already been claimed.')
         return redirect('current_listings')
     listing.status = 'Claimed'
     listing.hunter = request.user
@@ -131,6 +136,8 @@ def claim_listing(request, pk):
 @login_required
 def complete_listing(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.huntee:
+        return redirect('current_listings')
     listing.status = 'Completed'
     listing.save()
     messages.success(request, f'Listing  ' + str(listing.title) + ' has been marked completed! ' + str(listing.huntee) + ' has been notified!')
@@ -142,6 +149,8 @@ def complete_listing(request, pk):
 @login_required
 def issue_payment(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.huntee:
+        return redirect('current_listings')
     if request.method == "POST":
         listing.status = 'Payment Issued'
         listing.save()
@@ -157,6 +166,8 @@ def issue_payment(request, pk):
 @login_required
 def receipt(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.huntee or request.user != listing.hunter:
+        return redirect('current_listings')
     if request.method == "POST":
         return redirect('current_listings')
     else:
