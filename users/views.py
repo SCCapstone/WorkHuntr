@@ -32,7 +32,7 @@ def profile(request, username):
         try:
             searched = User.objects.get(username=search_user)
         except:
-            print('User Not Found')
+            messages.error(request, f'User does not exist!')
         if search_user == '' or searched == None:
             return redirect('profile', username)
         return redirect('profile', search_user)
