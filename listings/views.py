@@ -9,7 +9,7 @@ from dms.services import *
 
 @login_required
 def create_listings(request):
-    if request.user.profile.account_type != 'huntee':
+    if request.user.profile.account_type != 'Huntee':
         return redirect('current_listings')
     listings = Listings.objects.all()
     form = ListingsForm(request.POST)
