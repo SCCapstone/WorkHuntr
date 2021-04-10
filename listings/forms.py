@@ -100,7 +100,7 @@ class ModifyListingForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(), max_length=1000, required=True, help_text='Max 500 characters')
     tag_one = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag_two = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
-    tag_threee = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
+    tag_three = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
 
     class Meta: 
         model = Listings
