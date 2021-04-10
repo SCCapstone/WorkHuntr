@@ -62,10 +62,12 @@ def conversation(request, username):
 
 @login_required
 def info(request, username):
+    contact = User.objects.get(username=username)
+    users = [contact, request.user]
+    conversation = Message.objects.filter(sender__in=users, recipient__in=users)
+    if not conversation:
+        return redirect('contacts')
     if request.method == 'POST':
-        contact = User.objects.get(username=username)
-        users = [contact, request.user]
-        conversation = Message.objects.filter(sender__in=users, recipient__in=users)
         for message in conversation:
             message.delete()
         return redirect('contacts')

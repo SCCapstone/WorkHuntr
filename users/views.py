@@ -44,6 +44,8 @@ def profile(request, username):
 
 @login_required
 def edit_profile(request, username):
+    if username != request.user.username:
+        return redirect('profile', request.user.username)
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -63,6 +65,8 @@ def edit_profile(request, username):
 
 @login_required
 def add_comment(request, username):
+    if username  == request.user.username:
+        return redirect('profile', request.user.username)
     if request.method == 'POST':
         form = AddCommentForm(request.POST)
         if form.is_valid():
@@ -82,6 +86,8 @@ def add_comment(request, username):
 
 @login_required
 def add_skill(request, username):
+    if request.user.username != username:
+        return redirect('profile', request.user.username)
     if request.method == 'POST':
         s_form = AddSkillForm(request.POST)
         if s_form.is_valid():
@@ -99,6 +105,8 @@ def add_skill(request, username):
 
 @login_required
 def add_history(request, username):
+    if request.user.username != username:
+        return redirect('profile', request.user.username)
     if request.method == 'POST':
         h_form = AddHistoryForm(request.POST)
         if h_form.is_valid():

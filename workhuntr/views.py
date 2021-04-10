@@ -32,12 +32,13 @@ def user_login(request):
     return render(request, 'users/login.html', context)
 
 def verify(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     form = CodeForm(request.POST or None)
     pk = request.session.get('pk')
     if pk:
         user = User.objects.get(pk=pk)
         code = user.code
-        code_user = f"{user.username} : {user.code}"
         if not request.POST:
             send_mail(
                 subject='Two-Factor Verification Code for WorkHuntr',
