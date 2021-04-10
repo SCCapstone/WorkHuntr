@@ -93,8 +93,11 @@ def modify_listings(request, pk):
 @login_required
 def delete_listing(request, pk):
     item = Listings.objects.get(id=pk)
-    if request.method == "POST":
-        item.delete()
+    if request.user == item.huntee:
+        if request.method == "POST":
+            item.delete()
+            return redirect('current_listings')
+    else:
         return redirect('current_listings')
     return render(request, 'listings/delete_listing.html', {'item':item})
 
