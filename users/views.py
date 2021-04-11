@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from dms.services import MessagingService
 from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm, AddSkillForm, AddHistoryForm
 from .models import Comment, Skill, History
 
@@ -40,7 +41,12 @@ def profile(request, username):
     comments = Comment.objects.filter(profile=user.profile)
     skills = Skill.objects.filter(profile=user.profile)
     histories = History.objects.filter(profile=user.profile)
-    return render(request, 'users/profile.html', {'user':user, 'comments':comments, 'skills':skills, 'histories':histories})
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'users/profile.html', {'user':user, 'comments':comments, 'skills':skills, 'histories':histories, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
 
 @login_required
 def edit_profile(request, username):
@@ -57,9 +63,16 @@ def edit_profile(request, username):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'has_unread_messages': has_unread_messages,
+        'num_of_unread_messages': num_of_unread_messages
     }
     return render(request, 'users/edit_profile.html', context)
 
@@ -82,7 +95,12 @@ def add_comment(request, username):
             return redirect('profile', username)
     else:
         form = AddCommentForm()
-    return render(request, 'users/comment.html', {'comment_form': form})
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'users/comment.html', {'comment_form': form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
 @login_required
 def add_skill(request, username):
@@ -101,7 +119,12 @@ def add_skill(request, username):
             return redirect('profile', username)
     else:
         s_form = AddSkillForm()
-    return render(request, 'users/skill.html', {'skill_form': s_form})
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'users/skill.html', {'skill_form': s_form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
 @login_required
 def add_history(request, username):
@@ -123,4 +146,9 @@ def add_history(request, username):
             return redirect('profile', username)
     else:
         h_form = AddHistoryForm()
-    return render(request, 'users/history.html', {'h_form': h_form})
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'users/history.html', {'h_form': h_form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})

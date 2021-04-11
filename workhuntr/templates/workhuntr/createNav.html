@@ -30,7 +30,10 @@
                         <div class="navbar-nav">
                             <a class="nav-item nav-link" href="{% url 'profile' username=request.user.username %}">Profile</a>
                             <a class="nav-item nav-link" href="{% url 'current_listings' %}">Listings</a>
-                            <a class="nav-item nav-link" href="{% url 'contacts' %}">Messages</a>
+                            <a class="nav-item nav-link" href="{% url 'contacts' %}">
+                                <span>Messages</span>
+                                {% if has_unread_messages %}<span class="nav-item nav-badge">{{ num_of_unread_messages }}</span>{% endif %}
+                            </a>
                         </div>
                         <div id="searching">
                             <form action="{% url 'current_listings' %}">

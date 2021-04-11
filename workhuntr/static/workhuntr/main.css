@@ -33,6 +33,19 @@ ul {
     font-weight: 500;
 }
 
+.site-header .navbar-nav .nav-link .nav-badge {
+    position: relative;
+    top: -5px;
+    right: 0px;
+    padding: 5px 10px;
+    border-radius: 25%;
+    height: -50px;
+    width: -50px;
+    border: 1px solid #00B4CC;
+    background: #e3d6ab;
+    color: #8fbdc7;
+}
+
 .content-section {
     background: #ffffff;
     padding: 10px 20px;

@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import *
+from dms.services import MessagingService
 from users.forms import CodeForm
 from .forms import UserLoginForm
 
@@ -64,7 +65,23 @@ def home(request):
     return redirect('dashboard')
 
 def dashboard(request):
-    return render(request, 'workhuntr/dashboard.html')
+    if request.user.is_authenticated:
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        return render(request, 'workhuntr/dashboard.html', {'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
+    else:
+        return render(request, 'workhuntr/dashboard.html')
 
 def faq(request):
-    return render(request, 'workhuntr/faq.html')
+    if request.user.is_authenticated:
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        return render(request, 'workhuntr/faq.html', {'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
+    else:
+        return render(request, 'workhuntr/faq.html')
