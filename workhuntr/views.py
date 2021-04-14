@@ -58,6 +58,7 @@ def verify(request):
                 login(request, user)
                 return redirect('dashboard')
             else:
+                messages.error(request, f'Invalid 2FA Key!')
                 return redirect('login')
     return render(request, 'users/verify.html', {'form' : form})
 
