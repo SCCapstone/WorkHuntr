@@ -44,76 +44,84 @@
     </tr>
 </table>
 <div id="ListingsMain">
-    <div class="content-section" style="background-color: #8fbdc7; width: 180%">
+    <div class="content-section" style="background-color: #8fbdc7; width: 100%">
     <h2>All Open Listings</h2>
         <hr class="rounded">
         <table>
             <tr style="border-bottom: 1px solid black">
                 <th style="padding-right: 15px">Title</th>
-                <th style="padding-right: 15px">Description</th>
                 <th style="padding-right: 15px">Price</th>
                 <th style="padding-right: 15px">Owner</th>
                 <th>Status</th>
+                <th></th>
+                <th></th>
             </tr>
             {% for i in listings %}
             <tr>
             {% if i.status == 'Strutting' %}
-                <td style="border-bottom: 1px solid black;"><div><p style="padding-right: 15px; padding-top: 55px">{{i.title}}</p></div><div><p style = "color:gray; font-style: italic; font-size: 10px; vertical-align: bottom; height = 50px">Tags: {{i.tag_one}}, {{i.tag_two}}, {{i.tag_three}} </p></div></td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">${{i.price}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.huntee}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.status}}</td>
+                <td><div><p style="padding-right: 15px; padding-top: 55px">{{i.title}}</p></div><div><p style = "color:gray; font-style: italic; font-size: 10px; vertical-align: bottom; height = 50px">Tags: {{i.tag_one}}, {{i.tag_two}}, {{i.tag_three}} </p></div></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">${{i.price}}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.huntee}}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.status}}</td>
                 {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
                 {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" style=" background-color: #e3d6ab;" href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
                 {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><form method="POST" action="{% url 'claim_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Claim"></form></td>{% endif %}
-            {% endif %}
             </tr>
-            {% endfor %}
+            <tr>
+                <td style= "border-bottom: 1px solid black" colspan="6" t><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
+            </tr>
+        {% endif %}
+        {% endfor %}
         </table>
         </div>
+
         <hr>
-        <div class="content-section" style="background-color: #8fbdc7; width: 180%">
+        <div class="content-section" style="background-color: #8fbdc7; width: 100%">
         <table>
             <h2>In Progress</h2>
             <hr class="rounded">
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Description</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
+
             </tr>
             {% for i in listings %}
             <tr>
             {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Started' and i.hunter == request.user or i.status == 'Started' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
                 {% if i.hunter == request.user and i.status == 'Claimed' %}<td><form method="POST" action="{% url 'return_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Release"></form></td>{% endif %}
+            </tr>
+            <tr>
+                <td colspan="5"> <button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+            </tr>
             {% endif %}
             {% endfor %}
-            </tr>
         </table>
         </div>
         <hr>
-        <div class="content-section" style="background-color: #8fbdc7; width: 180%">
+        <div class="content-section" style="background-color: #8fbdc7; width: 100%">
         <table>
             <h2>My Completed Listings</h2>
             <hr class="rounded">
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Description</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
+                <th>Status</th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
             </tr>
             {% for i in listings %}
             <tr>
             {% if i.status == 'Complete' and i.huntee == request.user or i.status == 'Complete' and i.hunter == request.user %}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
@@ -124,12 +132,11 @@
         </table>
         </div>
         <hr>
-        <div class="content-section" style="background-color: #8fbdc7; width: 180%">
+        <div class="content-section" style="background-color: #8fbdc7; width: 100%">
         <table>
             <h2>Payment Issued for Listings</h2>
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Description</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
@@ -138,18 +145,19 @@
             <tr>
             {% if i.status == 'Payment Issued' and i.huntee == request.user or i.status == 'Payment Issued' and i.hunter == request.user %}
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
                 {% if i.huntee == request.user %}<td style="padding-right: 15px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
                 <td style="padding-right: 15px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../receipt/{{i.id}}">Receipt</a></td>
+            </tr>
+            <tr>
+                <td colspan="5"> <button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+            </tr>
             {% endif %}
             {% endfor %}
-            </tr>
-    </table>
-    </div>
-</div>
+        </table>
+        </div>
 
 <script>
     var acc = document.getElementsByClassName("accordion");
