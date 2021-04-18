@@ -17,7 +17,11 @@ class UserCreateAccountForm(UserCreationForm):
     gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
     account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
     email = forms.EmailField(required=True)
-    birthday = forms.DateField(label='Birthday', input_formats=DATE_FORMAT)
+    birthday = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
     current_employment = forms.CharField(max_length=50, required=False)
 
     class Meta:
