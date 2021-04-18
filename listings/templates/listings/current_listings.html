@@ -87,19 +87,19 @@
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
-
             </tr>
+
             {% for i in listings %}
             <tr>
             {% if i.status == 'Claimed' and i.hunter == request.user or i.status == 'Claimed' and i.huntee == request.user or i.status == 'Started' and i.hunter == request.user or i.status == 'Started' and i.huntee == request.user or i.status == 'Milestone 1' and i.hunter == request.user or i.status == 'Milestone 1' and i.huntee == request.user or i.status == 'Milestone 2' and i.hunter == request.user or i.status == 'Milestone 2' and i.huntee == request.user or i.status == 'Milestone 3' and i.hunter == request.user or i.status == 'Milestone 3' and i.huntee == request.user%}
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.title}}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
                 {% if i.hunter == request.user and i.status == 'Claimed' %}<td><form method="POST" action="{% url 'return_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Release"></form></td>{% endif %}
             </tr>
             <tr>
-                <td colspan="5"> <button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"><b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
             </tr>
             {% endif %}
             {% endfor %}
@@ -114,21 +114,25 @@
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
-                <th>Status</th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
             </tr>
             {% for i in listings %}
             <tr>
             {% if i.status == 'Complete' and i.huntee == request.user or i.status == 'Complete' and i.hunter == request.user %}
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.title}}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
                 {% if i.huntee == request.user %}<td style="padding-right: 15px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
+            </tr>
+            <tr>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
+            </tr>
             {% endif %}
             {% endfor %}
-            </tr>
+
         </table>
         </div>
         <hr>
@@ -144,15 +148,15 @@
             {% for i in listings %}
             <tr>
             {% if i.status == 'Payment Issued' and i.huntee == request.user or i.status == 'Payment Issued' and i.hunter == request.user %}
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{{i.title}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.title}}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
                 {% if i.huntee == request.user %}<td style="padding-right: 15px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
                 <td style="padding-right: 15px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../receipt/{{i.id}}">Receipt</a></td>
             </tr>
             <tr>
-                <td colspan="5"> <button class="accordion">Description</button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
             </tr>
             {% endif %}
             {% endfor %}
