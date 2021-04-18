@@ -53,33 +53,35 @@ def current_listings(request):
 
 @login_required
 def progress(request, pk):
-    listings = Listings.objects.all()
-    updates = Update.objects.all()
-    select_page = request.GET.get('selected', '')
-    if select_page:
-        item = Listings.objects.get(title=select_page)
-    else: 
-        item = Listings.objects.get(id=pk)
-    if request.user != item.hunter or request.user != item.huntee:
+    listing = Listings.objects.get(id=pk)
+    if request.user == listing.hunter or request.user == listing.huntee:
+        listings = Listings.objects.all()
+        updates = Update.objects.all()
+        select_page = request.GET.get('selected', '')
+        if select_page:
+            item = Listings.objects.get(title=select_page)
+        else:
+            item = Listings.objects.get(id=pk)
+        form = UpdateForm(request.POST)
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        context = {'listings': listings, 'updates': updates, 'item':item, 'form': form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages}
+        if request.method == 'POST':
+            if form.is_valid():
+                update = form.save(commit=False)
+                update.date = timezone.now()
+                update.description = form.cleaned_data.get('description')
+                update.status = form.cleaned_data.get('status')
+                update.listing = item
+                update.save()
+                item.status = update.status
+                item.save()
+        return render(request, 'listings/progress.html', context)
+    else:
         return redirect('current_listings')
-    form = UpdateForm(request.POST)
-    unread_messages = MessagingService.get_unread_messages(request, request.user)
-    has_unread_messages = True
-    num_of_unread_messages = unread_messages.count()
-    if not unread_messages:
-        has_unread_messages = False
-    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages}
-    if request.method == 'POST':
-        if form.is_valid():
-            update = form.save(commit=False)
-            update.date = timezone.now()
-            update.description = form.cleaned_data.get('description')
-            update.status = form.cleaned_data.get('status')
-            update.listing = item
-            update.save()
-            item.status = update.status
-            item.save()
-    return render(request, 'listings/progress.html', context)
 
 @login_required
 def modify_listings(request, pk):
