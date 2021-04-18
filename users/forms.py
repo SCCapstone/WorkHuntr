@@ -68,8 +68,18 @@ class AddSkillForm(forms.ModelForm):
 class AddHistoryForm(forms.ModelForm):
     company = forms.CharField(max_length=100, min_length=1, strip=True)
     description = forms.CharField(max_length=500, min_length=1, strip=True)
-    start_date = forms.CharField(max_length=10, help_text="Format: XX/XX/XXXX")
-    end_date = forms.CharField(max_length=10, help_text="If this is your current occupation, enter present")
+    start_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
+    end_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
+    #start_date = forms.CharField(max_length=10, help_text="Format: XX/XX/XXXX")
+    #end_date = forms.CharField(max_length=10, help_text="If this is your current occupation, enter present")
 
     class Meta:
         model = History
