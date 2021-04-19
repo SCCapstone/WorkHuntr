@@ -13,7 +13,6 @@ def create_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def generate_code(sender, instance, created, **kwargs):
-    print('reached')
     user = instance
     if created:
         code = Code(user=user)

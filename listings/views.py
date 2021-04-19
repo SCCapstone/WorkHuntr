@@ -9,6 +9,8 @@ from dms.services import *
 
 @login_required
 def create_listings(request):
+    if request.user.profile.account_type != 'Huntee':
+        return redirect('current_listings')
     listings = Listings.objects.all()
     form = ListingsForm(request.POST)
     if request.method == 'POST':
@@ -16,45 +18,59 @@ def create_listings(request):
             listing = form.save(commit=False)
             listing.title = form.cleaned_data.get('title')
             listing.description = form.cleaned_data.get('description')
-            if listing.price < 0:
-                listing.price = 0
-            else:
-                listing.price = form.cleaned_data.get('price')
-            listing.tag1 = form.cleaned_data.get('tag1')
-            listing.tag2 = form.cleaned_data.get('tag2')
-            listing.tag3 = form.cleaned_data.get('tag3')
+            listing.price = form.cleaned_data.get('price')
+            listing.tag_one = form.cleaned_data.get('tag_one')
+            listing.tag_two = form.cleaned_data.get('tag_two')
+            listing.tag_three = form.cleaned_data.get('tag_three')
             listing.huntee = request.user
             listing.save()
             messages.success(request, f'Your listing "'+ listing.title +'" has been created!')
             return redirect('current_listings')
         else:
             messages.error(request, f'Error: The listing could not be created!')
-    context = {'listings':listings, 'form':form}
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    context = {'listings':listings, 'form':form, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages}
     return render(request, 'listings/create_listings.html', context)
 
 @login_required
 def current_listings(request):
     search_query = request.GET.get('search', '')
     if search_query:
-        listings = Listings.objects.filter(Q(title__icontains=search_query) | Q(tag1__icontains=search_query) | Q(tag2__icontains=search_query) | Q(tag3__icontains=search_query))
+        listings = Listings.objects.filter(Q(title__icontains=search_query) | Q(tag_one__icontains=search_query) | Q(tag_two__icontains=search_query) | Q(tag_three__icontains=search_query))
     else:
         listings = Listings.objects.all()
-    context = {'listings': listings, 'user': request.user}
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    context = {'listings': listings, 'user': request.user, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages}
     return render(request, 'listings/current_listings.html', context)
 
 @login_required
 def progress(request, pk):
-    listings = Listings.objects.all()
-    updates = Update.objects.all()
-    select_page = request.GET.get('selected', '')
-    if select_page:
-        item = Listings.objects.get(title=select_page)
-    else: 
-        item = Listings.objects.get(id=pk)
-    form = UpdateForm(request.POST)
-    context = {'listings': listings, 'updates': updates, 'item':item, 'form': form}
-    if request.method == 'POST':
-        if form.is_valid():
+    listing = Listings.objects.get(id=pk)
+    if request.user == listing.hunter or request.user == listing.huntee:
+        listings = Listings.objects.all()
+        updates = Update.objects.all()
+        select_page = request.GET.get('selected', '')
+        if select_page:
+            item = Listings.objects.get(title=select_page)
+        else:
+            item = Listings.objects.get(id=pk)
+        form = UpdateForm(request.POST)
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        context = {'listings': listings, 'updates': updates, 'item':item, 'form': form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages}
+        if request.method == 'POST':
+            if form.is_valid():
                 update = form.save(commit=False)
                 update.date = timezone.now()
                 update.description = form.cleaned_data.get('description')
@@ -63,51 +79,71 @@ def progress(request, pk):
                 update.save()
                 item.status = update.status
                 item.save()
-    return render(request, 'listings/progress.html', context)
+        return render(request, 'listings/progress.html', context)
+    else:
+        return redirect('current_listings')
 
 @login_required
 def modify_listings(request, pk):
     listing = Listings.objects.get(id=pk)
-    if request.method == 'POST':
-        form = ModifyListingForm(request.POST, instance=listing)
-        if form.is_valid(): 
-            listing = form.save(commit=False)
-            listing.refresh_from_db()
-            listing.title = form.cleaned_data.get('title')
-            if listing.price < 0: 
-                listing.price = 0
-            else: 
+    if request.user == listing.huntee and listing.status == 'Strutting':
+        if request.method == 'POST':
+            form = ModifyListingForm(request.POST, instance=listing)
+            if form.is_valid():
+                listing = form.save(commit=False)
+                listing.refresh_from_db()
+                listing.title = form.cleaned_data.get('title')
                 listing.price = form.cleaned_data.get('price')
-            listing.description = form.cleaned_data.get('description')
-            listing.tag1 = form.cleaned_data.get('tag1')
-            listing.tag2 = form.cleaned_data.get('tag2')
-            listing.tag3 = form.cleaned_data.get('tag3')
-            listing.save()
-            messages.success(request, f'Your listing "'+ listing.title + '" has been modified!')
-        return redirect('current_listings')
+                listing.description = form.cleaned_data.get('description')
+                listing.tag_one = form.cleaned_data.get('tag_one')
+                listing.tag_two = form.cleaned_data.get('tag_two')
+                listing.tag_three = form.cleaned_data.get('tag_three')
+                listing.save()
+                messages.success(request, f'Your listing "'+ listing.title + '" has been modified!')
+            return redirect('current_listings')
+        else:
+            form = ModifyListingForm(instance=listing)
+        modifiable = False
+        if request.user == listing.huntee:
+            modifiable = True
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        context = {'listing':listing, 'form':form, 'modifiable': modifiable, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages}
+        return render(request, 'listings/modify_listings.html', context)
     else:
-        form = ModifyListingForm(instance=listing)
-    modifiable = False
-    if request.user == listing.huntee:
-        modifiable = True
-    context = {'listing':listing, 'form':form, 'modifiable': modifiable}
-    return render(request, 'listings/modify_listings.html', context)
+        return redirect('current_listings')
 
 @login_required
 def delete_listing(request, pk):
     item = Listings.objects.get(id=pk)
-    if request.method == "POST":
-        item.delete()
+    if request.user == item.huntee and item.status == 'Strutting' or request.user == item.huntee and item.status == 'Payment Issued':
+        if request.user == item.huntee:
+            if request.method == "POST":
+                item.delete()
+                return redirect('current_listings')
+        else:
+            return redirect('current_listings')
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        return render(request, 'listings/delete_listing.html', {'item':item, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
+    else:
         return redirect('current_listings')
-    return render(request, 'listings/delete_listing.html', {'item':item})
 
 @login_required
 def return_listing(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.hunter and listing.status != 'Claimed':
+        return redirect('current_listings')
     listing.status = 'Strutting'
     listing.hunter = request.user
     listing.save()
-    messages.success(request, f'Listing  ' + str(listing.title) + ' has been returned to current listings. ' + str(listing.huntee) + ' has been notified!')
+    messages.success(request, f'Listing ' + str(listing.title) + ' has been returned to current listings. ' + str(listing.huntee) + ' has been notified!')
     huntee = listing.huntee
     content = 'Your listing ' + listing.title + ' has been returned to current listings by ' + str(listing.hunter) + '.'
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
@@ -116,6 +152,8 @@ def return_listing(request, pk):
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
+    if listing.status != 'Strutting' or request.user.profile.account_type != 'Hunter':
+        return redirect('current_listings')
     listing.status = 'Claimed'
     listing.hunter = request.user
     listing.save()
@@ -128,6 +166,8 @@ def claim_listing(request, pk):
 @login_required
 def complete_listing(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.huntee:
+        return redirect('current_listings')
     listing.status = 'Completed'
     listing.save()
     messages.success(request, f'Listing  ' + str(listing.title) + ' has been marked completed! ' + str(listing.huntee) + ' has been notified!')
@@ -139,25 +179,38 @@ def complete_listing(request, pk):
 @login_required
 def issue_payment(request, pk):
     listing = Listings.objects.get(id=pk)
+    if request.user != listing.huntee:
+        return redirect('current_listings')
     if request.method == "POST":
         listing.status = 'Payment Issued'
         listing.save()
         messages.success(request, f'Payment has been issued to ' + str(listing.hunter) + ' in the amount of $' + str(listing.price) + '!')
-        # Receipt
         hunter = listing.hunter
         content = 'Receipt for ' + listing.title +  ' { Listing number:' +' (' + pk + ') ' + ', Listing Price: $' + str(listing.price) + ', Completed by: ' + str(listing.hunter) + ', Listed by: ' + str(listing.huntee) + ' }'
         MessagingService.send_message(request, sender=request.user, recipient=hunter, message=content)
         return redirect('current_listings')
     else:
-        context = {'form': PaymentForm(), 'listing':listing}
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        context = {'form': PaymentForm(), 'listing':listing, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages}
         return render(request, "listings/issue_payment.html", context)
 
 @login_required
 def receipt(request, pk):
     listing = Listings.objects.get(id=pk)
-    if request.method == "POST":
-        return redirect('current_listings')
+    if request.user == listing.huntee or request.user == listing.hunter:
+        if request.method == "POST":
+            return redirect('current_listings')
+        else:
+            unread_messages = MessagingService.get_unread_messages(request, request.user)
+            has_unread_messages = True
+            num_of_unread_messages = unread_messages.count()
+            if not unread_messages:
+                has_unread_messages = False
+            context = {'listing': listing, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages':num_of_unread_messages,}
+            return render(request, 'listings/receipt.html', context)
     else:
-        context = {'listing': listing}
-        return render(request, 'listings/receipt.html', context)
-
+        return redirect('current_listings')

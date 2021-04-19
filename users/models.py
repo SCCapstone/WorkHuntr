@@ -34,6 +34,7 @@ class Profile(models.Model):
     resume = models.FileField(upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)', null=True, blank=True)
     website = models.URLField(default='', max_length=200, blank=True)
     privacy = models.CharField(default='Public', max_length=10)
+    has_unread_messages = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user.username} Profile'

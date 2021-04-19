@@ -31,7 +31,12 @@ def contacts(request):
         users = [contact, request.user]
         last_message = Message.objects.filter(sender__in=users, recipient__in=users).order_by('sent_at').last()
         contacts_messages[contact] = last_message
-    return render(request, 'dms/contacts.html', {'contacts_messages': contacts_messages})
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'dms/contacts.html', {'contacts_messages': contacts_messages, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
 @login_required
 def conversation(request, username):
@@ -48,6 +53,8 @@ def conversation(request, username):
     conversation = []
     for message in all_messages:
         if message.sender in users and message.recipient in users:
+            if message.recipient == request.user:
+                MessagingService.mark_as_read(request, message)
             conversation.append(message)
     page = request.GET.get('page', 1)
     conversation = list(reversed(conversation))
@@ -58,15 +65,27 @@ def conversation(request, username):
         msgs = paginator.page(1)
     except EmptyPage:
         msgs = paginator.page(paginator.num_pages)
-    return render(request, 'dms/conversation.html', {'contact': contact, 'msgs': msgs})
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'dms/conversation.html', {'contact': contact, 'msgs': msgs, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
 @login_required
 def info(request, username):
+    contact = User.objects.get(username=username)
+    users = [contact, request.user]
+    conversation = Message.objects.filter(sender__in=users, recipient__in=users)
+    if not conversation:
+        return redirect('contacts')
     if request.method == 'POST':
-        contact = User.objects.get(username=username)
-        users = [contact, request.user]
-        conversation = Message.objects.filter(sender__in=users, recipient__in=users)
         for message in conversation:
             message.delete()
         return redirect('contacts')
-    return render(request, 'dms/info.html')
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'dms/info.html', {'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})

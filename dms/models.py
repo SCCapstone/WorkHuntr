@@ -23,8 +23,6 @@ class Message(models.Model):
     def save(self, **kwargs):
         if self.sender == self.recipient:
             raise ValidationError("You can't send messages to yourself!")
-
         if not self.id:
             self.sent_at = timezone.now()
-        
         super(Message, self).save(**kwargs)

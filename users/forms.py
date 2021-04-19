@@ -17,7 +17,11 @@ class UserCreateAccountForm(UserCreationForm):
     gender = forms.ChoiceField(widget=forms.Select(), choices=GENDERS)
     account_type = forms.ChoiceField(widget=forms.Select(), choices=ACCOUNT_TYPES)
     email = forms.EmailField(required=True)
-    birthday = forms.DateField(label='Birthday', input_formats=DATE_FORMAT)
+    birthday = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
     current_employment = forms.CharField(max_length=50, required=False)
 
     class Meta:
@@ -64,8 +68,18 @@ class AddSkillForm(forms.ModelForm):
 class AddHistoryForm(forms.ModelForm):
     company = forms.CharField(max_length=100, min_length=1, strip=True)
     description = forms.CharField(max_length=500, min_length=1, strip=True)
-    start_date = forms.CharField(max_length=10, help_text="Format: XX/XX/XXXX")
-    end_date = forms.CharField(max_length=10, help_text="If this is your current occupation, enter present")
+    start_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
+    end_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date'}
+        )
+    )
+    #start_date = forms.CharField(max_length=10, help_text="Format: XX/XX/XXXX")
+    #end_date = forms.CharField(max_length=10, help_text="If this is your current occupation, enter present")
 
     class Meta:
         model = History

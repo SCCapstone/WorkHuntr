@@ -24,14 +24,6 @@ class MessagingService(object):
         except Message.DoesNotExist:
             return ""
 
-    def read_message_formatted(self, message_id):
-        try:
-            message = Message.objects.get(id=message_id)
-            self.mark_as_read(message)
-            return message.sender.username + ": " + message.content
-        except Message.DoesNotExist:
-            return ""
-    
     def get_conversations(self, user1, user2, limit=None, reversed=False, mark_read=False):
         users = [user1, user2]
         if reversed:
