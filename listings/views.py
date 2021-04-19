@@ -138,7 +138,7 @@ def delete_listing(request, pk):
 @login_required
 def return_listing(request, pk):
     listing = Listings.objects.get(id=pk)
-    if request.user != listing.hunter:
+    if request.user != listing.hunter and listing.status != 'Claimed':
         return redirect('current_listings')
     listing.status = 'Strutting'
     listing.hunter = request.user
@@ -152,7 +152,7 @@ def return_listing(request, pk):
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
-    if listing.status == 'Claimed':
+    if listing.status != 'Strutting' or request.user.profile.account_type != 'Hunter':
         return redirect('current_listings')
     listing.status = 'Claimed'
     listing.hunter = request.user
@@ -201,15 +201,16 @@ def issue_payment(request, pk):
 @login_required
 def receipt(request, pk):
     listing = Listings.objects.get(id=pk)
-    if request.user != listing.huntee or request.user != listing.hunter:
-        return redirect('current_listings')
-    if request.method == "POST":
-        return redirect('current_listings')
+    if request.user == listing.huntee or request.user == listing.hunter:
+        if request.method == "POST":
+            return redirect('current_listings')
+        else:
+            unread_messages = MessagingService.get_unread_messages(request, request.user)
+            has_unread_messages = True
+            num_of_unread_messages = unread_messages.count()
+            if not unread_messages:
+                has_unread_messages = False
+            context = {'listing': listing, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages':num_of_unread_messages,}
+            return render(request, 'listings/receipt.html', context)
     else:
-        unread_messages = MessagingService.get_unread_messages(request, request.user)
-        has_unread_messages = True
-        num_of_unread_messages = unread_messages.count()
-        if not unread_messages:
-            has_unread_messages = False
-        context = {'listing': listing, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages':num_of_unread_messages,}
-        return render(request, 'listings/receipt.html', context)
+        return redirect('current_listings')
