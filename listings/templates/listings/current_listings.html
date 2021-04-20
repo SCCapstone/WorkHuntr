@@ -61,7 +61,7 @@
             {% if i.status == 'Strutting' %}
                 <td><div><p style="padding-right: 15px; padding-top: 55px">{{i.title}}</p></div><div><p style = "color:gray; font-style: italic; font-size: 10px; vertical-align: bottom; height = 50px">Tags: {{i.tag_one}}, {{i.tag_two}}, {{i.tag_three}} </p></div></td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">${{i.price}}</td>
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if request.user.profile.account_type == 'Hunter' %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.status}}</td>
                 {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
                 {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" style=" background-color: #e3d6ab;" href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
@@ -125,7 +125,7 @@
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
-                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
+                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
             </tr>
             <tr>
                 <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
@@ -154,8 +154,8 @@
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
-                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
-                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../receipt/{{i.id}}">Receipt</a></td>
+                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../delete_listing/{{i.id}}">Delete Listing</a></td>{% endif %}
+                <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../receipt/{{i.id}}">Receipt</a></td>
             </tr>
             <tr>
                 <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
