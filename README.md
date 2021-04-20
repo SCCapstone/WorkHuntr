@@ -42,7 +42,7 @@ The style guide that was used is the [Google Python Style Guide](https://google.
 
 # Deployment
 
-WorkHuntr is currently deployed to www.workhuntr.com
+WorkHuntr is currently deployed to https://workhuntr.herokuapp.com/dashboard/
 
 # Testing
 Unit testing such as the one for testing listing database functionality uses Django’s built in unittest module. There are currently 11 tests for WorkHuntr's databases. The UI tests utilize selenium and ChromeDriver to automate tests for WorkHuntr's primary functions. Including the "test" for creating the test user, there are currently 5 UI Tests.
