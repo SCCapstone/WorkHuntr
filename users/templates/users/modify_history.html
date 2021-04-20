@@ -1,0 +1,32 @@
+{% extends "workhuntr/profileNav.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section" style="background-color:#8fbdc7;">
+    <form method="POST">
+    {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Modify Work History</legend>
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-0">
+                    <b>{{ h_form.company|as_crispy_field }}</b>
+                </div>
+                <div class="form-group col-md-3 mb-0">
+                    <b>{{ h_form.start_date|as_crispy_field }}</b>
+                </div>
+                <div class="form-group col-md-3 mb-0">
+                    <b>{{ h_form.end_date|as_crispy_field }}</b>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                    <b>{{ h_form.description|as_crispy_field }}</b>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab">Update</button>
+            <a href="{% url 'modify_skill_history' username=user.username %}" style="background-color: #e3d6ab;" class="btn btn-outline-info">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

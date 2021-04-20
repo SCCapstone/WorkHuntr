@@ -1,0 +1,34 @@
+{% extends "workhuntr/profileNav.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if request.user == user or skills or histories %}
+<div class="content-section" style="background-color: #8fbdc7; width: 80%;">
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Skills & Work History <a class="btn btn-outline-info" id="historyBTN" type="button" href="{% url 'add_history' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add history</a><a class="btn btn-outline-info" type="button" id="skillBTN" href="{% url 'add_skill' username=user.username %}" style="background-color: #e3d6ab; float:right;">Add skill</a>
+            <hr class="rounded">
+                {% if skills %}
+                <h1> <b> Skills </b></h1>
+                    {% for skill in skills %}
+                        <h6>{{ skill.skill }}
+                <a class="btn btn-outline-info" style=" background-color: #e3d6ab;" href ="{% url 'delete_skill' skill.id %}">Delete</a></h6>
+                    {% endfor %}
+                {% endif %}
+                <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                    {% if histories %}
+                    <h1> <b>Work History </b></h1>
+                        {% for history in histories %}
+                    <h5><b>{{ history.company }} </b> <p style="float:right; font-size:15px;"> {{history.start_date}} &ensp; - &ensp; {{history.end_date}}</p><a class="btn btn-outline-info" style=" background-color: #e3d6ab;" href ="{% url 'delete_history' history.id %}">Delete</a> <a class="btn btn-outline-info" style=" background-color: #e3d6ab;" href ="{% url 'modify_history' history.id %}">Modify</a></h5>
+                            <h6>{{ history.description }}</h6>
+                            <hr class="rounded">
+                        {% endfor %}
+                            </div>
+                    {% endif %}
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

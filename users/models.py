@@ -70,8 +70,8 @@ class History(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     company = models.CharField(default='', max_length=150)
     description = models.CharField(default='', max_length=500)
-    start_date = models.CharField(default='XXXX-XX-XX', max_length=10)
-    end_date = models.CharField(default='XXXX-XX-XX', max_length=10)
+    start_date = models.CharField(default='XX/XX/XXXX', max_length=10)
+    end_date = models.CharField(default='XX/XX/XXXX', max_length=10, null=True)
 
     def __str__(self):
         return self.company, self.description, self.start_date, self.end_date
