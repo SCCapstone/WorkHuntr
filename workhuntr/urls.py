@@ -48,6 +48,7 @@ urlpatterns = [
     path('reset_password/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), name='password_reset_confirm'),
     path('reset_password/complete/', PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('dashboard/', workhuntr_views.dashboard, name='dashboard'),
+    path('about/', workhuntr_views.about, name='about'),
     path('create_listings/', listing_views.create_listings, name='create_listings'),
     path('current_listings/',listing_views.current_listings, name='current_listings'),
     path('modify_listings/<str:pk>/', listing_views.modify_listings, name='modify_listings'),
