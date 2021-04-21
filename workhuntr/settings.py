@@ -27,7 +27,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'media/about/'), os.path.join(BASE_DI
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['75.101.191.116', 'localhost', '127.0.0.1', 'www.workhuntr.com', 'workhuntr.herokuapp.com']
 
