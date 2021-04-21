@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from dms.services import MessagingService
-from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm, AddSkillForm, AddHistoryForm, ModifyHistoryForm
+from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm, AddSkillForm, AddHistoryForm, ModifyHistoryForm, ModifyCommentForm
 from .models import Comment, Skill, History
 
 def create_account(request):
@@ -88,6 +88,7 @@ def add_comment(request, username):
             comment.rating = form.cleaned_data.get('rating')
             comment.company = form.cleaned_data.get('company')
             profile_user = User.objects.get(username=username)
+            comment.username = profile_user
             comment.profile = profile_user.profile
             comment.author = request.user
             comment.save()
@@ -223,3 +224,49 @@ def delete_history(request, pk):
     if not unread_messages:
         has_unread_messages = False
     return render(request, 'users/delete_history.html', {'history':history, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
+
+@login_required
+def delete_comment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    print(comment.profile.user)
+    if request.method == "POST":
+        comment.delete()
+        return redirect('profile', comment.profile.user)
+    unread_messages = MessagingService.get_unread_messages(request, request.user)
+    has_unread_messages = True
+    num_of_unread_messages = unread_messages.count()
+    if not unread_messages:
+        has_unread_messages = False
+    return render(request, 'users/delete_comment.html', {'comment':comment, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
+
+@login_required
+def modify_comment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    if request.user == comment.author:
+        if request.method == 'POST':
+            form = ModifyCommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.comment = form.cleaned_data.get('comment')
+                comment.rating = form.cleaned_data.get('rating')
+                comment.company = form.cleaned_data.get('company')
+                profile_user = User.objects.get(username=comment.profile.user)
+                comment.username = profile_user
+                comment.profile = profile_user.profile
+                comment.author = request.user
+                comment.save()
+                messages.success(request, f'Your comment was modify!')
+                return redirect('profile', comment.profile.user)
+        else:
+            form = ModifyCommentForm(instance=comment)
+        modifiable = False
+        if request.user == comment.author:
+            modifiable = True
+        unread_messages = MessagingService.get_unread_messages(request, request.user)
+        has_unread_messages = True
+        num_of_unread_messages = unread_messages.count()
+        if not unread_messages:
+            has_unread_messages = False
+        return render(request, 'users/modify_comment.html', {'comment': comment, 'form':form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
+    else:
+        return redirect('profile', comment.profile.user)

@@ -51,8 +51,17 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class AddCommentForm(forms.ModelForm):
     rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
-    company = forms.CharField(max_length=100, min_length=1, strip=True)
-    comment = forms.CharField(max_length=500, min_length=1, strip=True)
+    company = forms.CharField(max_length=50, required=True, help_text='Max 40 characters')
+    comment = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 200 characters')
+
+    class Meta:
+        model = Comment
+        fields = ['rating', 'company', 'comment']
+
+class ModifyCommentForm(forms.ModelForm):
+    rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
+    company = forms.CharField(max_length=50, required=True, help_text='Max 40 characters')
+    comment = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 200 characters')
 
     class Meta:
         model = Comment

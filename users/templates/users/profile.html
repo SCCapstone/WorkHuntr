@@ -108,7 +108,7 @@
             {% for comment in comments %}
                 <h5>
                     <img class="rounded-circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
-                    {{ comment.author.username }}  |  Company:  {{ comment.company }}
+                    {{ comment.author.username }}  |  Company:  {{ comment.company }} {% if request.user == comment.author %}<a class="btn btn-outline-info" style=" background-color: #e3d6ab; float: right;" href ="{% url 'delete_comment' comment.id %}">Delete</a><a class="btn btn-outline-info" style=" background-color: #e3d6ab; float:right;" href ="{% url 'modify_comment' comment.id %}">Modify</a>{% endif %}
                 </h5>
                 <h5>
                     {% if comment.rating == '1' %}
