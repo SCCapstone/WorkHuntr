@@ -86,3 +86,6 @@ def faq(request):
         return render(request, 'workhuntr/faq.html', {'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
     else:
         return render(request, 'workhuntr/faq.html')
+    
+def about(request):
+    return render(request, 'workhuntr/about.html')    
