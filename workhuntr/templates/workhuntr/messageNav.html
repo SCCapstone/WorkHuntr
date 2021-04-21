@@ -43,6 +43,7 @@
                             </form>
                         </div>
                         <div class="navbar-nav ml-auto">
+			    <a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
                             <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                         </div>
@@ -51,6 +52,7 @@
                             <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                             <a class="nav-item nav-link" href="{% url 'create_account' %}">Create Account</a>
                             <a class="nav-item nav-link" href="{% url 'faq' %}">FAQ</a>
+			    <a class="nav-item nav-link" href="{% url 'about' %}">About</a>	
                         </div>
                         {% endif %}
                     </div>
