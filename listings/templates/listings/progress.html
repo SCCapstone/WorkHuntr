@@ -68,7 +68,7 @@
 </div>
 {% if item.hunter == request.user and item.status != 'Payment Issued' %}
     {% if item.hunter == request.user and item.status != 'Complete' %}
-    <div class="content-section" id="updateForm" style="background-color: #8fbdc7; width: 30%; float: left; position: fixed; left: 65%; top: 25%;">
+    <div class="content-section" id="updateForm" style="background-color: #8fbdc7; width: 30%; float: left; position: fixed; left: 65%; top: 13.5%;">
         <h2 style="text-align: center;">New Update</h2>
         <form method="POST">
         {% csrf_token %}

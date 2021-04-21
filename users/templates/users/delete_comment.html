@@ -1,0 +1,12 @@
+{% extends "workhuntr/profileNav.html" %}
+{% block content %}
+<div class="content-section" style="background-color:#8fbdc7; width: 100%;">
+<p>Are you sure you want to delete forever?</p>
+
+<form action="{% url 'delete_comment' comment.id %}" method="POST">
+{% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Delete"/>
+	<a href="{% url 'profile' username=comment.profile.user %}" style="background-color: #e3d6ab;" class="btn btn-outline-info">Cancel</a>
+</form>
+</div>
+{% endblock content %}
