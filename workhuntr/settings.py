@@ -26,7 +26,7 @@ STATIC_URL = '/static/'
 SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['75.101.191.116', 'localhost', '127.0.0.1', 'www.workhuntr.com', 'workhuntr.herokuapp.com']
 
