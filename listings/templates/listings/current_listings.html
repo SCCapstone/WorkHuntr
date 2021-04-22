@@ -64,7 +64,7 @@
                 {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><form method="POST" action="{% url 'claim_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Claim"></form></td>{% endif %}
             </tr>
             <tr>
-                <td style= "border-bottom: 1px solid black" colspan="4"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
             </tr>
         {% endif %}
         {% endfor %}
@@ -95,7 +95,7 @@
                 {% if i.hunter == request.user and i.status == 'Claimed' %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><form method="POST" action="{% url 'return_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Release"></form></td>{% endif %}
             </tr>
             <tr>
-                <td style= "border-bottom: 1px solid black" colspan="4"><button class="accordion" style ="text-align: center"><b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"><b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
             </tr>
             {% endif %}
             {% endfor %}
@@ -124,7 +124,7 @@
                 {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
             </tr>
             <tr>
-                <td style= "border-bottom: 1px solid black" colspan="4"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
             </tr>
             {% endif %}
             {% endfor %}
@@ -154,7 +154,7 @@
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../receipt/{{i.id}}">Receipt</a></td>
             </tr>
             <tr>
-                <td style= "border-bottom: 1px solid black" colspan="4"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
+                <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
             </tr>
             {% endif %}
             {% endfor %}
