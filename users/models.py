@@ -71,7 +71,7 @@ class History(models.Model):
     company = models.CharField(default='', max_length=150)
     description = models.CharField(default='', max_length=500)
     start_date = models.CharField(default='XX/XX/XXXX', max_length=10)
-    end_date = models.CharField(default='XX/XX/XXXX', max_length=10, null=True)
+    end_date = models.CharField(default='XX/XX/XXXX', max_length=10, blank=True)
 
     def __str__(self):
         return self.company, self.description, self.start_date, self.end_date
