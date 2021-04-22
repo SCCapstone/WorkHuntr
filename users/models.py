@@ -28,7 +28,7 @@ class Profile(models.Model):
     title = models.CharField(default='Other', max_length=5)
     gender = models.CharField(default='Prefer Not to Say', max_length=20)
     birthday = models.CharField(default='XXXX-XX-XX', max_length=10)
-    current_employment = models.CharField(default='No Employment', max_length=50)
+    current_employment = models.CharField(default='No Employment', max_length=20)
     account_type = models.CharField(default='Huntee', max_length=6)
     profile_picture = models.ImageField(default='default/default.jpg', upload_to='profile_pics')
     resume = models.FileField(upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)', null=True, blank=True)
@@ -52,7 +52,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     comment = models.CharField(default='', max_length=500)
     rating = models.CharField(default='1', max_length=1)
-    company = models.CharField(default='', max_length=150)
+    company = models.CharField(default='', max_length=20)
 
     def __str__(self):
         return self.comment, self.rating, self.company
@@ -60,7 +60,7 @@ class Comment(models.Model):
 class Skill(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    skill = models.CharField(default='', max_length=100)
+    skill = models.CharField(default='', max_length=20)
 
     def __str__(self):
         return self.skill
@@ -68,10 +68,10 @@ class Skill(models.Model):
 class History(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    company = models.CharField(default='', max_length=150)
+    company = models.CharField(default='', max_length=20)
     description = models.CharField(default='', max_length=500)
     start_date = models.CharField(default='XX/XX/XXXX', max_length=10)
-    end_date = models.CharField(default='XX/XX/XXXX', max_length=10, null=True)
+    end_date = models.CharField(default='XX/XX/XXXX', max_length=10)
 
     def __str__(self):
         return self.company, self.description, self.start_date, self.end_date

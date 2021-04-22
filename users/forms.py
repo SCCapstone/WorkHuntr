@@ -51,8 +51,8 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class AddCommentForm(forms.ModelForm):
     rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
-    company = forms.CharField(max_length=50, required=True, help_text='Max 40 characters')
-    comment = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 200 characters')
+    company = forms.CharField(max_length=20, required=True, help_text='Max 20 characters')
+    comment = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 500 characters')
 
     class Meta:
         model = Comment
@@ -60,23 +60,23 @@ class AddCommentForm(forms.ModelForm):
 
 class ModifyCommentForm(forms.ModelForm):
     rating = forms.ChoiceField(widget=forms.Select(), choices=RATINGS)
-    company = forms.CharField(max_length=50, required=True, help_text='Max 40 characters')
-    comment = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 200 characters')
+    company = forms.CharField(max_length=20, required=True, help_text='Max 20 characters')
+    comment = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 500 characters')
 
     class Meta:
         model = Comment
         fields = ['rating', 'company', 'comment']
 
 class AddSkillForm(forms.ModelForm):
-    skill = forms.CharField(max_length=50, required=True, help_text='Max 30 characters')
+    skill = forms.CharField(max_length=20, required=True, help_text='Max 20 characters')
 
     class Meta:
         model = Skill
         fields = ['skill']
 
 class AddHistoryForm(forms.ModelForm):
-    company = forms.CharField(max_length=100, min_length=1, strip=True)
-    description = forms.CharField(max_length=500, min_length=1, strip=True)
+    company = forms.CharField(max_length=20, min_length=1, strip=True, help_text='Max 20 characters')
+    description = forms.CharField(widget=forms.Textarea(), max_length=500, min_length=1, strip=True, help_text='Max 500 characters')
     start_date = forms.DateField(
         widget=forms.TextInput(
             attrs={'type': 'date'}
@@ -92,8 +92,8 @@ class AddHistoryForm(forms.ModelForm):
         fields = ['company', 'description', 'start_date', 'end_date']
 
 class ModifyHistoryForm(forms.ModelForm):
-    company = forms.CharField(max_length=50, required=True, help_text='Max 20 characters')
-    description = forms.CharField(widget=forms.Textarea(), max_length=1000, required=True, help_text='Max 500 characters')
+    company = forms.CharField(max_length=20, required=True, help_text='Max 20 characters')
+    description = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 500 characters')
     start_date = forms.DateField(
         widget=forms.TextInput(
             attrs={'type': 'date'}
@@ -102,7 +102,7 @@ class ModifyHistoryForm(forms.ModelForm):
     end_date = forms.DateField(
         widget=forms.TextInput(
             attrs={'type': 'date'}
-        ), required=False
+        )
     )
     class Meta:
         model = History
