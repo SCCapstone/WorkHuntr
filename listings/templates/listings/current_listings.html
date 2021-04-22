@@ -38,11 +38,7 @@
     {% endfor %}
 </ul>
 {% endif %}
-<table>
-    <tr>
-    {% if request.user.profile.account_type == 'Huntee' %}<td><button class ="btn-lg" onclick="location.href='/create_listings'" id="CreateListingBTN" class="btn btn-outline-info" style="background-color: #e3d6ab;">Create Listing</button></td>{% endif %}
-    </tr>
-</table>
+{% if request.user.profile.account_type == 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'create_listings' %}" style="background-color: #e3d6ab; float:right;">Create Listing</a>{% endif %}
 <div id="ListingsMain">
     <div class="content-section" style="background-color: #8fbdc7; width: 100%">
     <h2>All Open Listings</h2>
