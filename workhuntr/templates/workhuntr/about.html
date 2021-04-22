@@ -1,35 +1,49 @@
 {% extends "workhuntr/base.html" %}
 {% block content %}
     <div style="margin-left: 0">
-        <div class="video" style="border: 2px solid black;">
+    <table>
+        <tr>
+        <td></td>
+        <td><div class="video" style="border: 2px solid black;">
             <h2 style="text-align: center;">Video Placeholder</h2>
-        </div>
-        <div style="display: table-cell;">
+        </div></td>
+        <td></td>
+        </tr>
+        <tr>
+        <td><div style="display: table-cell;">
             <h2>Listing Example</h2>
             <img style="border: 2px solid black" src="../media/about/workhuntrListingResized.jpg">
             <p style="border: 2px solid black">The Listings page is the place to view all of your owned tasks whether they are being worked on or still waiting on a prespective hunter. Hunters can also claim Listings from here as well as update the status of a project currently being worked on.</p>
             
-        </div>
-        <br>
-        <div style="display: table-cell; ">
+        </div></td>
+        <td></td>
+        <td></td>
+        </tr>
+        
+        <tr>
+        <td></td>
+        <td></td>
+        <td><div style="display: table-cell; ">
             <h2>Profile Example</h2>
             <img style="border: 2px solid black" src="../media/about/workhuntrProfileResized.JPG">
             <p style="border: 2px solid black">Each user has a profile landing page where they can display their contact information, completed WorkHuntr projects, previous experience, and a link to their personal resume.</p>
-        </div>
-        <br>
-        <div style="display: table-cell;">
+        </div></td>
+        </tr>
+        
+        <tr>
+        <td></td>
+        <td><div style="display: table-cell;">
             <h2>Message Example</h2>
-            <img style="border: 2px solid black" src="../media/about/workhuntrProfileResized.JPG">
+            <img style="border: 2px solid black" src="../media/about/workhuntrMessagesResized.JPG">
             <p style="border: 2px solid black">The messages page shows you notifications for any changes to listings you are associated with, as well as one-on-one conversations with other WorkHuntr users. This allows you to contact potential cohorts prior to agreeing to work with them on a project.</p>
+        </div></td>
+        <td></td>
+        </tr>
+        </table>
         </div>
-    </div>
 
-    <br>
-    <br>
-
-    <!-- Please add a a photo with Dimension 200x200 to ensure uniformity -->
-
-    <div>
+        <!-- Please add a a photo with Dimension 200x200 to ensure uniformity -->
+        <div>
         <h2 style="border: 1px solid black; text-align: center;">About the Creators</h2>
         <div style="display: table-cell; border: 2px solid black; text-align: center;">
             <img src="../media/about/timothy.jpg">
@@ -46,24 +60,21 @@
         </div>
 
         <div style="display: table-cell; border: 2px solid black; text-align: center;">
-            <img src="">
+            <img src="../media/about/angel.jpg">
             <p><b>Angel Nguyen</b></p>
-            <a href="https://www.linkedin.com/in/timothybollman/">LinkedIn</a>
-            <a href="https://www.github.com/tbollman">GitHub</a>
+            <a href="https://www.linkedin.com/in/tien-n-711a6a155/">LinkedIn</a>
         </div>
 
         <div style="display: table-cell; border: 2px solid black; text-align: center;">
-            <img src="">
+            <img src="../media/about/angel.jpg">
             <p><b>Matthew Re</b></p>
-            <a href="https://www.linkedin.com/in/timothybollman/">LinkedIn</a>
-            <a href="https://www.github.com/tbollman">GitHub</a>
         </div>
 
         <div style="display: table-cell; border: 2px solid black; text-align: center;">
-            <img src="">
+            <img src="../media/about/justin/jpg">
             <p><b>Justin Hill</b></p>
-            <a href="https://www.linkedin.com/in/timothybollman/">LinkedIn</a>
-            <a href="https://www.github.com/tbollman">GitHub</a>
+            <a href="https://github.com/jhill08">GitHub</a>
         </div>
-    </div>
+    </div>    
+
 {% endblock %}
