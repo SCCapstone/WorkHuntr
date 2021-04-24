@@ -1,5 +1,5 @@
 #
-# Adming page configuration for Listings
+# Admin page configuration for Listings
 #
 
 from django.contrib import admin
