@@ -1,8 +1,11 @@
+<!--
+    Displays a confirmation page to delete a Listing
+-->
+
 {% extends "workhuntr/listingNav.html" %}
 {% block content %}
 <div class="content-section" style="background-color:#8fbdc7; width: 100%;">
 <p>Are you sure you want to delete {{item}} listing forever?</p>
-
 <form action="{% url 'delete_listing' item.id %}" method="POST">
 {% csrf_token %}
     <input class="btn btn-danger" type="submit" value="Delete"/>
