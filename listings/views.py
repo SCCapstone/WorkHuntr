@@ -1,12 +1,19 @@
+#
+# Views for the Listings app
+#
+
 from django.contrib import messages
 from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from dms.services import *
 from .forms import *
 from .models import *
-from dms.services import *
 
+#
+# View that displays the fields necessary to create a Listing
+#
 @login_required
 def create_listings(request):
     if request.user.profile.account_type != 'Huntee':
@@ -36,6 +43,9 @@ def create_listings(request):
     context = {'listings':listings, 'form':form, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages}
     return render(request, 'listings/create_listings.html', context)
 
+#
+# View that displays all currently created listings
+#
 @login_required
 def current_listings(request):
     search_query = request.GET.get('search', '')
@@ -51,6 +61,9 @@ def current_listings(request):
     context = {'listings': listings, 'user': request.user, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages}
     return render(request, 'listings/current_listings.html', context)
 
+#
+# View that displays the progress page for a Listing
+#
 @login_required
 def progress(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -86,6 +99,9 @@ def progress(request, pk):
     else:
         return redirect('current_listings')
 
+#
+# View that displays the fields necessary to modify an existing Listing
+#
 @login_required
 def modify_listings(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -119,6 +135,9 @@ def modify_listings(request, pk):
     else:
         return redirect('current_listings')
 
+#
+# View that displays a confirmation page to delete a Listing
+#
 @login_required
 def delete_listing(request, pk):
     item = Listings.objects.get(id=pk)
@@ -138,6 +157,9 @@ def delete_listing(request, pk):
     else:
         return redirect('current_listings')
 
+#
+# View that returns a Listing to being unclaimed and notifies the huntee of the Listing
+#
 @login_required
 def return_listing(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -156,6 +178,9 @@ def return_listing(request, pk):
     else:
         return redirect('current_listings')
 
+#
+# View that claims a Listing and notifies the huntee of the Listing
+#
 @login_required
 def claim_listing(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -170,6 +195,9 @@ def claim_listing(request, pk):
     MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
     return redirect('current_listings')
 
+#
+# View that completes a listing and notifies the huntee/hunter of the Listing
+#
 @login_required
 def complete_listing(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -187,6 +215,9 @@ def complete_listing(request, pk):
     else:
         return redirect('current_listings')
 
+#
+# View that displays fields to input payment information and sends a receipt to the hunter of the listing
+#
 @login_required
 def issue_payment(request, pk):
     listing = Listings.objects.get(id=pk)
@@ -210,6 +241,9 @@ def issue_payment(request, pk):
     else:
         return redirect('current_listings')
 
+#
+# View that displays the receipt for a completed Listing
+#
 @login_required
 def receipt(request, pk):
     listing = Listings.objects.get(id=pk)
