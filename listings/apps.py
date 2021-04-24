@@ -1,3 +1,7 @@
+#
+# Configure the Listings app
+#
+
 from django.apps import AppConfig
 
 class ListingsConfig(AppConfig):
