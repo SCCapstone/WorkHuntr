@@ -1,3 +1,7 @@
+#
+# Views for the WorkHuntr app
+#
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import *
@@ -10,6 +14,9 @@ from dms.services import MessagingService
 from users.forms import CodeForm
 from .forms import UserLoginForm
 
+#
+# View that displays the field necessary to login a User
+#
 def user_login(request):
     logout(request)
     username = password = ''
@@ -35,6 +42,9 @@ def user_login(request):
         context['form'] = UserLoginForm()
     return render(request, 'users/login.html', context)
 
+#
+# View that displays the fields necessary to verify a 2FA Code and sends a 2FA Code to a User
+#
 def verify(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -62,9 +72,15 @@ def verify(request):
                 return redirect('login')
     return render(request, 'users/verify.html', {'form' : form})
 
+#
+# View that displays the homepage of the app (redirects)
+#
 def home(request):
     return redirect('dashboard')
 
+#
+# View that displays the dashboard of the app
+#
 def dashboard(request):
     if request.user.is_authenticated:
         unread_messages = MessagingService.get_unread_messages(request, request.user)
@@ -76,6 +92,9 @@ def dashboard(request):
     else:
         return render(request, 'workhuntr/dashboard.html')
 
+#
+# View that displays the FAQ of the app
+#
 def faq(request):
     if request.user.is_authenticated:
         unread_messages = MessagingService.get_unread_messages(request, request.user)
@@ -86,6 +105,9 @@ def faq(request):
         return render(request, 'workhuntr/faq.html', {'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
     else:
         return render(request, 'workhuntr/faq.html')
-    
+
+#
+# View that displays the about page of the app
+#
 def about(request):
     return render(request, 'workhuntr/about.html')    

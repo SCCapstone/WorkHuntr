@@ -1,3 +1,7 @@
+#
+# Views for the Users app
+#
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -6,6 +10,9 @@ from dms.services import MessagingService
 from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm, AddSkillForm, AddHistoryForm, ModifyHistoryForm, ModifyCommentForm
 from .models import Comment, Skill, History
 
+#
+# View that displays the fields necessary to create a new account
+#
 def create_account(request):
     if request.method == 'POST':
         form = UserCreateAccountForm(request.POST)
@@ -25,6 +32,9 @@ def create_account(request):
         form = UserCreateAccountForm()
     return render(request, 'users/create_account.html', {'form': form})
 
+#
+# View that displays a User Profile
+#
 @login_required
 def profile(request, username):
     if request.method == 'POST':
@@ -48,6 +58,9 @@ def profile(request, username):
         has_unread_messages = False
     return render(request, 'users/profile.html', {'user':user, 'comments':comments, 'skills':skills, 'histories':histories, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
 
+#
+# View that displays the fields necessary to edit a Profile
+#
 @login_required
 def edit_profile(request, username):
     if username != request.user.username:
@@ -76,6 +89,9 @@ def edit_profile(request, username):
     }
     return render(request, 'users/edit_profile.html', context)
 
+#
+# View that displays the fields necessary to add a Comment to a Profile
+#
 @login_required
 def add_comment(request, username):
     if username == request.user.username:
@@ -103,6 +119,9 @@ def add_comment(request, username):
         has_unread_messages = False
     return render(request, 'users/comment.html', {'comment_form': form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
+#
+# View that displays the fields necessary to add a Skill to a Profile
+#
 @login_required
 def add_skill(request, username):
     if request.user.username != username:
@@ -128,6 +147,9 @@ def add_skill(request, username):
         has_unread_messages = False
     return render(request, 'users/skill.html', {'skill':skill, 'skill_form': s_form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
+#
+# View that displays the fields necessary to add a History to a Profile
+#
 @login_required
 def add_history(request, username):
     if request.user.username != username:
@@ -155,6 +177,9 @@ def add_history(request, username):
         has_unread_messages = False
     return render(request, 'users/history.html', {'h_form': h_form, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
+#
+# View that displays the fields necessary to modify a Skill and History
+#
 @login_required
 def modify(request, username):
     user = User.objects.get(username=username)
@@ -167,6 +192,9 @@ def modify(request, username):
         has_unread_messages = False
     return render(request, 'users/modify_skill_work.html', {'user':user, 'skills':skills, 'histories':histories, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
 
+#
+# View that displays a confirmation page to delete a Skill
+#
 @login_required
 def delete_skill(request, pk):
     skill = Skill.objects.get(id=pk)
@@ -180,6 +208,9 @@ def delete_skill(request, pk):
         has_unread_messages = False
     return render(request, 'users/delete_skill.html', {'skill':skill, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
 
+#
+# View that displays the fields necessary to modify a History
+#
 @login_required
 def modify_history(request, pk):
     history = History.objects.get(id=pk)
@@ -212,6 +243,9 @@ def modify_history(request, pk):
     else:
         return redirect('modify_skill_history', request.user)
 
+#
+# View that displays a confirmation page to delete a History
+#
 @login_required
 def delete_history(request, pk):
     history = History.objects.get(id=pk)
@@ -225,6 +259,9 @@ def delete_history(request, pk):
         has_unread_messages = False
     return render(request, 'users/delete_history.html', {'history':history, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
 
+#
+# View that displays a confirmation page to delete a Comment
+#
 @login_required
 def delete_comment(request, pk):
     comment = Comment.objects.get(id=pk)
@@ -239,6 +276,9 @@ def delete_comment(request, pk):
         has_unread_messages = False
     return render(request, 'users/delete_comment.html', {'comment':comment, 'has_unread_messages':has_unread_messages, 'num_of_unread_messages':num_of_unread_messages})
 
+#
+# View that displays the fields necessary to modify a Comment
+#
 @login_required
 def modify_comment(request, pk):
     comment = Comment.objects.get(id=pk)

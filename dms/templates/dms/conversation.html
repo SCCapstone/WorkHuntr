@@ -1,6 +1,8 @@
 <!-- 
     Code Source: https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
     Code Author: Corey Schafer
+    
+    Displays the messages between two users with most recent first
 -->
 
 {% extends "workhuntr/messageNav.html" %}
@@ -52,12 +54,15 @@
     </div>
 </body>
 <script>
+<!-- Load saved message drafts -->
 function loadDraft() {
     document.getElementById('message').value = localStorage.getItem('message-save');
 }
+<!-- Save message drafts -->
 function saveDraft() {
     localStorage.setItem('message-save', document.getElementById('message').value);
 }
+<!-- Delete message drafts -->
 function deleteDraft() {
     window.onbeforeunload = null;
     localStorage.removeItem('message-save');

@@ -1,8 +1,13 @@
+#
+# Forms for the Listings app
+#
+
 from django import forms
 from django.forms import ModelForm
 from .models import Listings
 from .models import Update
 
+# Tags for a Listing
 TAGS = [
     ('None', 'None'),
     ('AI', 'AI'),
@@ -14,6 +19,7 @@ TAGS = [
     ('Web', 'Web')
 ]
 
+# Types of payment
 TYPES = [
     ('Master Card', 'Master Card'),
     ('Visa', 'Visa'),
@@ -21,6 +27,7 @@ TYPES = [
     ('Discover', 'Discover')
 ]
 
+# Update statuses for a Listing
 UPDATE_STATUSES = [
     ('Started', 'Started'),
     ('Milestone 1', 'Milestone 1'),
@@ -29,6 +36,7 @@ UPDATE_STATUSES = [
     ('Complete', 'Complete')
 ]
 
+# States for a billing address
 STATES = [
     ('Alabama', 'AL'),
     ('Alaska', 'AK'),
@@ -82,10 +90,13 @@ STATES = [
     ('Wyoming', 'WY'),
 ]
 
+#
+# Form to create a new Listing
+#
 class ListingsForm(ModelForm):
-    title = forms.CharField(max_length=50, required=True, help_text='Max 20 characters')
+    title = forms.CharField(max_length=50, required=True, help_text='Max 50 characters')
     price = forms.DecimalField(min_value=0.00, max_value=999.99, max_digits=5, decimal_places=2, required=True)
-    description = forms.CharField(widget=forms.Textarea(), max_length=1000, required=True, help_text='Max 500 characters')
+    description = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 500 characters')
     tag_one = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag_two = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag_three = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
@@ -94,10 +105,13 @@ class ListingsForm(ModelForm):
         model = Listings
         fields = ['title', 'price', 'description', 'tag_one', 'tag_two', 'tag_three']  
 
+#
+# Form to modify an existing Listing
+#
 class ModifyListingForm(forms.ModelForm):
-    title = forms.CharField(max_length=50, required=True, help_text='Max 20 characters')
+    title = forms.CharField(max_length=50, required=True, help_text='Max 50 characters')
     price = forms.DecimalField(min_value=0.00, max_value=999.99, max_digits=5, decimal_places=2, required=True)
-    description = forms.CharField(widget=forms.Textarea(), max_length=1000, required=True, help_text='Max 500 characters')
+    description = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 500 characters')
     tag_one = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag_two = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
     tag_three = forms.ChoiceField(widget=forms.Select(), choices=TAGS, required=False)
@@ -106,6 +120,9 @@ class ModifyListingForm(forms.ModelForm):
         model = Listings
         fields = ['title', 'price', 'description', 'tag_one', 'tag_two', 'tag_three']
 
+#
+# Form to fill out payment information for a Listing
+#
 class PaymentForm(forms.Form):
     first_name = forms.CharField(max_length=20, min_length=1, strip=True, required=True, help_text="First name listed on credit card")
     last_name = forms.CharField(max_length=20, min_length=1, strip=True, required=True, help_text="Last name listed on credit card")
@@ -118,7 +135,10 @@ class PaymentForm(forms.Form):
     billing_city = forms.CharField(max_length=20, min_length=3, required=True, help_text="City of billing address")
     billing_state = forms.ChoiceField(widget=forms.Select(), choices=STATES, required=True, help_text="State of billing address")
     zip = forms.IntegerField(min_value=501, max_value=99999, required=True, help_text="Zip code of billing address")
-    
+
+#
+# Form to update the status of a Listing
+#
 class UpdateForm(forms.ModelForm):
     status = forms.ChoiceField(choices = UPDATE_STATUSES, required=True)
     description = forms.CharField(widget=forms.Textarea(), max_length=500, required=True, help_text='Max 500 characters')
@@ -127,5 +147,8 @@ class UpdateForm(forms.ModelForm):
         model = Update
         fields = ['status','description']
 
+#
+# Form to display all Listings
+#
 class MyListingsForm(forms.Form):
     Listings = forms.ModelChoiceField(queryset=Listings.objects.values_list("title", flat=True).distinct(), empty_label=None)

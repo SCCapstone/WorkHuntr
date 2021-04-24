@@ -1,3 +1,7 @@
+#
+# Views for the Dms app
+#
+
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -7,6 +11,9 @@ from django.shortcuts import render, redirect
 from .models import Message
 from .services import MessagingService
 
+#
+# View that displays all previous contacts that a user has (previous conversations)
+#
 @login_required
 def contacts(request):
     if request.method == 'POST':
@@ -15,7 +22,7 @@ def contacts(request):
         try:
             searched = User.objects.get(username=search_user)
         except:
-            print('User Not Found')
+            messages.error(request, 'You cannot send a message to yourself!')
         if search_user == '' or search_user == request.user.username or searched == None:
             return redirect('contacts')
         return redirect('conversation', search_user)
@@ -38,6 +45,9 @@ def contacts(request):
         has_unread_messages = False
     return render(request, 'dms/contacts.html', {'contacts_messages': contacts_messages, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
+#
+# View that displays the messages between two users with most recent first 
+#
 @login_required
 def conversation(request, username):
     contact = User.objects.get(username=username)
@@ -72,6 +82,9 @@ def conversation(request, username):
         has_unread_messages = False
     return render(request, 'dms/conversation.html', {'contact': contact, 'msgs': msgs, 'has_unread_messages': has_unread_messages, 'num_of_unread_messages': num_of_unread_messages})
 
+#
+# View that displays the info for a conversation and where the user can delete the conversation
+#
 @login_required
 def info(request, username):
     contact = User.objects.get(username=username)

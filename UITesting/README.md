@@ -1,6 +1,11 @@
+# IMPORTANT
+
+DO NOT RUN ANY TEST FILES WHILE THE MOVE FROM LOCAL TO WEB IS IN PLACE. nothing works anyway, but running the test_init will create an account on the physical website that cannot (easily) be deleted / modified as I'm trying to fix everything.
+
+
 ## Testing Technology
 
-For UI testing, selenium must be installed using pip (refer to prerequisites and setup above) and ChromeDriver must also be downloaded and placed in the `UITesting/` directory. ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 88.0.4324.104 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 88.0.4324.96.
+For UI testing, selenium must be installed using pip (refer to prerequisites and setup above) and ChromeDriver must also be downloaded and placed in the `UITesting/` directory. ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 90.0.4430.85 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 90.0.4430.24
 
 Download Chromedriver [here](https://sites.google.com/a/chromium.org/chromedriver/home).
 
