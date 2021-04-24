@@ -1,5 +1,5 @@
 #
-# Admin page configuration for Message
+# Admin page configuration for Dms
 #
 
 from django.contrib import admin
