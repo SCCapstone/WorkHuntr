@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 USERNAME = "WorkhuntrTester"
 PASSWORD = "Thispass142"
@@ -13,17 +14,20 @@ driver = webdriver.Chrome("chromedriver.exe")
 
 print("INITIALIZING TEST USER...")
 
-driver.get("http://127.0.0.1:8000/dashboard/")
+driver.get("https://workhuntr.herokuapp.com/create_account/")
 
-driver.find_element_by_id("createACCBTN").click()
+wait = WebDriverWait(driver, 10)
+wait.until(lambda driver: driver.current_url == "https://workhuntr.herokuapp.com/create_account/")
 
-driver.find_element_by_name("email").send_keys(GMAIL)
+driver.find_element_by_id("id_email").send_keys(GMAIL)
+
 
 driver.find_element_by_name("first_name").send_keys("Test")
 
 driver.find_element_by_name("last_name").send_keys("monkey")
 
-driver.find_element_by_name("birthday").send_keys("1999-08-22")
+driver.find_element_by_name("birthday").click()
+driver.find_element_by_name("birthday").send_keys(Keys.SPACE + Keys.TAB + Keys.RETURN)
 
 driver.find_element_by_name("current_employment").send_keys("test guy")
 
