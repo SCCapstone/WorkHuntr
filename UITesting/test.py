@@ -14,9 +14,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 # WorkHuntr test login
-USERNAME = "WorkhuntrTester"
-PASSWORD = "Thispass142"
-GMAIL = "WorkhuntrTester@gmail.com"
+USERNAME = "Matthewjre"
+PASSWORD = "Workhuntr1"
+GMAIL = "newworkhuntrtester@gmail.com"
 GMAILPASSWORD = "thispass142"
 testCount = 0
 failedTests = ""
@@ -28,7 +28,7 @@ print("RUNNING TESTS...")
 try:
     print("RUNNING LOGIN TEST...")
     # Go to login page
-    urlLogin = "http://127.0.0.1:8000/login/"
+    urlLogin = "https://workhuntr.herokuapp.com/login/"
     driver.get(urlLogin)
     # Find username field
     driver.find_element_by_name("username").send_keys(USERNAME)
@@ -55,7 +55,7 @@ try:
     nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
     nextButton[0].click()
 
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 20)
     wait.until(lambda driver: driver.current_url == "https://mail.google.com/mail/u/0/#inbox")
 
     source = driver.page_source
@@ -68,10 +68,12 @@ try:
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
 
-    driver.find_element_by_xpath("//*[@id=\":28\"]/div[1]/span").click()
+    print("Debug: KEY=" + key)
+
+#    driver.find_element_by_xpath("//*[@id=\":28\"]/div[1]/span").click()
 
 
-    driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
+#    driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
 
     driver.close()#close gmail
 
@@ -87,6 +89,7 @@ except:
     print("Login failed")
     failedTests += "\nlogin test fail\n"
 
+"""
 try:
     print("RUNNING PROFILE UPDATE TEST...")
 
@@ -163,4 +166,4 @@ if failedTests != "":
 
 
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
-driver.close()
+driver.close()"""
