@@ -6,6 +6,9 @@ import pytz
 from django.db import models
 from django.utils import timezone
 
+
+# A function called to test the functionality of the Message database. It creates a copy of the DB, fills in the values
+# and check to ensure that te values were set correctly. the copy is then later destroyed.
 class TestListing(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='sender', email='sender@...', password='test123')
@@ -14,6 +17,7 @@ class TestListing(TestCase):
                                sent_at=datetime.datetime.now(),
                                read_at=pytz.utc.localize(datetime.datetime.strptime('2007-10-25 14:30:59', '%Y-%m-%d %H:%M:%S')))
 
+    # Tests the content field of the message
     def test_content(self):
         message = Message.objects.get(id=1)
         field_object = Message._meta.get_field('content')
@@ -21,6 +25,7 @@ class TestListing(TestCase):
         self.assertEqual(value, 'testMSG')
         print("content PASS")
 
+    # Tests the read_at field of the message
     def test_Read_At(self):
         message = Message.objects.get(id=1)
         field_object = Message._meta.get_field('read_at')
@@ -28,6 +33,7 @@ class TestListing(TestCase):
         self.assertEqual(value, pytz.utc.localize(datetime.datetime.strptime('2007-10-25 14:30:59', '%Y-%m-%d %H:%M:%S', )))
         print("Read_At PASS")
 
+    # Tests the read_at field of the message
     def test_Sender(self):
         message = Message.objects.get(id=1)
         field_object = Message._meta.get_field('sender')
@@ -35,6 +41,7 @@ class TestListing(TestCase):
         self.assertEqual(value, self.user.id)
         print("Sender PASS")
 
+    # Tests the recipient field of the message
     def test_Recipient(self):
         message = Message.objects.get(id=1)
         field_object = Message._meta.get_field('recipient')
