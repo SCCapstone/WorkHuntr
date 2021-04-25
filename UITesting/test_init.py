@@ -14,10 +14,10 @@ driver = webdriver.Chrome("chromedriver.exe")
 
 print("INITIALIZING TEST USER...")
 
-driver.get("https://workhuntr.herokuapp.com/create_account/")
+driver.get("http://127.0.0.1:8000/create_account/")
 
 wait = WebDriverWait(driver, 10)
-wait.until(lambda driver: driver.current_url == "https://workhuntr.herokuapp.com/create_account/")
+wait.until(lambda driver: driver.current_url == "http://127.0.0.1:8000/create_account/")
 
 driver.find_element_by_id("id_email").send_keys(GMAIL)
 
@@ -38,6 +38,8 @@ driver.find_element_by_name("password1").send_keys(PASSWORD)
 driver.find_element_by_name("password2").send_keys(PASSWORD)
 
 driver.find_element_by_id("signUPBTN").click()
+
+print("TEST USER CREATED")
 
 driver.close()
 
