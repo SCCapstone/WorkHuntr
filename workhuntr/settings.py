@@ -19,7 +19,7 @@ from typing import Sequence
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'media/about/'), os.path.join(BASE_DIR, 'media/default/'), os.path.join(BASE_DIR, 'media/workhuntr/')]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'media/about/'), os.path.join(BASE_DIR, 'media/default/'), os.path.join(BASE_DIR, 'media/workhuntr/')]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -136,8 +136,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
