@@ -12,7 +12,7 @@
     <form method="POST">
     {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4"><img class="square account-img" src="/media/workhuntr/huntr_person.jpg"><b>Join Today</b></legend>
+            <legend class="border-bottom mb-4"><img class="square account-img" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390135/media/workhuntr/huntr_person.jpg"><b>Join Today</b></legend>
             <div class="form-row">
                 <div class="form-group col-md-4 mb-0">
                     <b><abbr title="Hunters are hunting for a project (employees). &#013;Huntees are hunting for help (employers).">{{ form.account_type|as_crispy_field }}</abbr></b>
