@@ -265,7 +265,6 @@ def delete_history(request, pk):
 @login_required
 def delete_comment(request, pk):
     comment = Comment.objects.get(id=pk)
-    print(comment.profile.user)
     if request.method == "POST":
         comment.delete()
         return redirect('profile', comment.profile.user)
