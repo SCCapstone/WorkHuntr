@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+
 
 
 # IN ORDER TO RUN TESTS, YOU MUST HAVE THE ACCOUNT CREATED WITH THE INFORMATION BELOW (username & password)
@@ -14,9 +16,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 # WorkHuntr test login
-USERNAME = "Matthewjre"
-PASSWORD = "Workhuntr1"
-GMAIL = "newworkhuntrtester@gmail.com"
+USERNAME = "WorkhuntrTester"
+PASSWORD = "Thispass142"
+GMAIL = "WorkhuntrTester@gmail.com"
 GMAILPASSWORD = "thispass142"
 testCount = 0
 failedTests = ""
@@ -28,7 +30,7 @@ print("RUNNING TESTS...")
 try:
     print("RUNNING LOGIN TEST...")
     # Go to login page
-    urlLogin = "https://workhuntr.herokuapp.com/login/"
+    urlLogin = "http://127.0.0.1:8000/login/"
     driver.get(urlLogin)
     # Find username field
     driver.find_element_by_name("username").send_keys(USERNAME)
@@ -37,50 +39,56 @@ try:
     # Login
     driver.find_element_by_id("loginButton").click()
 
+    # open a new tab to access gmail
     driver.execute_script("window.open('https://www.gmail.com');")
 
+    # Switch the driver to gmail tab
     driver.switch_to.window(driver.window_handles[1])#chrome
 
+    # enter the gmail
     driver.find_element_by_name("identifier").send_keys(GMAIL)
 
+    # A wait function that I'm not convinced works
     driver.implicitly_wait(1)
 
+    # next button
     next = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
     next[0].click()
 
+    # Another wait function that I'm not convinced works
     driver.set_page_load_timeout(10)
 
+    # finds password and logs in
     driver.find_element_by_name('password').send_keys(GMAILPASSWORD)
-
     nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
     nextButton[0].click()
 
+    # A 3rd wait function that im not convinced works
     wait = WebDriverWait(driver, 20)
+    # forces Selenium to wait until the inbox has loaded (the url reflects the inbox)
     wait.until(lambda driver: driver.current_url == "https://mail.google.com/mail/u/0/#inbox")
 
+    # Grabs the page source to fetch the password
     source = driver.page_source
 
     driver.implicitly_wait(4)
 
+    # finds the index of the 2FA password in the page source & grabs the 5 random numbers
     subSTR = source.find("Your two-factor verification code for WorkHuntr is ")
-
     key = ""
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
 
-    print("Debug: KEY=" + key)
 
 #    driver.find_element_by_xpath("//*[@id=\":28\"]/div[1]/span").click()
-
-
 #    driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
 
-    driver.close()#close gmail
-
+    # Close gmail and switch the active tab back to workhuntr
+    driver.close()
     driver.switch_to.window(driver.window_handles[0])#workhuntr
 
+    # enter the 2FA code and login
     driver.find_element_by_name("number").send_keys(key)
-
     driver.find_element_by_id("loginButton").click()
 
     print("LOGIN SUCCESSFUL")
@@ -89,12 +97,11 @@ except:
     print("Login failed")
     failedTests += "\nlogin test fail\n"
 
-"""
 try:
     print("RUNNING PROFILE UPDATE TEST...")
 
     #go to the profile and start editing
-    driver.find_element_by_xpath("//*[@id=\"dashProfileButton\"]").click()
+    driver.find_element_by_id("dashProfileButton").click()
     driver.find_element_by_xpath("/html/body/main/div[2]/div/div/a").click()
 
     #add a website
@@ -112,58 +119,107 @@ except:
     failedTests += "\nprofile update test fail\n"
 
 try:
-    print("TESTING ADDING SKILLS AND HISTORY...")
+    print("TESTING ADDING AND DELETING SKILLS...")
     # from profile, click on the skills
+    driver.find_element_by_id("SkillHistoryBTN").click()
     driver.find_element_by_id("skillBTN").click()
 
     # add a skill and submit
-    driver.find_element_by_xpath("//*[@id=\"id_skill\"]").send_keys("writing tests")
+    driver.find_element_by_id("id_skill").send_keys("writing tests")
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
 
+    # Delete the added skill
+    driver.find_element_by_xpath("/html/body/main/div[2]/div/div/h6/a").click()
+    driver.find_element_by_xpath("/html/body/main/div/form/input[2]").click()
+    print("PROFILE UPDATE SUCCESSFUL")
+    testCount += 1
+except:
+    print("ADDING/DELETING SKILLS FILED")
+    failedTests += "\nskills test fail\n"
+
+try:
+    print("TESTING ADDING AND DELETING HISTORY...")
     # click on history
-    driver.get("http://127.0.0.1:8000/add_work_history/WorkhuntrTester/")
+    driver.find_element_by_id("historyBTN").click()
 
     # Fill out the history form
-    driver.find_element_by_xpath("//*[@id=\"id_company\"]").send_keys("Worhuntr development")
-    driver.find_element_by_xpath("//*[@id=\"id_start_date\"]").send_keys("08/22/2015")
-    driver.find_element_by_xpath("//*[@id=\"id_end_date\"]").send_keys("08/22/2018")
-    driver.find_element_by_xpath("//*[@id=\"id_description\"]").send_keys("try to do things without breaking more")
+    driver.find_element_by_name("company").send_keys("Worhuntr")
+
+    # add start date
+    driver.find_element_by_id("id_start_date").click()
+    driver.find_element_by_id("id_start_date").send_keys(Keys.SPACE + Keys.TAB + Keys.RETURN)
+    driver.find_element_by_id("id_start_date").send_keys("2015")
+
+    # Add end date
+    driver.find_element_by_id("id_end_date").click()
+    driver.find_element_by_id("id_end_date").send_keys(Keys.SPACE + Keys.TAB + Keys.RETURN)
+
+    driver.find_element_by_name("description").send_keys("try to do things without breaking more")
 
     # submit
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
 
-    print("ADDING SKILLS AND HISTORY SUCCESSFUL")
+    # Delete the history
+    driver.find_element_by_xpath("//*[@id=\"accordion1\"]/h5/a[1]").click()
+    driver.find_element_by_xpath("/html/body/main/div/form/input[2]").click()
+
+    print("ADDING AND DELETING HISTORY SUCCESSFUL")
     testCount += 1
 except:
-    print("ADDING SKILLS AND HISTORY FILED")
-    failedTests += "\nadding skills and history fail\n"
+    print("ADDING AND DELETING HISTORY FILED")
+    failedTests += "\nadding history fail\n"
 
 try:
     print("TESTING LISTING CREATION")
     # find listing field
-    driver.get("http://127.0.0.1:8000/current_listings/")
+    driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
 
     # create Listing
     driver.find_element_by_id("CreateListingBTN").click()
 
     ListingTitle = "CREATE THIS TEST"
 
+    # Fill in the proper elements
     driver.find_element_by_name("title").send_keys(ListingTitle)
     driver.find_element_by_name("price").send_keys("10")
     driver.find_element_by_name("description").send_keys("This is a generated test listing")
+    dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_tag_one\"]"))
+    dropdown.select_by_value("Java")
+    dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_tag_two\"]"))
+    dropdown.select_by_value("Design")
 
+    # submit
     driver.find_element_by_id("ListingSubmitBTN").click()
 
-    fetch = driver.find_element_by_xpath("/html/body/main/div/div/div[1]").text
-    testCount += 1
+    # Check for success
+    fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
+    if fetch == "Your listing \"" + ListingTitle +"\" has been created!":
+        print("LISTING CREATION SUCCESSFUL")
+        testCount += 1
 except:
     print("LISTING TEST FAILED")
     failedTests += "\nlisting test fail\n"
 
-print("\n\nSUCCESSFULLY RAN " + str(testCount) + " TESTS")
-if failedTests != "":
-    print(str(failedTests) + " TESTS FAILED DURING RUNNING")
+try:
+    print("TESTING LISTING MODIFICATION")
 
+    ListingTitle = "CREATE THIS TEST"
+    # Modify the description of the listing
+    driver.find_element_by_id("modifyBTN").click()
+    driver.find_element_by_name("description").send_keys(Keys.CONTROL+"A")
+    driver.find_element_by_name("description").send_keys("This listing has been modified")
+
+    driver.find_element_by_id("submitModBTN").click()
+
+    fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
+    if fetch == "Your listing \"" + ListingTitle +"\" has been modified!":
+        print("LISTING MODIFICATION SUCCESSFUL")
+        testCount += 1
+except:
+    print("LISTING MODIFICATION TEST FAILED")
+    failedTests += "\nlisting modification test fail\n"
 
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
-driver.close()"""
+driver.close()
+
+print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")

@@ -1,7 +1,3 @@
-# IMPORTANT
-
-DO NOT RUN ANY TEST FILES WHILE THE MOVE FROM LOCAL TO WEB IS IN PLACE. nothing works anyway, but running the test_init will create an account on the physical website that cannot (easily) be deleted / modified as I'm trying to fix everything.
-
 
 ## Testing Technology
 

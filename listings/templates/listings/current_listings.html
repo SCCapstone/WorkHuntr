@@ -63,7 +63,7 @@
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">${{i.price}}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if request.user.profile.account_type == 'Hunter' %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{{i.status}}</td>
-                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
+                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" id="modifyBTN" style="background-color: #e3d6ab;" href="../modify_listings/{{i.id}}">Modify</a></td>{% endif %}
                 {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px;"><a class="btn btn-outline-info" style=" background-color: #e3d6ab;" href ="{% url 'delete_listing' i.id %}">Delete</a></td>{% endif %}
                 {% if i.huntee != request.user and request.user.profile.account_type == 'Hunter' %}<td><form method="POST" action="{% url 'claim_listing' i.id %}">{% csrf_token %}<input class="btn btn-outline-info" style="background-color: #e3d6ab;" type="submit" value="Claim"></form></td>{% endif %}
             </tr>
