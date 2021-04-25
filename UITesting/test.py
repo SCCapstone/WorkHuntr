@@ -17,6 +17,7 @@ from selenium.webdriver.common.keys import Keys
 
 # WorkHuntr test login
 USERNAME = "WorkhuntrTester"
+USERNAMEHUNTER = "WorkhuntrHunter"
 PASSWORD = "Thispass142"
 GMAIL = "WorkhuntrTester@gmail.com"
 GMAILPASSWORD = "thispass142"
@@ -208,9 +209,9 @@ try:
     driver.find_element_by_id("modifyBTN").click()
     driver.find_element_by_name("description").send_keys(Keys.CONTROL+"A")
     driver.find_element_by_name("description").send_keys("This listing has been modified")
-
+    # submit
     driver.find_element_by_id("submitModBTN").click()
-
+    # Check for success
     fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
     if fetch == "Your listing \"" + ListingTitle +"\" has been modified!":
         print("LISTING MODIFICATION SUCCESSFUL")
@@ -219,7 +220,43 @@ except:
     print("LISTING MODIFICATION TEST FAILED")
     failedTests += "\nlisting modification test fail\n"
 
+# This message needs to be stored outside a test since it will be called in the send and the receive test
+TESTMESSAGE = "Howdy, fella!"
+
+try:
+    print("TESTING MESSAGE SENDING")
+
+    # Access the message tab from the navbar
+    driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/li/a").click()
+
+    # Search for the Hunter user from the search box
+    driver.find_element_by_xpath("/html/body/main/div/div/div/div/div/form/input[2]").send_keys(USERNAMEHUNTER)
+    driver.find_element_by_id("MSGSearchBTN").click()
+
+    # Send a message using the message saved above
+    driver.find_element_by_id("message").send_keys(TESTMESSAGE)
+    driver.find_element_by_id("MSGsendBTN").click()
+
+    # Check for url change to signal successful send
+    if driver.current_url == "http://127.0.0.1:8000/contacts/conversation/WorkhuntrHunter":
+        print("MESSAGE SENT TEST SUCCESSFUL")
+        testCount += 1
+    else:
+        print("MESSAGE SENDING FAILED")
+        failedTests += "\nmessage sending test fail\n"
+
+
+except:
+    print("MESSAGE SENDING FAILED")
+    failedTests += "\nmessage sending test fail\n"
+
+
+
+
+
+
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
 driver.close()
 
 print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
+print("\nFailed tests:\n"+failedTests)

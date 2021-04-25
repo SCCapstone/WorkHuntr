@@ -47,7 +47,7 @@
             <form method="POST">
             {% csrf_token %}
                 <input type="text" placeholder="Message" name="textarea" id="message" style="background-color: #e3d6ab;">
-                <button onclick="deleteDraft()" class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;">Send</button>
+                <button onclick="deleteDraft()" id="MSGsendBTN" class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;">Send</button>
             </form>
             <a href="{% url 'contacts' %}" class="btn btn-outline-info" type="button" style="background-color: #e3d6ab">Back</a>
         </h5>
