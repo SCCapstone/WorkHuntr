@@ -40,7 +40,6 @@
         </div>
     </div>
 </div>
-{% if user.profile.website != '' or request.user == user %}
 <div class="content-section" style="background-color: #8fbdc7;  width: 80%;">
     <div class="media">
         <div class="media-body">
@@ -53,7 +52,6 @@
         </div>
     </div>
 </div>
-{% endif %}
 {% if request.user == user or skills or histories %}
 <div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
