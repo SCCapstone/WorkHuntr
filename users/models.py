@@ -41,7 +41,7 @@ class Profile(models.Model):
     birthday = models.CharField(default='XXXX-XX-XX', max_length=10)
     current_employment = models.CharField(default='No Employment', max_length=20)
     account_type = models.CharField(default='Huntee', max_length=6)
-    profile_picture = CloudinaryField('Profile picture', default='default.jpg')
+    profile_picture = CloudinaryField('Profile picture', default='https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg')
     resume = CloudinaryField('Resume (.pdf only)', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], null=True, blank=True)
     website = models.URLField(default='', max_length=200, blank=True)
     privacy = models.CharField(default='Public', max_length=10)
