@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'workhuntr',
     'users',
     'listings',
-    'dms'
+    'dms',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
