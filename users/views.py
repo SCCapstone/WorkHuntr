@@ -69,9 +69,6 @@ def edit_profile(request, username):
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
-            resume = p_form.cleaned_data.get('resume')
-            if resume == False:
-                cloudinary.uploader.destory(request.user.profile.resume.url, invalidate=True)
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
