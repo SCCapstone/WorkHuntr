@@ -114,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Cloudinary credentials
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': hwtxtlvxz,
-    'API_KEY': 838849478698496,
-    'API_SECRET': --O13QYWVL5-ARNl7dM9GO650wY,
+    'CLOUD_NAME': 'hwtxtlvxz',
+    'API_KEY': '838849478698496',
+    'API_SECRET': '--O13QYWVL5-ARNl7dM9GO650wY',
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
