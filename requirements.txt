@@ -8,3 +8,5 @@ gunicorn
 psycopg2
 pymongo
 django-heroku
+cloudinary
+django-cloudinary-storage
