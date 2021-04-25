@@ -19,11 +19,7 @@
 <br>
 <div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
-        {% if user.profile.profile_picture.url %}
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
-        {% else %}
-        <img class="rounded-circle account-img" src="media/default/default.jpg">
-        {% endif %}
         <div class="media-body">
             <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
             {% if request.user != user %}<a class="btn btn-outline-info" type="button" href="{% url 'conversation' username=user.username %}" style="background-color: #e3d6ab; float:right;">Message</a>{% endif %}
