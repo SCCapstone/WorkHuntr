@@ -9,6 +9,8 @@ from django.shortcuts import render, redirect
 from dms.services import MessagingService
 from .forms import AddCommentForm, ProfileUpdateForm, UserCreateAccountForm, UserUpdateForm, AddSkillForm, AddHistoryForm, ModifyHistoryForm, ModifyCommentForm
 from .models import Comment, Skill, History
+import cloudinary
+import cloudinary.uploader
 
 #
 # View that displays the fields necessary to create a new account
@@ -69,6 +71,10 @@ def edit_profile(request, username):
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
+            resume = p_form.cleaned_data.get('resume')
+            if resume == False and self.instance.resume:
+                if os.path.isfile(self.instance.resume.url):
+                    cloudinary.uploader.destroy(self.instance.resume.public_id, invalidate=True)
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
