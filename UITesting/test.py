@@ -179,25 +179,45 @@ try:
 
     ListingTitle = "CREATE THIS TEST"
 
+    # Fill in the proper elements
     driver.find_element_by_name("title").send_keys(ListingTitle)
     driver.find_element_by_name("price").send_keys("10")
     driver.find_element_by_name("description").send_keys("This is a generated test listing")
-
     dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_tag_one\"]"))
     dropdown.select_by_value("Java")
     dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_tag_two\"]"))
     dropdown.select_by_value("Design")
 
+    # submit
     driver.find_element_by_id("ListingSubmitBTN").click()
 
+    # Check for success
     fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
-
     if fetch == "Your listing \"" + ListingTitle +"\" has been created!":
         print("LISTING CREATION SUCCESSFUL")
         testCount += 1
 except:
     print("LISTING TEST FAILED")
     failedTests += "\nlisting test fail\n"
+
+try:
+    print("TESTING LISTING MODIFICATION")
+
+    ListingTitle = "CREATE THIS TEST"
+    # Modify the description of the listing
+    driver.find_element_by_id("modifyBTN").click()
+    driver.find_element_by_name("description").send_keys(Keys.CONTROL+"A")
+    driver.find_element_by_name("description").send_keys("This listing has been modified")
+
+    driver.find_element_by_id("submitModBTN").click()
+
+    fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
+    if fetch == "Your listing \"" + ListingTitle +"\" has been modified!":
+        print("LISTING MODIFICATION SUCCESSFUL")
+        testCount += 1
+except:
+    print("LISTING MODIFICATION TEST FAILED")
+    failedTests += "\nlisting modification test fail\n"
 
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
 driver.close()
