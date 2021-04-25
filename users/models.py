@@ -36,6 +36,7 @@ class Code(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     title = models.CharField(default='Other', max_length=5)
+    phone_number = models.CharField(max_length=12)
     gender = models.CharField(default='Prefer Not to Say', max_length=20)
     birthday = models.CharField(default='XXXX-XX-XX', max_length=10)
     current_employment = models.CharField(default='No Employment', max_length=20)
