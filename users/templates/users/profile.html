@@ -19,7 +19,11 @@
 <br>
 <div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
+        {% if user.profile.profile_picture.url %}
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
+        {% else %}
+        <img class="rounded-circle account-img" src="default/default.jpg">
+        {% endif %}
         <div class="media-body">
             <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
             {% if request.user != user %}<a class="btn btn-outline-info" type="button" href="{% url 'conversation' username=user.username %}" style="background-color: #e3d6ab; float:right;">Message</a>{% endif %}
@@ -47,7 +51,7 @@
             <h2 class="account-heading">Resume & Work Samples</h2>
             <div>
                 <hr class="rounded">
-                {% if user.profile.resume.url != 'default/default.pdf' %}<a class="ml" href="{{ user.profile.resume.url }}">Resume</a>{% endif %}
+                {% if user.profile.resume.url %}<a class="ml" href="{{ user.profile.resume.url }}">Resume</a>{% endif %}
                 {% if user.profile.website != '' %}<a class="ml-4" href="{{ user.profile.website }}">Work Samples</a>{% endif %}
             </div>
         </div>
