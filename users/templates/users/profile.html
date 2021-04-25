@@ -22,7 +22,7 @@
         {% if user.profile.profile_picture.url %}
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
         {% else %}
-        <img class="rounded-circle account-img" src="default/default.jpg">
+        <img class="rounded-circle account-img" src="media/default/default.jpg">
         {% endif %}
         <div class="media-body">
             <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
