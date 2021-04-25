@@ -168,11 +168,11 @@ try:
 except:
     print("ADDING AND DELETING HISTORY FILED")
     failedTests += "\nadding history fail\n"
-"""
+
 try:
     print("TESTING LISTING CREATION")
     # find listing field
-    driver.get("http://127.0.0.1:8000/current_listings/")
+    driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
 
     # create Listing
     driver.find_element_by_id("CreateListingBTN").click()
@@ -183,20 +183,23 @@ try:
     driver.find_element_by_name("price").send_keys("10")
     driver.find_element_by_name("description").send_keys("This is a generated test listing")
 
+    dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_tag_one\"]"))
+    dropdown.select_by_value("Java")
+    dropdown = Select(driver.find_element_by_xpath("//*[@id=\"id_tag_two\"]"))
+    dropdown.select_by_value("Design")
+
     driver.find_element_by_id("ListingSubmitBTN").click()
 
-    fetch = driver.find_element_by_xpath("/html/body/main/div/div/div[1]").text
-    testCount += 1
+    fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
+
+    if fetch == "Your listing \"" + ListingTitle +"\" has been created!":
+        print("LISTING CREATION SUCCESSFUL")
+        testCount += 1
 except:
     print("LISTING TEST FAILED")
     failedTests += "\nlisting test fail\n"
 
-print("\n\nSUCCESSFULLY RAN " + str(testCount) + " TESTS")
-if failedTests != "":
-    print(str(failedTests) + " TESTS FAILED DURING RUNNING")
-
-
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
-driver.close()"""
+driver.close()
 
 print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
