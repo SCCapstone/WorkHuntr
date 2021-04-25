@@ -41,7 +41,7 @@ class Profile(models.Model):
     birthday = models.CharField(default='XXXX-XX-XX', max_length=10)
     current_employment = models.CharField(default='No Employment', max_length=20)
     account_type = models.CharField(default='Huntee', max_length=6)
-    profile_picture = CloudinaryField('Profile picture', default='default/default.jpg')
+    profile_picture = CloudinaryField('Profile picture', default='default.jpg')
     resume = CloudinaryField('Resume (.pdf only)', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], null=True, blank=True)
     website = models.URLField(default='', max_length=200, blank=True)
     privacy = models.CharField(default='Public', max_length=10)
@@ -50,15 +50,6 @@ class Profile(models.Model):
     # String representation of a Profile
     def __str__(self):
         return f'{self.user.username} Profile'
-
-    # Save a Profile
-    #def save(self):
-        #super().save()
-        #img = Image.open(self.profile_picture.path)
-        #if img.height > 300 or img.width > 300:
-            #output_size = (300, 300)
-            #img.thumbnail(output_size)
-            #img.save(self.profile_picture.path)
 
 #
 # Model for a Comment on a Profile
