@@ -175,7 +175,7 @@ try:
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
 
     # create Listing
-    driver.find_element_by_id("CreateListingBTN").click()
+    driver.find_element_by_id("createListingBTN").click()
 
     ListingTitle = "CREATE THIS TEST"
 
@@ -252,5 +252,8 @@ except:
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
 driver.close()
 
-print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
-print("\nFailed tests:\n"+failedTests)
+if testCount == 7:
+    print("All (" + str(testCount) + ") tests ran without errors.")
+else:
+    print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
+    print("\nFailed tests:\n"+failedTests)

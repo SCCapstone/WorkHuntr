@@ -44,7 +44,7 @@
 {% endif %}
 <div id="ListingsMain">
     <div class="content-section" style="background-color: #8fbdc7; width: 100%">
-    {% if request.user.profile.account_type == 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'create_listings' %}" style="background-color: #e3d6ab; float:right;">Create Listing</a>{% endif %}
+    {% if request.user.profile.account_type == 'Huntee' %}<a class="btn btn-outline-info" id="createListingBTN" type="button" href="{% url 'create_listings' %}" style="background-color: #e3d6ab; float:right;">Create Listing</a>{% endif %}
     <h2>All Open Listings</h2>
         <hr class="rounded">
         <table>

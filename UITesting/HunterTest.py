@@ -163,8 +163,12 @@ except:
     print("LISTING COMPLETION FAIL")
     failedTests += "\nlisting completion test fail\n"
 
-print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
-print("\nFailed tests:\n"+failedTests)
+if testCount == 5:
+    print("All (" + str(testCount) + ") tests ran without errors.")
+else:
+    print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
+    print("\nFailed tests:\n"+failedTests)
+
 
 driver.switch_to.window(driver.window_handles[0])  # workhuntr
 driver.close()
