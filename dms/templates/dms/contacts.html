@@ -26,7 +26,11 @@
                     <div class="media">
                         <div class="media-body">
                 <p class="text-secondary">
+                {% if contact.profile.profile_picture %}
                 <img class="rounded-circle" width="50" height="50" src="{{ contact.profile.profile_picture.url }}"><a class="ml-2" style="color: #e3d6ab;" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+                {% else %}
+                <img class="rounded-circle" width="50" height="50" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg"><a class="ml-2" style="color: #e3d6ab;" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+                {% endif %}
                 <a  style="background-color: #e3d6ab; float:right;" class="btn btn-outline-info" href="{% url 'info' username=contact.username %}">Delete</a>
                 </p>
                 <p class="text-secondary" style="color: #000000;">{{ message.content }}</p> </div></div></div>
@@ -35,7 +39,11 @@
                         <div class="media">
                             <div class="media-body">
                     <p class="text-secondary">
+                {% if contact.profile.profile_picture %}
                 <img class="rounded-circle" width="50" height="50" src="{{ contact.profile.profile_picture.url }}"><a class="ml-2" style="color: #e3d6ab;" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+                {% else %}
+                <img class="rounded-circle" width="50" height="50" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg"><a class="ml-2" style="color: #e3d6ab;" href="{% url 'conversation' username=contact.username %}">{{ contact }}</a>
+                {% endif %}
                 <a  style="background-color: #e3d6ab; float:right;" class="btn btn-outline-info" href="{% url 'info' username=contact.username %}">Delete</a>
                 </p>
                     <p class="text-secondary" style="color: #000000;">{{ message.content }}</p> </div></div></div>
