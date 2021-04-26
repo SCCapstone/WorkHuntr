@@ -19,7 +19,11 @@
 <br>
 <div class="content-section" style="background-color: #8fbdc7; width: 80%;">
     <div class="media">
+        {% if user.profile.profile_picture %}
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
+        {% else %}
+        <img class="rounded-circle account-img" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg">
+        {% endif %}
         <div class="media-body">
             <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2>
             {% if request.user != user %}<a class="btn btn-outline-info" type="button" href="{% url 'conversation' username=user.username %}" style="background-color: #e3d6ab; float:right;">Message</a>{% endif %}
@@ -109,7 +113,11 @@
             <hr class="rounded">
             {% for comment in comments %}
                 <h5>
+                    {% if comment.author.profile.profile_picture %}
                     <img class="rounded-circle" width="50" height="50" src="{{ comment.author.profile.profile_picture.url }}">
+                    {% else %}
+                    <img class="rounded-circle" width="50" height="50" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg">
+                    {% endif %}
                     {{ comment.author.username }}  |  Company:  {{ comment.company }} {% if request.user == comment.author %}<a class="btn btn-outline-info" style=" background-color: #e3d6ab; float: right;" href ="{% url 'delete_comment' comment.id %}">Delete</a><a class="btn btn-outline-info" style=" background-color: #e3d6ab; float:right;" href ="{% url 'modify_comment' comment.id %}">Modify</a>{% endif %}
                 </h5>
                 <h5>
