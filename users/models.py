@@ -17,6 +17,17 @@ class Code(models.Model):
     # String representation of a Code
     def __str__(self):
         return str(self.number)
+    
+    # Save a Code
+    def save(self):
+        super().save()
+        number_list = [x for x in range(0, 10)]
+        code_items = []
+        for i in range(0, 5):
+            num = random.choice(number_list)
+            code_items.append(num)
+        code_string = "".join(str(item) for item in code_items)
+        self.number = code_string
 
 #
 # Model for a User Profile
