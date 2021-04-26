@@ -42,7 +42,7 @@ class Profile(models.Model):
     current_employment = models.CharField(default='No Employment', max_length=20)
     account_type = models.CharField(default='Huntee', max_length=6)
     profile_picture = models.ImageField(verbose_name='Profile picture', default='https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg')
-    resume = models.FileField(verbose_name='Resume (.pdf only)', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], null=True, blank=True)
+    resume = models.FileField(verbose_name='Resume (.pdf only)', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], null=True, blank=True, use_filename=True)
     website = models.URLField(default='', max_length=200, blank=True)
     privacy = models.CharField(default='Public', max_length=10)
     has_unread_messages = models.BooleanField(default=False)
