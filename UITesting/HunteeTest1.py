@@ -30,6 +30,7 @@ try:
     print("RUNNING LOGIN TEST...")
     # Go to login page
     urlLogin = "http://127.0.0.1:8000/login/"
+    time.sleep(1)
     driver.get(urlLogin)
     # Find username field
     driver.find_element_by_name("username").send_keys(USERNAME)
@@ -37,12 +38,14 @@ try:
     driver.find_element_by_name("password").send_keys(PASSWORD)
     # Login
     driver.find_element_by_id("loginButton").click()
+    time.sleep(1)
 
     # open a new tab to access gmail
     driver.execute_script("window.open('https://www.gmail.com');")
 
     # Switch the driver to gmail tab
     driver.switch_to.window(driver.window_handles[1])#chrome
+    time.sleep(1)
 
     # enter the gmail
     driver.find_element_by_name("identifier").send_keys(GMAIL)
@@ -53,6 +56,7 @@ try:
     # next button
     next = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
     next[0].click()
+    time.sleep(1)
 
     # Another wait function that I'm not convinced works
     driver.set_page_load_timeout(10)
@@ -61,6 +65,7 @@ try:
     driver.find_element_by_name('password').send_keys(GMAILPASSWORD)
     nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
     nextButton[0].click()
+    time.sleep(1)
 
     # A 3rd wait function that im not convinced works
     wait = WebDriverWait(driver, 20)
@@ -76,6 +81,7 @@ try:
     key = ""
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
+    time.sleep(1)
 
     # Deletes the email so that it can easily find the code the next time it logs in
     driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
@@ -86,10 +92,12 @@ try:
 
     driver.close()
     driver.switch_to.window(driver.window_handles[0])#workhuntr
+    time.sleep(1)
 
     # enter the 2FA code and login
     driver.find_element_by_name("number").send_keys(key)
     driver.find_element_by_id("loginButton").click()
+    time.sleep(1)
 
     print("LOGIN SUCCESSFUL")
     testCount += 1
@@ -102,7 +110,10 @@ try:
 
     #go to the profile and start editing
     driver.find_element_by_id("dashProfileButton").click()
+    time.sleep(1)
+
     driver.find_element_by_xpath("/html/body/main/div[2]/div/div/a").click()
+    time.sleep(1)
 
     #add a website
     driver.find_element_by_name("website").send_keys("http://Workhuntr.com")
@@ -113,6 +124,8 @@ try:
 
     #update the profile
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
+    time.sleep(1)
+
     print("PROFILE UPDATE SUCCESSFUL")
     testCount += 1
 except:
@@ -122,15 +135,23 @@ try:
     print("TESTING ADDING AND DELETING SKILLS...")
     # from profile, click on the skills
     driver.find_element_by_id("SkillHistoryBTN").click()
+    time.sleep(1)
+
     driver.find_element_by_id("skillBTN").click()
+    time.sleep(1)
+
 
     # add a skill and submit
     driver.find_element_by_id("id_skill").send_keys("writing tests")
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
+    time.sleep(1)
 
     # Delete the added skill
     driver.find_element_by_xpath("/html/body/main/div[2]/div/div/h6/a").click()
+    time.sleep(1)
     driver.find_element_by_xpath("/html/body/main/div/form/input[2]").click()
+    time.sleep(1)
+
     print("PROFILE UPDATE SUCCESSFUL")
     testCount += 1
 except:
@@ -141,6 +162,8 @@ try:
     print("TESTING ADDING AND DELETING HISTORY...")
     # click on history
     driver.find_element_by_id("historyBTN").click()
+    time.sleep(1)
+
 
     # Fill out the history form
     driver.find_element_by_name("company").send_keys("Worhuntr")
@@ -158,10 +181,16 @@ try:
 
     # submit
     driver.find_element_by_xpath("/html/body/main/div/form/div/button").click()
+    time.sleep(1)
+
 
     # Delete the history
     driver.find_element_by_xpath("//*[@id=\"accordion1\"]/h5/a[1]").click()
+    time.sleep(1)
+
     driver.find_element_by_xpath("/html/body/main/div/form/input[2]").click()
+    time.sleep(1)
+
 
     print("ADDING AND DELETING HISTORY SUCCESSFUL")
     testCount += 1
@@ -173,9 +202,13 @@ try:
     print("TESTING LISTING CREATION")
     # find listing field
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
+    time.sleep(1)
+
 
     # create Listing
     driver.find_element_by_id("createListingBTN").click()
+    time.sleep(1)
+
 
     ListingTitle = "CREATE THIS TEST"
 
@@ -190,6 +223,8 @@ try:
 
     # submit
     driver.find_element_by_id("ListingSubmitBTN").click()
+    time.sleep(1)
+
 
     # Check for success
     fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
@@ -202,14 +237,19 @@ except:
 
 try:
     print("TESTING LISTING MODIFICATION")
+    time.sleep(1)
 
     ListingTitle = "CREATE THIS TEST"
     # Modify the description of the listing
     driver.find_element_by_id("modifyBTN").click()
+    time.sleep(1)
+
     driver.find_element_by_name("description").send_keys(Keys.CONTROL+"A")
     driver.find_element_by_name("description").send_keys("This listing has been modified")
     # submit
     driver.find_element_by_id("submitModBTN").click()
+    time.sleep(1)
+
     # Check for success
     fetch = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
     if fetch == "Your listing \"" + ListingTitle +"\" has been modified!":
@@ -227,14 +267,20 @@ try:
 
     # Access the message tab from the navbar
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/li/a").click()
+    time.sleep(1)
+
 
     # Search for the Hunter user from the search box
     driver.find_element_by_xpath("/html/body/main/div/div/div/div/div/form/input[2]").send_keys(USERNAMEHUNTER)
     driver.find_element_by_id("MSGSearchBTN").click()
+    time.sleep(1)
+
 
     # Send a message using the message saved above
     driver.find_element_by_id("message").send_keys(TESTMESSAGE)
     driver.find_element_by_id("MSGsendBTN").click()
+    time.sleep(1)
+
 
     # Check for url change to signal successful send
     if driver.current_url == "http://127.0.0.1:8000/contacts/conversation/WorkhuntrHunter":

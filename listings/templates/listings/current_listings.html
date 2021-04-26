@@ -125,7 +125,7 @@
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.hunter == request.user %}<a href="../contacts/conversation/{{i.huntee}}">{{i.huntee}}</a>{% else %} {{i.huntee}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px">{% if i.huntee == request.user %}<a href="../contacts/conversation/{{i.hunter}}">{{i.hunter}}</a>{% else %} {{i.hunter}} {% endif %}</td>
                 <td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a href="../progress/{{i.id}}">{{i.status}}</a></td>
-                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
+                {% if i.huntee == request.user %}<td style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px"><a class="btn btn-outline-info" style="background-color: #e3d6ab;" id="paymentBTN" href="../issue_payment/{{i.id}}">Issue Payment</a></td>{% endif %}
             </tr>
             <tr>
                 <td style= "border-bottom: 1px solid black" colspan="6"><button class="accordion" style ="text-align: center"> <b>Description</b></button><div class="panel"><p>{{i.description}}</p></div></td>
