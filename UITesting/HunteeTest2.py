@@ -117,8 +117,11 @@ except:
     print("PAYMENT TEST FAIL")
     failedTests += "\npayment test fail\n"
 
-print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
-print("\nFailed tests:\n"+failedTests)
+if testCount == 1:
+    print("All (" + str(testCount) + ") tests ran without errors.")
+else:
+    print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
+    print("\nFailed tests:\n"+failedTests)
 
 # Clean up
 
