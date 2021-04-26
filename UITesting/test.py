@@ -1,4 +1,5 @@
 import sys
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
@@ -81,8 +82,10 @@ try:
         key += source[i]
 
 
-#    driver.find_element_by_xpath("//*[@id=\":28\"]/div[1]/span").click()
-#    driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
+    driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
+    driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
+
+    time.sleep(2)
 
     # Close gmail and switch the active tab back to workhuntr
     driver.close()
