@@ -35,7 +35,7 @@ class UserCreateAccountForm(UserCreationForm):
             attrs={'type': 'date'}
         )
     )
-    current_employment = forms.CharField(max_length=50, required=False)
+    current_employment = forms.CharField(max_length=20, required=False)
 
     class Meta:
         model = User
@@ -119,7 +119,7 @@ class AddHistoryForm(forms.ModelForm):
     end_date = forms.DateField(
         widget=forms.TextInput(
             attrs={'type': 'date'}
-        ), required=False
+        )
     )
     
     class Meta:

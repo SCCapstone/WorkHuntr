@@ -2,6 +2,7 @@
 # Models for the Users app
 #
 
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
@@ -34,14 +35,14 @@ class Code(models.Model):
 #
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=12)
     title = models.CharField(default='Other', max_length=5)
+    phone_number = models.CharField(max_length=12)
     gender = models.CharField(default='Prefer Not to Say', max_length=20)
     birthday = models.CharField(default='XXXX-XX-XX', max_length=10)
     current_employment = models.CharField(default='No Employment', max_length=20)
     account_type = models.CharField(default='Huntee', max_length=6)
-    profile_picture = models.ImageField(default='default/default.jpg', upload_to='profile_pics')
-    resume = models.FileField(upload_to='resumes', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Resume (.pdf only)', null=True, blank=True)
+    profile_picture = models.ImageField(verbose_name='Profile picture', default='https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg')
+    resume = models.FileField(verbose_name='Resume (.pdf only)', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], null=True, blank=True)
     website = models.URLField(default='', max_length=200, blank=True)
     privacy = models.CharField(default='Public', max_length=10)
     has_unread_messages = models.BooleanField(default=False)

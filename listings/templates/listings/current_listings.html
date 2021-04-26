@@ -42,13 +42,9 @@
     {% endfor %}
 </ul>
 {% endif %}
-<table>
-    <tr>
-    {% if request.user.profile.account_type == 'Huntee' %}<td><button class ="btn-lg" onclick="location.href='/create_listings'" id="CreateListingBTN" class="btn btn-outline-info" style="background-color: #e3d6ab;">Create Listing</button></td>{% endif %}
-    </tr>
-</table>
 <div id="ListingsMain">
     <div class="content-section" style="background-color: #8fbdc7; width: 100%">
+    {% if request.user.profile.account_type == 'Huntee' %}<a class="btn btn-outline-info" type="button" href="{% url 'create_listings' %}" style="background-color: #e3d6ab; float:right;">Create Listing</a>{% endif %}
     <h2>All Open Listings</h2>
         <hr class="rounded">
         <table>
@@ -87,7 +83,7 @@
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Hunter</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
@@ -117,7 +113,7 @@
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Hunter</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
@@ -146,7 +142,7 @@
             <tr>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Title</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Owner</th>
-                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Huntr</th>
+                <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Hunter</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black">Status</th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
                 <th style="padding-right: 15px; padding-top: 10px; padding-bottom: 5px; border-bottom: 1px solid black"></th>
