@@ -17,9 +17,17 @@
                 {% for m in msgs %}
                 <hr class="rounded">
                 {% if m.sender != request.user %}
+                {% if m.sender.profile.profile_picture %}
                 <p class="text-secondary" style="text-align:left;"><img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}">{{ m.sender }}</p><p style="float: left; padding-right: 30%;">{{ m.content }}</p><br><p style="text-align:right;">{{ m.sent_at }}</p></h2>
                 {% else %}
+                <p class="text-secondary" style="text-align:left;"><img class="rounded-circle" width="50" height="50" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg">{{ m.sender }}</p><p style="float: left; padding-right: 30%;">{{ m.content }}</p><br><p style="text-align:right;">{{ m.sent_at }}</p></h2>
+                {% endif %}
+                {% else %}
+                {% if m.sender.profile.profile_picture %}
                 <p class="text-secondary" style="text-align:right;">{{ m.sender }}<img class="rounded-circle" width="50" height="50" src="{{ m.sender.profile.profile_picture.url }}"></p><p style="float: right; padding-left: 30%;">{{ m.content }}</p><br><p style="text-align:left;">{{ m.sent_at }}</p></h2>
+                {% else %}
+                <p class="text-secondary" style="text-align:right;">{{ m.sender }}<img class="rounded-circle" width="50" height="50" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg"></p><p style="float: right; padding-left: 30%;">{{ m.content }}</p><br><p style="text-align:left;">{{ m.sent_at }}</p></h2>
+                {% endif %}
                 {% endif %}
                 {% endfor %}
                 {% endif %}
