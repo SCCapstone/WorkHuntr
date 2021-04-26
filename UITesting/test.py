@@ -72,8 +72,7 @@ try:
 
     # Grabs the page source to fetch the password
     source = driver.page_source
-
-    driver.implicitly_wait(4)
+    time.sleep(1)
 
     # finds the index of the 2FA password in the page source & grabs the 5 random numbers
     subSTR = source.find("Your two-factor verification code for WorkHuntr is ")
@@ -81,14 +80,15 @@ try:
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
 
-
+    # Deletes the email so that it can easily find the code the next time it logs in
     driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
     driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
 
+    # if you don't wait for a second or two, selenium moves on before gmail registers the click on the trashcan
     time.sleep(2)
 
     # Close gmail and switch the active tab back to workhuntr
-    driver.close()
+    #driver.close()
     driver.switch_to.window(driver.window_handles[0])#workhuntr
 
     # enter the 2FA code and login
@@ -254,12 +254,78 @@ except:
     failedTests += "\nmessage sending test fail\n"
 
 
+try:
+    print("ATTEMPTING TO LOGOUT AND LOG BACK IN TO HUNTER ACCOUNT...")
+
+    # Log out
+    driver.find_element_by_id("logoutBTN").click()
+    # Log back in
+    driver.find_element_by_xpath("/html/body/main/div/div/div/small/a").click()
+
+    # Repeat the same process as the first test but now with the new login
+    driver.find_element_by_name("username").send_keys(USERNAMEHUNTER)
+    # Find password field
+    driver.find_element_by_name("password").send_keys(PASSWORD)
+    # Login
+    driver.find_element_by_id("loginButton").click()
+
+    # Once logged in, there needs to be a few seconds of waiting because we don't want the script to open
+    # gmail before the email even reaches the inbox
+    time.sleep(5)
+
+    # open a new tab to access gmail
+    #driver.execute_script("window.open('https://www.gmail.com');")
+
+    # Switch the driver to gmail tab
+    driver.switch_to.window(driver.window_handles[1])  # chrome
+
+    # forces Selenium to wait until the inbox has loaded (the url reflects the inbox)
+    wait.until(lambda driver: driver.current_url == "https://mail.google.com/mail/u/0/#inbox")
+
+    driver.refresh()
+
+    # forces Selenium to wait until the inbox has loaded (the url reflects the inbox)
+    wait.until(lambda driver: driver.current_url == "https://mail.google.com/mail/u/0/#inbox")
+
+    # Opens the email and saves the content
+    driver.find_element_by_xpath("//*[@id=\":1\"]/div/div/div[8]").click()
+    checkEmail = driver.find_element_by_xpath("//*[@id=\":5z\"]").text
+
+    # finds the index of the 2FA password in the email & grabs the 5 random numbers
+    subSTR = checkEmail.find("Your two-factor verification code for WorkHuntr is ")
+    key = ""
+    for i in range(subSTR + 51, subSTR + 56):
+        key += checkEmail[i]
+
+    print("Debug key:",key)
+
+    # #head back into the inbox so that 2nd email can be deleted
+    driver.get("https://mail.google.com/mail/u/0/#inbox")
+    time.sleep(1)
+
+    # Deletes the email so that it can easily find the code the next time it logs in
+    driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
+    driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()
+
+    # if you don't wait for a second or two, selenium moves on before gmail registers the click on the trashcan
+    time.sleep(2)
+
+    # Close gmail and switch the active tab back to workhuntr
+    #driver.close()
+    driver.switch_to.window(driver.window_handles[0])  # workhuntr
+
+    # enter the 2FA code and login
+    driver.find_element_by_name("number").send_keys(key)
+    driver.find_element_by_id("loginButton").click()
+
+    print("LOGIN SUCCESSFUL")
+
+except:
+    print("FAILED TO LOGIN TO HUNTER ACCOUNT...")
 
 
-
-
-driver.switch_to.window(driver.window_handles[0])  # workhuntr
-driver.close()
+#driver.switch_to.window(driver.window_handles[0])  # workhuntr
+#driver.close()
 
 print("\n\n" + "Number of test run: " + str(testCount) + " + Account creation test.")
 print("\nFailed tests:\n"+failedTests)
