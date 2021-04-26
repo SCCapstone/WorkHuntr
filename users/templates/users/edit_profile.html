@@ -10,7 +10,11 @@
 {% block content %}
 <div class="content-section" style="background-color: #8fbdc7">
     <div class="media">
+        {% if user.profile.profile_picture %}
         <img class="rounded-circle account-img" src="{{ user.profile.profile_picture.url }}">
+        {% else %}
+        <img class="rounded-circle account-img" src="https://res.cloudinary.com/hwtxtlvxz/image/upload/v1619390071/media/default/default.jpg">
+        {% endif %}
         <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
             <p class="text-secondary">{{ user.email }}</p>
