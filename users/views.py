@@ -69,11 +69,10 @@ def edit_profile(request, username):
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
-            user = u_form.save()
-            user.refresh_from_db()
-            profile = p_form.save()
-            user.profile.privacy = u_form.cleaned_data.get('privacy')
-            user.profile.save()
+            u_form.save()
+            profile = p_form.save(commit=False)
+            profile.privacy = p_form.cleaned_data.get('privacy')
+            profile.save()
             messages.success(request, f'Your account has been updated!')
         return redirect('profile', username)
     else:
