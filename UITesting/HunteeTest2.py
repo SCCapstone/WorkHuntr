@@ -59,17 +59,18 @@ try:
     wait = WebDriverWait(driver, 20)
     # forces Selenium to wait until the inbox has loaded (the url reflects the inbox)
     wait.until(lambda driver: driver.current_url == "https://mail.google.com/mail/u/0/#inbox")
-
+    print("HELLA")
+    time.sleep(1)
     # Grabs the page source to fetch the password
     source = driver.page_source
     time.sleep(1)
-
+    print("WPOASD")
     # finds the index of the 2FA password in the page source & grabs the 5 random numbers
     subSTR = source.find("Your two-factor verification code for WorkHuntr is ")
     key = ""
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
-
+    print("Got the key",key)
     # Deletes the email so that it can easily find the code the next time it logs in
     driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
     driver.find_element_by_xpath("//*[@id=\":4\"]/div/div[1]/div[1]/div/div/div[2]/div[3]/div").click()

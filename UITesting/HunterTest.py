@@ -130,7 +130,7 @@ try:
 
     #Move to the listing tab and claim the Huntee's listing
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
-    driver.find_element_by_xpath("//*[@id=\"ListingsMain\"]/div[1]/table/tbody/tr[2]/td[5]/form/input[2]").click()
+    driver.find_element_by_id("claimBTN").click()
 
     # Check for Success
     textCheck = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
@@ -148,8 +148,7 @@ except:
 try:
     print("TESTING LISTING COMPLETION")
     # click on the claimed to start updating the status
-    driver.find_element_by_xpath("//*[@id=\"ListingsMain\"]/div[2]/table/tbody/tr[2]/td[4]/a").click()
-
+    driver.find_element_by_id("statusID").click()
     # set the status to complete and give a description.
     dropdown = Select(driver.find_element_by_name("status"))
     dropdown.select_by_value("Complete")
