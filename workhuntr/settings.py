@@ -122,7 +122,7 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '838849478698496',
     'API_SECRET': '--O13QYWVL5-ARNl7dM9GO650wY',
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
