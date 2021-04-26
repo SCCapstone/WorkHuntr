@@ -15,7 +15,7 @@
             <form method="POST">
             {% csrf_token %}
                 <input type="text" placeholder="Search Users" name="search" style="background-color: #e3d6ab;">
-                <button class="btn btn-outline-info" type="submit" style="background-color: #e3d6ab;">Submit</button>
+                <button class="btn btn-outline-info" id="MSGSearchBTN" type="submit" style="background-color: #e3d6ab;">Submit</button>
             </form>
             {% if contacts_messages %}
             {% for contact, message in contacts_messages.items %}

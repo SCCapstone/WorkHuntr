@@ -9,6 +9,7 @@ USERNAMEHUNTEE = "WorkhuntrTester"
 USERNAMEHUNTER = "WorkhuntrHunter"
 PASSWORD = "Thispass142"
 GMAIL = "WorkhuntrTester@gmail.com"
+HUNTERGMAIL = "WorkhuntrHunter@gmail.com"
 GMAILPASSWORD = "thispass142"
 
 driver = webdriver.Chrome("chromedriver.exe")
@@ -51,9 +52,9 @@ wait.until(lambda driver: driver.current_url == "http://127.0.0.1:8000/create_ac
 dropdown = Select(driver.find_element_by_name("account_type"))
 dropdown.select_by_value("Hunter")
 
-driver.find_element_by_id("id_email").send_keys(GMAIL)
-driver.find_element_by_name("first_name").send_keys("Test")
-driver.find_element_by_name("last_name").send_keys("monkey")
+driver.find_element_by_id("id_email").send_keys(HUNTERGMAIL)
+driver.find_element_by_name("first_name").send_keys("Hunter")
+driver.find_element_by_name("last_name").send_keys("Test-Guy")
 driver.find_element_by_name("birthday").click()
 driver.find_element_by_name("birthday").send_keys(Keys.SPACE + Keys.TAB + Keys.RETURN)
 driver.find_element_by_name("current_employment").send_keys("test guy")

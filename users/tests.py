@@ -1,4 +1,4 @@
-"""from django.test import TestCase
+from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Profile
 
@@ -6,8 +6,7 @@ from .models import Profile
 # Create your tests here.
 class TestProfile(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(id=123, username='TestUser', email='tester2@...', password='test123')
-        Profile.objects.create(user_id=123, phone_number="1234567890", title='TestTit', gender='TestGen', birthday="08221999",
+        self.profile = Profile.objects.create(id=1, user_id=1, phone_number="1234567890", title='TestTit', gender='TestGen', birthday="08221999",
                                current_employment="TestEmp", account_type='TestTyp', website='Test.com',
                                privacy='TestPri')
 
@@ -62,15 +61,19 @@ class TestProfile(TestCase):
 
     def test_Title(self):
         profile = Profile.objects.get(id=1)
-        field_object = Profile._meta.get_field('username')
+        field_object = Profile._meta.get_field('title')
         value = field_object.value_from_object(profile)
-        self.assertEqual(value, 'TestUse')
+        self.assertEqual(value, 'TestTit')
         print("Username PASS")
 
     def test_Privacy(self):
         profile = Profile.objects.get(id=1)
-        field_object = Profile._meta.get_field('Privacy')
+        field_object = Profile._meta.get_field('privacy')
         value = field_object.value_from_object(profile)
         self.assertEqual(value, 'TestPri')
         print("Privacy PASS")
-"""
+
+    def tearDown(self):
+        self.profile.delete()
+
+

@@ -1,7 +1,8 @@
 from django.test import TestCase
 import datetime
 from django.contrib.auth.models import User
-from .models import Listings
+from .models import Listings,Update
+
 
 
 # A function called to test the functionality of the Listings database. It creates a copy of the DB, fills in the values
@@ -11,7 +12,7 @@ class TestListing(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='tester', email='tester@...', password='test123')
         self.user2 = User.objects.create_user(username='tester2', email='tester@...', password='test123')
-        Listings.objects.create(title='test', date=datetime.datetime.now(), price=1.0, description='this is a test',
+        self.listing = Listings.objects.create(title='test', date=datetime.datetime.now(), price=1.0, description='this is a test',
                                 status='test', tag_one='AI', tag_two='Java', tag_three='Python', huntee=self.user,
                                 hunter=self.user2)
 
@@ -60,6 +61,13 @@ class TestListing(TestCase):
         self.assertEqual(value, 'this is a test')
         print("Description PASS")
 
+    def test_Date(self):
+        listing = Listings.objects.get(id=1)
+        field_object = Update._meta.get_field('date')
+        value = field_object.value_from_object(listing)
+        self.assertEqual(value, self.listing.date)
+        print("Listing Date PASS")
+
     # Tests the Status value in the Listing database
     def test_Status(self):
         listing = Listings.objects.get(id=1)
@@ -82,6 +90,54 @@ class TestListing(TestCase):
         self.assertEqual(value3, 'Python')
         print("Tags PASS")
 
-    # Deletes the listing that was called for testing.
+    # Deletes the user after ever test call to prevent unique errors in the DB
     def tearDown(self):
         self.user.delete()
+
+
+class TestListingUpdate(TestCase):
+    # sets up the temp listing to go into the database
+    def setUp(self):
+        self.user = User.objects.create_user(username='tester', email='tester@...', password='test123')
+        self.user2 = User.objects.create_user(username='tester2', email='tester@...', password='test123')
+        self.listing = Listings.objects.create(title='test', date=datetime.datetime.now(), price=1.0, description='this is a test',
+                                status='test', tag_one='AI', tag_two='Java', tag_three='Python', huntee=self.user,
+                                hunter=self.user2)
+        self.Update = Update.objects.create(date=datetime.datetime.now(), status="testSta", description="testDes",
+                                            listing=self.listing)
+
+    # Tests the Status value in the UpdateListing database
+    def test_Status(self):
+        update = Update.objects.get(id=1)
+        field_object = Update._meta.get_field('status')
+        value = field_object.value_from_object(update)
+        self.assertEqual(value, 'testSta')
+        print("Update Status PASS")
+
+    # Tests the date value in the UpdateListing database
+    def test_Date(self):
+        update = Update.objects.get(id=1)
+        field_object = Update._meta.get_field('date')
+        value = field_object.value_from_object(update)
+        self.assertEqual(value, self.Update.date)
+        print("Update Date PASS")
+
+    # Tests the Status value in the UpdateListing database
+    def test_Description(self):
+        update = Update.objects.get(id=1)
+        field_object = Update._meta.get_field('description')
+        value = field_object.value_from_object(update)
+        self.assertEqual(value, 'testDes')
+        print("Update Description PASS")
+
+    # Tests the Status value in the UpdateListing database
+    def test_Listing(self):
+        update = Update.objects.get(id=1)
+        field_object = Update._meta.get_field('listing')
+        value = field_object.value_from_object(update)
+        self.assertEqual(value, self.listing.id)
+        print("Update Listing PASS")
+
+    # Deletes the update after ever test call to prevent unique errors in the DB
+    def tearDown(self):
+        self.Update.delete()
