@@ -69,6 +69,7 @@ def edit_profile(request, username):
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
+            print("RACHEAJDKFJAKLJFKJ")
             u_form.save()
             profile = p_form.save(commit=False)
             profile.privacy = p_form.cleaned_data.get('privacy')
