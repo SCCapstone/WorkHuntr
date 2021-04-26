@@ -75,6 +75,7 @@ def edit_profile(request, username):
             profile.privacy = p_form.cleaned_data.get('privacy')
             profile.save()
             messages.success(request, f'Your account has been updated!')
+        print("HERE WE ARE")
         return redirect('profile', username)
     else:
         u_form = UserUpdateForm(instance=request.user)
