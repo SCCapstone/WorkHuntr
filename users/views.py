@@ -182,6 +182,8 @@ def add_history(request, username):
 #
 @login_required
 def modify(request, username):
+    if username != request.user.username:
+        return redirect('profile', request.user.username)
     user = User.objects.get(username=username)
     skills = Skill.objects.filter(profile=user.profile)
     histories = History.objects.filter(profile=user.profile)
@@ -198,6 +200,8 @@ def modify(request, username):
 @login_required
 def delete_skill(request, pk):
     skill = Skill.objects.get(id=pk)
+    if skill.author != request.user:
+        return redirect('profile', request.user.username)
     if request.method == "POST":
         skill.delete()
         return redirect('modify_skill_history', request.user)
@@ -214,6 +218,8 @@ def delete_skill(request, pk):
 @login_required
 def modify_history(request, pk):
     history = History.objects.get(id=pk)
+    if history.author != request.user:
+        return redirect('profile', request.user.username)
     if request.user == history.author:
         if request.method == 'POST':
             h_form = ModifyHistoryForm(request.POST, instance=history)
@@ -249,6 +255,8 @@ def modify_history(request, pk):
 @login_required
 def delete_history(request, pk):
     history = History.objects.get(id=pk)
+    if history.author != request.user:
+        return redirect('profile', request.user.username)
     if request.method == "POST":
         history.delete()
         return redirect('modify_skill_history', request.user)
@@ -265,6 +273,8 @@ def delete_history(request, pk):
 @login_required
 def delete_comment(request, pk):
     comment = Comment.objects.get(id=pk)
+    if comment.author != request.user:
+        return redirect('profile', request.user.username)
     if request.method == "POST":
         comment.delete()
         return redirect('profile', comment.profile.user)
@@ -281,6 +291,8 @@ def delete_comment(request, pk):
 @login_required
 def modify_comment(request, pk):
     comment = Comment.objects.get(id=pk)
+    if comment.author != request.user:
+        return redirect('profile', request.user.username)
     if request.user == comment.author:
         if request.method == 'POST':
             form = ModifyCommentForm(request.POST, instance=comment)
