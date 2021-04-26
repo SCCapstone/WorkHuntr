@@ -1,31 +1,41 @@
 
 ## Testing Technology
 
-For UI testing, selenium must be installed using pip (refer to prerequisites and setup above) and ChromeDriver must also be downloaded and placed in the `UITesting/` directory. ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 90.0.4430.85 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 90.0.4430.24
+For UI testing, selenium must be installed using pip (refer to the README in the main directory) and ChromeDriver must also be downloaded and placed in the `UITesting/` directory. Currently, ChomeDriver is already in the proper directory, so no download is needed unless Chrome updates inbetween me posting this and someone trying to test it) ChromeDriver is specific to the tester user and the version required is dependent on the OS the tester is using as well as the version of Google Chrome the tester has installed. The currently uploaded version of ChromeDriver in the repo is for Google Chrome Version 90.0.4430.85 (Official Build) (64-bit) on Windows and uses ChromeDriver version ChromeDriver 90.0.4430.24
 
 Download Chromedriver [here](https://sites.google.com/a/chromium.org/chromedriver/home).
 
 ## Running Tests
-Before running any tests, you must initialize the test user by running the `test_init.py` file by navigating to the `UITesting/` directory and running `python3 test_init.py`. This will open selenium chromedriver and automatically navigate to the user creation of WorkHuntr and create the profile with the correct username, password, and Gmail necessary for running the tests.
+Before running any tests, I recommend starting from a fresh clone. While I've tested with clones that aren't fresh, it made it easier to follow with a clean one.
 
-Creating this testUser via `test_init.py` only needs to be done once to your local copy.
+Before running any tests, you must initialize the test users by running the `test_init.py` file by navigating to the `UITesting/` directory and running `python3 test_init.py`. This will open selenium chromedriver and automatically navigate to the user creation of WorkHuntr and create the profiles with the correct username, password, and Gmail necessary for running the tests.
 
-To run the UI Tests, run `python3 test.py` in the `UITesting/` directory. All the tests are run in the one file. 
+Creating this testUser via `test_init.py` only needs to be done ONCE to your local copy.
 
+To run the UI Tests you mut run 3 different test files. Because of some unexplainable error with gmail, the test files had to be split every time you needed to log into an account and get past the 2FA.
+
+you MUST run the tests in this order:
+
+0) test_init.py (if you haven't already)
+1) HunteeTest1.py
+2) HunterTest.py
+3) HunteeTest2.py
+
+to run these files, run `python3 <testFileName>.py` in the `UITesting/` directory. 
 
 # IMPORTANT
-Due to how selenium interacts with Gmail, the inbox for the Gmail provided must be empty for the tests to run properly. Selenium is looking for the substring that Workhuntr sends with the 2FA code, and if the tests are run when there is more than one 2FA email, it is currently unable to differentiate which code is for the current instance. 
+
+Because of Gmail security, whenever attempting to login to either Gmail accounts, Gmail will attempt to have the user login to the email by either using a phone number or adding a phone number. There is no phone number associated with the Gmail account. To prevent this from interfering with the UITesting process, use the below Gmail logins to attempt to login to the Gmail before running the tests. You will be prompted to add/enter a phone number. By simply hitting "update", Gmail seems to stop asking. This only has to be done once assuming your IP / location is not changing.
 
 you can access the Gmail with this information:
-GMAIL = "WorkhuntrTester@gmail.com"
-GMAILPASSWORD = "thispass142"
 
-Each time a test is run, if you wish to run another, log into the Gmail and clear out the inbox.
+Huntee login = "WorkhuntrTester@gmail.com"
+password = "thispass142"
 
-# IMPORTANT
+Hunter login = "WorkhuntrHunter@gmail.com"
+password = "thispass142" (yes, they're the same)
 
-Because of Gmail security, whenever attempting to login to a Gmail account, Gmail will attempt to have the user login to the email by either using a phone number or adding a phone number. There is no phone number associated with the Gmail account. To prevent this from interfering with the UITesting process, use the above Gmail login to attempt to login to the Gmail before running the tests. You will be prompted to add/enter a phone number. By simply closing the browser on that windows, Gmail seems to stop asking. This only has to be done once assuming your IP / location is not changing.
 
 # Known bugs:
 
-~ With Gmail, there is an issue in viewing the page's source that occurs one in very few instances of trying to run the tests. Selenium fetches the 2FA code by viewing the inbox's source page and searching for the substring that contains the 2FA password. Rarely, the source will not display the 2FA email and instead just have a message saying there's an issue and that the Gmail is currently unavailable. It is currently unknown what causes this issue. Should this issue arise during testing, close all browsers that have the Gmail open and wait a minute before running the test again. This normally fixes the issue, albeit temporarily.
+~ While this hasn't happened to me since Easter, with Gmail, there is an issue in viewing the page's source that occurs one in very few instances of trying to run the tests. Selenium fetches the 2FA code by viewing the inbox's source page and searching for the substring that contains the 2FA password. Rarely, the source will not display the 2FA email and instead just have a message saying there's an issue and that the Gmail is currently unavailable. It is currently unknown what causes this issue. Should this issue arise during testing, close all browsers that have the Gmail open and wait a minute before running the test again. This normally fixes the issue, albeit temporarily.
