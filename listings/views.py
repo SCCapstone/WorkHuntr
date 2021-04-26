@@ -170,7 +170,7 @@ def return_listing(request, pk):
             listing.save()
             messages.success(request, f'Listing ' + str(listing.title) + ' has been returned to current listings. ' + str(listing.huntee) + ' has been notified!')
             huntee = listing.huntee
-            content = 'Your listing ' + listing.title + ' has been returned to current listings by ' + str(listing.hunter) + '.'
+            content = 'Your listing ' + listing.title + ' has been returned to current listings.'
             MessagingService.send_message(request, sender=request.user, recipient=huntee, message=content)
             return redirect('current_listings')
         else:
