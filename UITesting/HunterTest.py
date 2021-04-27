@@ -23,15 +23,21 @@ try:
     # Go to login page
     urlLogin = "http://127.0.0.1:8000/login/"
     driver.get(urlLogin)
+    time.sleep(1)
+
     # Find username field
     driver.find_element_by_name("username").send_keys(USERNAMEHUNTER)
     # Find password field
     driver.find_element_by_name("password").send_keys(PASSWORD)
     # Login
     driver.find_element_by_id("loginButton").click()
+    time.sleep(1)
+
 
     # open a new tab to access gmail
     driver.execute_script("window.open('https://www.gmail.com');")
+    time.sleep(1)
+
 
     # Switch the driver to gmail tab
     driver.switch_to.window(driver.window_handles[1])#chrome
@@ -45,6 +51,8 @@ try:
     # next button
     next = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
     next[0].click()
+    time.sleep(1)
+
 
     # Another wait function that I'm not convinced works
     driver.set_page_load_timeout(10)
@@ -53,6 +61,8 @@ try:
     driver.find_element_by_name('password').send_keys(GMAILPASSWORD)
     nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
     nextButton[0].click()
+    time.sleep(1)
+
 
     # A 3rd wait function that im not convinced works
     wait = WebDriverWait(driver, 20)
@@ -68,6 +78,7 @@ try:
     key = ""
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
+    time.sleep(1)
 
     # Deletes the email so that it can easily find the code the next time it logs in
     driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
@@ -80,10 +91,12 @@ try:
     # Close gmail and switch the active tab back to workhuntr
     driver.close()
     driver.switch_to.window(driver.window_handles[0])#workhuntr
+    time.sleep(1)
 
     # enter the 2FA code and login
     driver.find_element_by_name("number").send_keys(key)
     driver.find_element_by_id("loginButton").click()
+    time.sleep(1)
 
     print("LOGIN SUCCESSFUL")
     testCount += 1
@@ -96,8 +109,12 @@ try:
     print("TESTING MESSAGE RECEIVE / REPLY")
     # Head over to message center
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/li/a").click()
+    time.sleep(1)
+
     # Check for the huntee's message
     driver.find_element_by_xpath("/html/body/main/div/div/div/div/div/div/div/div/p[1]/a[1]").click()
+    time.sleep(1)
+
     # grab the message & check
     hunteeMessage = driver.find_element_by_xpath("/html/body/main/div/div/div/div/div/p[2]").text
     print("HUNTEE MESSAGE:",hunteeMessage)
@@ -111,6 +128,8 @@ try:
     # Attempt to reply
     driver.find_element_by_xpath("//*[@id=\"message\"]").send_keys("Mornin. to ye, feller.")
     driver.find_element_by_xpath("//*[@id=\"MSGsendBTN\"]").click()
+    time.sleep(1)
+
     # Check if sent
     sender = driver.find_element_by_xpath("/html/body/main/div/div/div/div/div/p[1]").text
 
@@ -130,7 +149,11 @@ try:
 
     #Move to the listing tab and claim the Huntee's listing
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
-    driver.find_element_by_xpath("//*[@id=\"ListingsMain\"]/div[1]/table/tbody/tr[2]/td[5]/form/input[2]").click()
+    time.sleep(1)
+
+    driver.find_element_by_id("claimBTN").click()
+    time.sleep(1)
+
 
     # Check for Success
     textCheck = driver.find_element_by_xpath("/html/body/main/div/div/ul/p").text
@@ -148,13 +171,15 @@ except:
 try:
     print("TESTING LISTING COMPLETION")
     # click on the claimed to start updating the status
-    driver.find_element_by_xpath("//*[@id=\"ListingsMain\"]/div[2]/table/tbody/tr[2]/td[4]/a").click()
+    driver.find_element_by_id("statusID").click()
+    time.sleep(1)
 
     # set the status to complete and give a description.
     dropdown = Select(driver.find_element_by_name("status"))
     dropdown.select_by_value("Complete")
     driver.find_element_by_id("id_description").send_keys("This is a test description")
     driver.find_element_by_xpath("//*[@id=\"updateForm\"]/form/fieldset/input").click()
+    time.sleep(1)
 
     print("LISTING COMPLETION SUCCESSFUL")
     testCount+=1
