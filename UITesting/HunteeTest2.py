@@ -24,23 +24,18 @@ try:
     # Go to login page
     urlLogin = "http://127.0.0.1:8000/login/"
     driver.get(urlLogin)
-    time.sleep(1)
-
     # Find username field
     driver.find_element_by_name("username").send_keys(USERNAME)
     # Find password field
     driver.find_element_by_name("password").send_keys(PASSWORD)
     # Login
     driver.find_element_by_id("loginButton").click()
-    time.sleep(1)
-
 
     # open a new tab to access gmail
     driver.execute_script("window.open('https://www.gmail.com');")
 
     # Switch the driver to gmail tab
     driver.switch_to.window(driver.window_handles[1])#chrome
-    time.sleep(1)
 
     # enter the gmail
     driver.find_element_by_name("identifier").send_keys(GMAIL)
@@ -51,8 +46,6 @@ try:
     # next button
     next = driver.find_elements_by_xpath('//*[@id ="identifierNext"]')
     next[0].click()
-    time.sleep(1)
-
 
     # Another wait function that I'm not convinced works
     driver.set_page_load_timeout(10)
@@ -61,24 +54,21 @@ try:
     driver.find_element_by_name('password').send_keys(GMAILPASSWORD)
     nextButton = driver.find_elements_by_xpath('//*[@id ="passwordNext"]')
     nextButton[0].click()
-    time.sleep(1)
-
 
     # A 3rd wait function that im not convinced works
     wait = WebDriverWait(driver, 20)
     # forces Selenium to wait until the inbox has loaded (the url reflects the inbox)
     wait.until(lambda driver: driver.current_url == "https://mail.google.com/mail/u/0/#inbox")
-    time.sleep(1)
+
     # Grabs the page source to fetch the password
     source = driver.page_source
     time.sleep(1)
+
     # finds the index of the 2FA password in the page source & grabs the 5 random numbers
     subSTR = source.find("Your two-factor verification code for WorkHuntr is ")
     key = ""
     for i in range(subSTR+51, subSTR+56):
         key += source[i]
-    print("Got the key",key)
-    time.sleep(1)
 
     # Deletes the email so that it can easily find the code the next time it logs in
     driver.find_element_by_xpath("//*[@id=\":1z\"]/div[1]/span").click()
@@ -89,13 +79,10 @@ try:
 
     driver.close()
     driver.switch_to.window(driver.window_handles[0])#workhuntr
-    time.sleep(1)
-
 
     # enter the 2FA code and login
     driver.find_element_by_name("number").send_keys(key)
     driver.find_element_by_id("loginButton").click()
-    time.sleep(1)
 
     print("LOGIN SUCCESSFUL")
 except:
@@ -106,13 +93,9 @@ try:
     print("RUNNING PAYMENT TEST")
     # head to the listing tab
     driver.find_element_by_xpath("//*[@id=\"navbarToggle\"]/div[1]/a[2]").click()
-    time.sleep(1)
-
 
     # hit issue payment
-    driver.find_element_by_id("paymentBTN").click()
-    time.sleep(1)
-
+    driver.find_element_by_xpath("//*[@id=\"ListingsMain\"]/div[3]/table/tbody/tr[2]/td[5]/a").click()
 
     # Fill out the payment form
     driver.find_element_by_id("id_first_name").send_keys("Test")
@@ -127,8 +110,6 @@ try:
 
     # hit issue payment
     driver.find_element_by_xpath("/html/body/main/div/div/div/form/input[2]").click()
-    time.sleep(1)
-
 
     print("PAYMENT TEST SUCCESS")
     testCount+=1
