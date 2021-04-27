@@ -11,26 +11,26 @@ Because of Gmail security, whenever attempting to login to either Gmail accounts
 
 you can access the Gmail with this information:
 
-Huntee login = "WorkhuntrTester@gmail.com"
-password = "thispass142"
+`Huntee login = "WorkhuntrTester@gmail.com"
+password = "thispass142"`
 
-Hunter login = "WorkhuntrHunter@gmail.com"
-password = "thispass142" (yes, they're the same)
+`Hunter login = "WorkhuntrHunter@gmail.com"
+password = "thispass142" (yes, they're the same)`
 
 ## Preparing To Run Tests
 Before running any tests, I recommend starting from a fresh clone. While I've tested with clones that aren't fresh, it made it easier to follow with a clean one.
 
 Before running any tests, if starting from a clean clone, be sure to set up the database file. this can be achieved by navigating to the base `WorkHuntr` directory and running:
 
-python3 manage.py makemigrations
+`python3 manage.py makemigrations`
 
-python3 manage.py migrate
+`python3 manage.py migrate`
 
-python3 manage.py migrate --run-syncdb
+`python3 manage.py migrate --run-syncdb`
 
 Now that the database is ready, in the same directory, run:
 
-python3 manage.py runserver
+`python3 manage.py runserver`
 
 to run the local server. Then, in a new terminal, head to the `WorkHuntr/UITesting/` directory to begin running the test files.
 
@@ -44,10 +44,10 @@ To run the UI Tests you mut run 3 different test files. Because of some unexplai
 
 you MUST run the tests in this order:
 
-0) test_init.py (if you haven't already)
-1) HunteeTest1.py
-2) HunterTest.py
-3) HunteeTest2.py
+0) `test_init.py` (if you haven't already)
+1) `HunteeTest1.py`
+2) `HunterTest.py`
+3) `HunteeTest2.py`
 
 to run these files, run `python3 <testFileName>.py` in the `UITesting/` directory. 
 
